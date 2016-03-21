@@ -9,4 +9,4 @@ Harrison Leon *(hleon@usc.edu)* [30381]
 
 Nick Wojtyna *(wojtyna@usc.edu)* [30381]
 
-Sophia Spackova *(spackova@usc.edu)* [Add lec#]
+Sophia Spackova *(spackova@usc.edu)* [29928]
