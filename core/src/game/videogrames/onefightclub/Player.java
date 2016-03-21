@@ -1,12 +1,48 @@
 package game.videogrames.onefightclub;
 
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-
 public class Player
 {
-	Vector2				pos		= new Vector2();
-	Vector2				accel	= new Vector2();
-	Vector2				vel		= new Vector2();
-	public Rectangle	bounds	= new Rectangle();
+	boolean	movingLeft;
+	boolean	movingRight;
+
+	public void updateMotion()
+	{
+		if (movingLeft)
+		{
+			// TODO: move player left
+		}
+		if (movingRight)
+		{
+			// TODO: move player right
+		}
+	}
+
+	public void setMovingLeft(boolean b)
+	{
+		if (movingRight && b)
+		{
+			movingRight = false;
+		}
+		this.movingLeft = b;
+	}
+
+	public void setMovingRight(boolean b)
+	{
+		if (movingLeft && b)
+		{
+			movingLeft = false;
+		}
+		this.movingRight = b;
+	}
+
+	public void jump()
+	{
+		// TODO: make player jump
+	}
+
+	public void attack()
+	{
+		// TODO: make player attack
+	}
+
 }
