@@ -36,7 +36,7 @@ public class MainMenu extends OFCScreen
 		batch.end();
 
 		time += delta;
-		if (time > 1)
+		if (time > 0)
 		{
 			if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched())
 			{
