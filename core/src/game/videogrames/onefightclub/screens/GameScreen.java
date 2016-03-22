@@ -10,6 +10,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,7 +20,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-import game.videogrames.onefightclub.Player;
+import game.videogrames.onefightclub.OneFightClub;
+import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.OFCContactListener;
 
@@ -29,6 +31,9 @@ public class GameScreen extends OFCScreen
 	private OFCContactListener	cl;
 	private Box2DDebugRenderer	debugRenderer;
 	private OrthographicCamera	b2dCamera;
+
+	private OrthographicCamera	mainCam;
+	private SpriteBatch			sb;
 
 	private BodyDef				bdef;
 	private Body				body;
@@ -49,6 +54,9 @@ public class GameScreen extends OFCScreen
 		world.setContactListener(cl);
 		debugRenderer = new Box2DDebugRenderer();
 
+		sb = ((OneFightClub) game).getSpriteBatch();
+		mainCam = ((OneFightClub) game).getMainCam();
+
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown(int keycode)
@@ -65,7 +73,6 @@ public class GameScreen extends OFCScreen
 					if (cl.isPlayerGrounded())
 					{
 						player.jump();
-						playerBody.setLinearVelocity(playerBody.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 					}
 					break;
 				case Keys.SPACE: // attack
@@ -108,16 +115,15 @@ public class GameScreen extends OFCScreen
 		body.createFixture(fdef).setUserData("ground");
 
 		// create player
-		player = new Player();
 
 		bdef.position.set(160.0f / PPM, 200.0f / PPM);
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
 		shape.setAsBox(20.0f / PPM, 16.0f / PPM);
 		fdef.shape = shape;
-
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND;
+		fdef.friction = 2.0f;
 		playerBody.createFixture(fdef).setUserData("player");
 
 		// create foot sensor
@@ -128,6 +134,9 @@ public class GameScreen extends OFCScreen
 		fdef.isSensor = true;
 		playerBody.createFixture(fdef).setUserData("player.foot");
 
+		player = new Player(playerBody);
+		playerBody.setUserData(player);
+
 		shape.dispose();
 	}
 
@@ -137,7 +146,11 @@ public class GameScreen extends OFCScreen
 		// processInput();
 
 		b2dCamera.update();
+		player.updateMotion();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		sb.setProjectionMatrix(mainCam.combined);
+		player.render(sb);
 
 		debugRenderer.render(world, b2dCamera.combined);
 

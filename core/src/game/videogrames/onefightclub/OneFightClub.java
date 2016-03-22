@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import game.videogrames.onefightclub.screens.MainMenu;
+import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.OFCInputProcessor;
 
 public class OneFightClub extends Game
@@ -26,7 +27,7 @@ public class OneFightClub extends Game
 		sb.dispose();
 	}
 
-	public SpriteBatch getSb()
+	public SpriteBatch getSpriteBatch()
 	{
 		return sb;
 	}
@@ -47,6 +48,8 @@ public class OneFightClub extends Game
 		Gdx.input.setInputProcessor(new OFCInputProcessor());
 
 		sb = new SpriteBatch();
+		mainCam = new OrthographicCamera();
+		mainCam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
 		setScreen(new MainMenu(this));
 	}
 }
