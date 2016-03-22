@@ -22,7 +22,7 @@ public class MainMenu extends OFCScreen
 	@Override
 	public void show()
 	{
-		title = new TextureRegion(new Texture(Gdx.files.internal("data/temptitle.png")), 0, 0, 960, 640);
+		title = new TextureRegion(new Texture(Gdx.files.internal("images/temptitle.png")), 0, 0, 960, 640);
 		batch = new SpriteBatch();
 		batch.getProjectionMatrix().setToOrtho2D(0, 0, 960, 640);
 	}
