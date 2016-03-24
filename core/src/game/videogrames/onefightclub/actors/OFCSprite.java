@@ -51,11 +51,6 @@ public abstract class OFCSprite
 		height = keyFrames.get(0).getRegionHeight();
 	}
 
-	// public void update(float delta)
-	// {
-	// animation.update
-	// }
-
 	public void render(SpriteBatch sb)
 	{
 		stateTime += Gdx.graphics.getDeltaTime();

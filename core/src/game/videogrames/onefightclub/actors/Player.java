@@ -10,7 +10,7 @@ import game.videogrames.onefightclub.utils.Constants;
 
 public class Player extends OFCSprite
 {
-	public static final String	PLAYER_FILEPATH	= "images/bunny.png";
+	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
 	boolean						movingLeft		= false;
 	boolean						movingRight		= false;
 
@@ -19,7 +19,7 @@ public class Player extends OFCSprite
 		super(body);
 
 		Texture t = new Texture(Gdx.files.internal(PLAYER_FILEPATH));
-		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 32, 32)[0]);
+		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
 
 		setAnimation(1 / 12.0f, sprites);
 	}

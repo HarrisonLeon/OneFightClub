@@ -101,6 +101,8 @@ public class GameScreen extends OFCScreen
 		b2dCamera = new OrthographicCamera();
 		b2dCamera.setToOrtho(false, APP_WIDTH / PPM, APP_HEIGHT / PPM);
 
+		createPlayer();
+
 		// create platform
 		bdef = new BodyDef();
 		bdef.position.set(0.0f / PPM, 0.0f / PPM);
@@ -114,12 +116,19 @@ public class GameScreen extends OFCScreen
 		fdef.filter.maskBits = Constants.BIT_PLAYER;
 		body.createFixture(fdef).setUserData("ground");
 
-		// create player
+		shape.dispose();
+	}
 
+	public void createPlayer()
+	{
+		// create player
+		BodyDef bdef = new BodyDef();
 		bdef.position.set(160.0f / PPM, 200.0f / PPM);
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
-		shape.setAsBox(20.0f / PPM, 16.0f / PPM);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND;
@@ -127,7 +136,7 @@ public class GameScreen extends OFCScreen
 		playerBody.createFixture(fdef).setUserData("player");
 
 		// create foot sensor
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -14.0f / PPM), 0);
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND;
@@ -136,8 +145,6 @@ public class GameScreen extends OFCScreen
 
 		player = new Player(playerBody);
 		playerBody.setUserData(player);
-
-		shape.dispose();
 	}
 
 	@Override
@@ -146,10 +153,12 @@ public class GameScreen extends OFCScreen
 		// processInput();
 
 		b2dCamera.update();
-		player.updateMotion();
+		mainCam.update();
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		sb.setProjectionMatrix(mainCam.combined);
+		player.updateMotion();
 		player.render(sb);
 
 		debugRenderer.render(world, b2dCamera.combined);
