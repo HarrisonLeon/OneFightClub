@@ -7,7 +7,7 @@ public class Constants
 	public static final int		APP_HEIGHT		= 640;
 
 	// pixels per meter
-	public static final int		PPM				= 100;
+	public static final float	PPM				= 100f;
 
 	public static final float	GRAVITY			= -15.0f;
 	public static final float	JUMP_VELOCITY	= 6.5f;
