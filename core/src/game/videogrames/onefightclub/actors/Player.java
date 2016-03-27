@@ -3,6 +3,7 @@ package game.videogrames.onefightclub.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -29,6 +30,7 @@ public class Player extends OFCSprite
 		setAnimation(1 / 12.0f, sprites);
 		
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
+		//getK
 	}
 
 	public void updateMotion()
@@ -70,6 +72,11 @@ public class Player extends OFCSprite
 	public void attack()
 	{
 		// TODO: make player attack
+	}
+	
+	public void render(SpriteBatch sb) {
+		super.render(sb);
+		
 	}
 
 }
