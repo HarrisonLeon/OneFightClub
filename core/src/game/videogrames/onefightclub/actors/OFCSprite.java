@@ -12,6 +12,7 @@ import game.videogrames.onefightclub.utils.Constants;
 
 public abstract class OFCSprite {
     protected Body body;
+
     protected Animation animation;
     protected float width;
     protected float height;

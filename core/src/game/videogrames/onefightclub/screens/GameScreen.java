@@ -249,6 +249,7 @@ public class GameScreen extends OFCScreen {
 	sb.setProjectionMatrix(mainCam.combined);
 
 	player.updateMotion();
+	player.setGrounded(cl.isPlayerGrounded());
 	player.render(sb);
 
 	for (Enemy e : enemies) {

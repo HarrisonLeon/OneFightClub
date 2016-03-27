@@ -17,6 +17,7 @@ public class Player extends MovingSprite {
 
     private boolean movingLeft = false;
     private boolean movingRight = false;
+    private boolean isGrounded = false;
 
     public Player(Body body) {
 	super(body);
@@ -27,7 +28,6 @@ public class Player extends MovingSprite {
 	setAnimation(1 / 12.0f, sprites);
 
 	sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
-	// getK
     }
 
     public void updateMotion() {
@@ -51,6 +51,10 @@ public class Player extends MovingSprite {
 	    movingLeft = false;
 	}
 	this.movingRight = b;
+    }
+
+    public void setGrounded(boolean b) {
+	this.isGrounded = b;
     }
 
     public void jump() {
