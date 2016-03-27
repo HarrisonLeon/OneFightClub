@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -57,12 +59,12 @@ public class DesktopLauncher extends JFrame
 		createFirstGUI();
 		createLoginGUI();
 		createRegisterGUI();
+		addActions();
+		
 		jf.setSize(300, 400);
 		jf.setVisible(true);
 	}
-	
-	
-	
+
 	public static void main(String[] arg)
 	{
 		DesktopLauncher dl = new DesktopLauncher();
@@ -203,8 +205,39 @@ public class DesktopLauncher extends JFrame
 		cardLayout.add(registerScreen, "3");
 		
 	}
+	
+	private void addActions() {
+		login.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl.show(cardLayout, "2");
+			}
+			
+		});
 		
-	  void start() {
+		signup.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl.show(cardLayout, "3");
+			}
+			
+		});
+		
+		offline.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jf.setVisible(false);
+				String[] userinfo = {"offline"};
+				start(userinfo);
+			}
+			
+		});
+	}
+	  
+	void start(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "OneFightClub";
