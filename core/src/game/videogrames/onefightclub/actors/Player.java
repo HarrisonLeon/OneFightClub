@@ -63,7 +63,7 @@ public class Player extends OFCSprite
 
 	public void jump()
 	{
-		sound_jump.play(0.5f);
+		sound_jump.play(0.3f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 	}
 
