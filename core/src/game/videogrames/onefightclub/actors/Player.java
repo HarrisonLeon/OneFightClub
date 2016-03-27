@@ -12,7 +12,8 @@ import game.videogrames.onefightclub.utils.Constants;
 public class Player extends OFCSprite
 {
 	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
-	public static final String  SOUND_JUMP = "sounds/Player_Jump.wav";
+	
+	private Sound sound_jump;
 	
 	
 	boolean						movingLeft		= false;
@@ -26,6 +27,8 @@ public class Player extends OFCSprite
 		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
 
 		setAnimation(1 / 12.0f, sprites);
+		
+		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
 	}
 
 	public void updateMotion()
@@ -60,8 +63,7 @@ public class Player extends OFCSprite
 
 	public void jump()
 	{
-		Sound sound = Gdx.audio.newSound(Gdx.files.internal(SOUND_JUMP));
-		sound.play(1.0f);
+		sound_jump.play(0.5f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 	}
 
