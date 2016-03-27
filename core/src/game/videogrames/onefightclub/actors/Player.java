@@ -10,13 +10,12 @@ import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
 
-public class Player extends OFCSprite
+public class Player extends MovingSprite
 {
 	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
-	
-	private Sound sound_jump;
-	
-	
+
+	private Sound				sound_jump;
+
 	boolean						movingLeft		= false;
 	boolean						movingRight		= false;
 
@@ -28,7 +27,7 @@ public class Player extends OFCSprite
 		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
 
 		setAnimation(1 / 12.0f, sprites);
-		
+
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
 		//getK
 	}
