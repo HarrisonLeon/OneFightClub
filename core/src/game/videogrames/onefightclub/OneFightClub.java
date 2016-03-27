@@ -7,45 +7,38 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import game.videogrames.onefightclub.screens.MainMenu;
 import game.videogrames.onefightclub.utils.Constants;
 
-public class OneFightClub extends Game
-{
-	private SpriteBatch			sb;
-	private OrthographicCamera	mainCam;
-	private OrthographicCamera	hudCam;
+public class OneFightClub extends Game {
+    private SpriteBatch sb;
+    private OrthographicCamera mainCam;
+    private OrthographicCamera hudCam;
 
-	@Override
-	public void render()
-	{
-		super.render();
-	}
+    @Override
+    public void render() {
+	super.render();
+    }
 
-	@Override
-	public void dispose()
-	{
-		sb.dispose();
-	}
+    @Override
+    public void dispose() {
+	sb.dispose();
+    }
 
-	public SpriteBatch getSpriteBatch()
-	{
-		return sb;
-	}
+    public SpriteBatch getSpriteBatch() {
+	return sb;
+    }
 
-	public OrthographicCamera getMainCam()
-	{
-		return mainCam;
-	}
+    public OrthographicCamera getMainCam() {
+	return mainCam;
+    }
 
-	public OrthographicCamera getHudCam()
-	{
-		return hudCam;
-	}
+    public OrthographicCamera getHudCam() {
+	return hudCam;
+    }
 
-	@Override
-	public void create()
-	{
-		sb = new SpriteBatch();
-		mainCam = new OrthographicCamera();
-		mainCam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
-		setScreen(new MainMenu(this));
-	}
+    @Override
+    public void create() {
+	sb = new SpriteBatch();
+	mainCam = new OrthographicCamera();
+	mainCam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+	setScreen(new MainMenu(this));
+    }
 }
