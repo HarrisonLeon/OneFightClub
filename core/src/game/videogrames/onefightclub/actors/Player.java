@@ -15,6 +15,7 @@ public class Player extends MovingSprite
 	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
 
 	private Sound				sound_jump;
+	private Sound				sound_walk;
 
 	boolean						movingLeft		= false;
 	boolean						movingRight		= false;
@@ -29,7 +30,9 @@ public class Player extends MovingSprite
 		setAnimation(1 / 12.0f, sprites);
 
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
-		//getK
+		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
+		sound_walk.loop();
+		sound_walk.pause();
 	}
 
 	public void updateMotion()
@@ -76,6 +79,12 @@ public class Player extends MovingSprite
 	public void render(SpriteBatch sb) {
 		super.render(sb);
 		
+		if (movingRight || movingLeft) {
+			sound_walk.resume();
+		}
+		else {
+			sound_walk.pause();
+		}
 	}
 
 }
