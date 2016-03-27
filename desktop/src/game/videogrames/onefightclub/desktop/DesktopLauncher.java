@@ -251,6 +251,9 @@ public class DesktopLauncher extends JFrame
 			}
 		}
 		
+		Constants.ui = new UserInfo(line, username);
+		
+		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "OneFightClub";
