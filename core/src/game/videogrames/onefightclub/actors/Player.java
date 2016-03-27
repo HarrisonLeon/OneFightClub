@@ -15,8 +15,8 @@ public class Player extends MovingSprite {
 
     private Sound sound_jump;
 
-    boolean movingLeft = false;
-    boolean movingRight = false;
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
 
     public Player(Body body) {
 	super(body);
