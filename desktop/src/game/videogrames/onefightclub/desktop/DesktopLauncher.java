@@ -22,6 +22,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.utils.Constants;
+import game.videogrames.onefightclub.utils.UserInfo;
 
 public class DesktopLauncher extends JFrame
 {
@@ -238,6 +239,21 @@ public class DesktopLauncher extends JFrame
 	}
 	  
 	void start(String[] args) {
+		String line = "";
+		String username = "";
+		
+		for(int i = 0; i < args.length; i++) {
+			if(i == 0) {
+				line = args[i];	
+			}
+			if(i == 1) {
+				username = args[i];
+			}
+		}
+		
+		Constants.ui = new UserInfo(line, username);
+		
+		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "OneFightClub";
