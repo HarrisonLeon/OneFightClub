@@ -15,4 +15,6 @@ public class Constants
 
 	public static final short	BIT_GROUND		= 2;
 	public static final short	BIT_PLAYER		= 4;
+	
+	public static UserInfo ui;
 }

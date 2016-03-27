@@ -1,6 +1,7 @@
 package game.videogrames.onefightclub.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,6 +12,9 @@ import game.videogrames.onefightclub.utils.Constants;
 public class Player extends OFCSprite
 {
 	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
+	public static final String  SOUND_JUMP = "sounds/Player_Jump.wav";
+	
+	
 	boolean						movingLeft		= false;
 	boolean						movingRight		= false;
 
@@ -56,6 +60,8 @@ public class Player extends OFCSprite
 
 	public void jump()
 	{
+		Sound sound = Gdx.audio.newSound(Gdx.files.internal(SOUND_JUMP));
+		sound.play(1.0f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 	}
 
