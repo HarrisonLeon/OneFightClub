@@ -1,5 +1,5 @@
 # 2-0: The One Fight Club
-## by ***videogRAMes***
+## by ***videogRAMs***
 
 **Team Members**
 
