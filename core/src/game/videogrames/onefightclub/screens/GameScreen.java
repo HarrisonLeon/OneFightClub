@@ -4,11 +4,13 @@ import static game.videogrames.onefightclub.utils.Constants.APP_HEIGHT;
 import static game.videogrames.onefightclub.utils.Constants.APP_WIDTH;
 import static game.videogrames.onefightclub.utils.Constants.PPM;
 
+import java.util.Random;
+import java.util.Vector;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.actors.Player;
+import game.videogrames.onefightclub.actors.Enemy;
 import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.OFCContactListener;
 
@@ -41,6 +44,7 @@ public class GameScreen extends OFCScreen
 
 	private Body				playerBody;
 	private Player				player;
+	private Vector<Enemy>       enemies;
 
 	public GameScreen(Game game)
 	{
@@ -102,7 +106,12 @@ public class GameScreen extends OFCScreen
 		b2dCamera = new OrthographicCamera();
 		b2dCamera.setToOrtho(false, APP_WIDTH / PPM, APP_HEIGHT / PPM);
 
+		enemies = new Vector<Enemy>();
+		
 		createPlayer();
+		for (int i = 0; i < 5; i++) {
+			createEnemy();
+		}
 
 		// create platform
 		bdef = new BodyDef();
@@ -147,6 +156,36 @@ public class GameScreen extends OFCScreen
 		player = new Player(playerBody);
 		playerBody.setUserData(player);
 	}
+	
+	public void createEnemy()
+	{
+		// create player
+		Random rand = new Random();
+		int randval = rand.nextInt(1000);
+		BodyDef bdef2 = new BodyDef();
+		bdef2.position.set(randval / PPM, 200.0f / PPM);
+		bdef2.type = BodyType.DynamicBody;
+		Body enemyBody = world.createBody(bdef2);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		FixtureDef fdef2 = new FixtureDef();
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.friction = 2.0f;
+		enemyBody.createFixture(fdef2).setUserData("enemy");
+
+		// create foot sensor
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.isSensor = true;
+		enemyBody.createFixture(fdef2).setUserData("enemy.foot");
+		Enemy enemy = new Enemy(enemyBody);
+		enemyBody.setUserData(enemy);
+		enemies.add(enemy);
+	}
 
 	@Override
 	public void render(float delta)
@@ -159,8 +198,13 @@ public class GameScreen extends OFCScreen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		sb.setProjectionMatrix(mainCam.combined);
+		
 		player.updateMotion();
 		player.render(sb);
+		
+		for (Enemy e : enemies) {
+			e.render(sb);
+		}
 
 		debugRenderer.render(world, b2dCamera.combined);
 
