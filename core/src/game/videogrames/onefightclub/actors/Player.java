@@ -10,66 +10,53 @@ import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
 
-public class Player extends MovingSprite
-{
-	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
+public class Player extends MovingSprite {
+    public static final String PLAYER_FILEPATH = "images/soldierwalk.png";
 
 	private Sound				sound_jump;
 	private Sound				sound_walk;
 
-	boolean						movingLeft		= false;
-	boolean						movingRight		= false;
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
+    private boolean isGrounded = false;
 
-	public Player(Body body)
-	{
+    public Player(Body body) {
 		super(body);
-
+	
 		Texture t = new Texture(Gdx.files.internal(PLAYER_FILEPATH));
 		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
-
+	
 		setAnimation(1 / 12.0f, sprites);
 
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
 		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
 		sound_walk.loop();
 		sound_walk.pause();
-	}
+    }
 
-	public void updateMotion()
-	{
-		if (movingLeft)
-		{
-			body.setLinearVelocity(-Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+    public void updateMotion() {
+		if (movingLeft) {
+		    body.setLinearVelocity(-Constants.RUN_VELOCITY, body.getLinearVelocity().y);
 		}
-		if (movingRight)
-		{
-			body.setLinearVelocity(Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+		if (movingRight) {
+		    body.setLinearVelocity(Constants.RUN_VELOCITY, body.getLinearVelocity().y);
 		}
-	}
+    }
 
-	public void setMovingLeft(boolean b)
-	{
-		if (movingRight && b)
-		{
-			movingRight = false;
-		}
-		this.movingLeft = b;
+    public void setMovingLeft(boolean b) {
+	if (movingRight && b) {
+	    movingRight = false;
 	}
+	this.movingLeft = b;
+    }
 
-	public void setMovingRight(boolean b)
-	{
-		if (movingLeft && b)
-		{
-			movingLeft = false;
-		}
-		this.movingRight = b;
+    public void setMovingRight(boolean b) {
+	if (movingLeft && b) {
+	    movingLeft = false;
 	}
+	this.movingRight = b;
+    }
 
-	public void jump()
-	{
-		sound_jump.play(0.3f);
-		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
-	}
 
 	public void attack()
 	{
@@ -79,7 +66,7 @@ public class Player extends MovingSprite
 	public void render(SpriteBatch sb) {
 		super.render(sb);
 		
-		if (movingRight || movingLeft) {
+		if ((movingRight || movingLeft) && isGrounded) {
 			sound_walk.resume();
 		}
 		else {
@@ -87,4 +74,12 @@ public class Player extends MovingSprite
 		}
 	}
 
+    public void setGrounded(boolean b) {
+    	this.isGrounded = b;
+    }
+
+    public void jump() {
+		sound_jump.play(0.3f);
+		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
+    }
 }

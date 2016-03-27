@@ -10,55 +10,48 @@ import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
 
-public abstract class OFCSprite
-{
-	protected Body		body;
-	protected Animation	animation;
-	protected float		width;
-	protected float		height;
+public abstract class OFCSprite {
+    protected Body body;
 
-	protected float		stateTime;
+    protected Animation animation;
+    protected float width;
+    protected float height;
 
-	public OFCSprite(Body body)
-	{
-		this.body = body;
-	}
+    protected float stateTime;
 
-	public Body getBody()
-	{
-		return body;
-	}
+    public OFCSprite(Body body) {
+	this.body = body;
+    }
 
-	public Vector2 getPosition()
-	{
-		return body.getPosition();
-	}
+    public Body getBody() {
+	return body;
+    }
 
-	public float getWidth()
-	{
-		return width;
-	}
+    public Vector2 getPosition() {
+	return body.getPosition();
+    }
 
-	public float getHeight()
-	{
-		return height;
-	}
+    public float getWidth() {
+	return width;
+    }
 
-	public void setAnimation(float frameDuration, Array<TextureRegion> keyFrames)
-	{
-		animation = new Animation(frameDuration, keyFrames);
-		width = keyFrames.get(0).getRegionWidth();
-		height = keyFrames.get(0).getRegionHeight();
-	}
+    public float getHeight() {
+	return height;
+    }
 
-	public void render(SpriteBatch sb)
-	{
-		stateTime += Gdx.graphics.getDeltaTime();
-		TextureRegion currFrame = animation.getKeyFrame(stateTime, true);
-		sb.begin();
-		sb.draw(currFrame, body.getPosition().x * Constants.PPM - width / 2,
-				body.getPosition().y * Constants.PPM - height / 2);
-		sb.end();
-	}
+    public void setAnimation(float frameDuration, Array<TextureRegion> keyFrames) {
+	animation = new Animation(frameDuration, keyFrames);
+	width = keyFrames.get(0).getRegionWidth();
+	height = keyFrames.get(0).getRegionHeight();
+    }
+
+    public void render(SpriteBatch sb) {
+	stateTime += Gdx.graphics.getDeltaTime();
+	TextureRegion currFrame = animation.getKeyFrame(stateTime, true);
+	sb.begin();
+	sb.draw(currFrame, body.getPosition().x * Constants.PPM - width / 2,
+		body.getPosition().y * Constants.PPM - height / 2);
+	sb.end();
+    }
 
 }
