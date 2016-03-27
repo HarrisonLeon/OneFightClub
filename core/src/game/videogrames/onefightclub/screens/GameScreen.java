@@ -26,6 +26,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.Enemy;
+import game.videogrames.onefightclub.actors.PowerUp;
+import game.videogrames.onefightclub.actors.Weapon;
 import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.OFCContactListener;
 
@@ -45,6 +47,8 @@ public class GameScreen extends OFCScreen
 	private Body				playerBody;
 	private Player				player;
 	private Vector<Enemy>       enemies;
+	private Vector<PowerUp>     powerups;
+	private Vector<Weapon>      weapons;
 
 	public GameScreen(Game game)
 	{
@@ -107,11 +111,15 @@ public class GameScreen extends OFCScreen
 		b2dCamera.setToOrtho(false, APP_WIDTH / PPM, APP_HEIGHT / PPM);
 
 		enemies = new Vector<Enemy>();
+		powerups = new Vector<PowerUp>();
+		weapons = new Vector<Weapon>();
 		
 		createPlayer();
 		for (int i = 0; i < 5; i++) {
 			createEnemy();
 		}
+		createPowerUp();
+		createWeapon();
 
 		// create platform
 		bdef = new BodyDef();
@@ -186,6 +194,60 @@ public class GameScreen extends OFCScreen
 		enemyBody.setUserData(enemy);
 		enemies.add(enemy);
 	}
+	
+	public void createPowerUp()
+	{
+		BodyDef bdef2 = new BodyDef();
+		bdef2.position.set(200.0f / PPM, 200.0f / PPM);
+		bdef2.type = BodyType.DynamicBody;
+		Body powerupBody = world.createBody(bdef2);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		FixtureDef fdef2 = new FixtureDef();
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.friction = 2.0f;
+		powerupBody.createFixture(fdef2).setUserData("powerup");
+
+		// create foot sensor
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.isSensor = true;
+		powerupBody.createFixture(fdef2).setUserData("powerup.foot");
+		PowerUp powerup = new PowerUp(powerupBody);
+		powerupBody.setUserData(powerup);
+		powerups.add(powerup);
+	}
+	
+	public void createWeapon() 
+	{
+		BodyDef bdef2 = new BodyDef();
+		bdef2.position.set(500.0f / PPM, 200.0f / PPM);
+		bdef2.type = BodyType.DynamicBody;
+		Body weaponBody = world.createBody(bdef2);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		FixtureDef fdef2 = new FixtureDef();
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.friction = 2.0f;
+		weaponBody.createFixture(fdef2).setUserData("weapon");
+
+		// create foot sensor
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+		fdef2.shape = shape;
+		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.maskBits = Constants.BIT_GROUND;
+		fdef2.isSensor = true;
+		weaponBody.createFixture(fdef2).setUserData("weapon.foot");
+		Weapon weapon = new Weapon(weaponBody);
+		weaponBody.setUserData(weapon);
+		weapons.add(weapon);
+	}
 
 	@Override
 	public void render(float delta)
@@ -204,6 +266,14 @@ public class GameScreen extends OFCScreen
 		
 		for (Enemy e : enemies) {
 			e.render(sb);
+		}
+		
+		for (PowerUp p : powerups) {
+			p.render(sb);
+		}
+		
+		for (Weapon w : weapons) {
+			w.render(sb);
 		}
 
 		debugRenderer.render(world, b2dCamera.combined);
