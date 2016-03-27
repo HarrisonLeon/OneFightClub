@@ -9,12 +9,11 @@ import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
 
-public class Player extends OFCSprite
+public class Player extends MovingSprite
 {
 	public static final String	PLAYER_FILEPATH	= "images/soldierwalk.png";
-	public static final String  SOUND_JUMP = "sounds/Player_Jump.wav";
-	
-	
+	public static final String	SOUND_JUMP		= "sounds/Player_Jump.wav";
+
 	boolean						movingLeft		= false;
 	boolean						movingRight		= false;
 
