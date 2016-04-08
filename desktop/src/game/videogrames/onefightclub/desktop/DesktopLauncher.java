@@ -338,4 +338,6 @@ public class DesktopLauncher extends JFrame
 
 		new LwjglApplication(new OneFightClub(), config);
 	}
+	
+	
 }

@@ -29,6 +29,7 @@ public class Player extends MovingSprite {
 		setAnimation(1 / 12.0f, sprites);
 
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
+
 		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
 		sound_walk.loop();
 		sound_walk.pause();
