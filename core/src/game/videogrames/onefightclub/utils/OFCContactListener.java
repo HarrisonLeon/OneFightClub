@@ -10,33 +10,33 @@ public class OFCContactListener implements ContactListener {
     private boolean playerGrounded;
 
     public boolean isPlayerGrounded() {
-	return playerGrounded;
+    	return playerGrounded;
     }
 
     @Override
     public void beginContact(Contact contact) {
-	Fixture fa = contact.getFixtureA();
-	Fixture fb = contact.getFixtureB();
-
-	if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
-	    playerGrounded = true;
-	}
-	if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
-	    playerGrounded = true;
-	}
+		Fixture fa = contact.getFixtureA();
+		Fixture fb = contact.getFixtureB();
+	
+		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
+		    playerGrounded = true;
+		}
+		if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
+		    playerGrounded = true;
+		}
     }
 
     @Override
     public void endContact(Contact contact) {
-	Fixture fa = contact.getFixtureA();
-	Fixture fb = contact.getFixtureB();
-
-	if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
-	    playerGrounded = false;
-	}
-	if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
-	    playerGrounded = false;
-	}
+		Fixture fa = contact.getFixtureA();
+		Fixture fb = contact.getFixtureB();
+	
+		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
+		    playerGrounded = false;
+		}
+		if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
+		    playerGrounded = false;
+		}
     }
 
     @Override

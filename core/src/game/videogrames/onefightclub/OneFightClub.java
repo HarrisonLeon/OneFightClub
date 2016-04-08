@@ -14,31 +14,31 @@ public class OneFightClub extends Game {
 
     @Override
     public void render() {
-	super.render();
+    	super.render();
     }
 
     @Override
     public void dispose() {
-	sb.dispose();
+    	sb.dispose();
     }
 
     public SpriteBatch getSpriteBatch() {
-	return sb;
+    	return sb;
     }
 
     public OrthographicCamera getMainCam() {
-	return mainCam;
+    	return mainCam;
     }
 
     public OrthographicCamera getHudCam() {
-	return hudCam;
+    	return hudCam;
     }
 
     @Override
     public void create() {
-	sb = new SpriteBatch();
-	mainCam = new OrthographicCamera();
-	mainCam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
-	setScreen(new MainMenu(this));
+		sb = new SpriteBatch();
+		mainCam = new OrthographicCamera();
+		mainCam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+		setScreen(new MainMenu(this));
     }
 }

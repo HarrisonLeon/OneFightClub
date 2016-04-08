@@ -31,7 +31,7 @@ public class Player extends MovingSprite {
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
 
 		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
-		sound_walk.loop();
+		sound_walk.loop(0.3f);
 		sound_walk.pause();
     }
 
@@ -45,17 +45,17 @@ public class Player extends MovingSprite {
     }
 
     public void setMovingLeft(boolean b) {
-	if (movingRight && b) {
-	    movingRight = false;
-	}
-	this.movingLeft = b;
+		if (movingRight && b) {
+		    movingRight = false;
+		}
+		this.movingLeft = b;
     }
 
     public void setMovingRight(boolean b) {
-	if (movingLeft && b) {
-	    movingLeft = false;
-	}
-	this.movingRight = b;
+		if (movingLeft && b) {
+		    movingLeft = false;
+		}
+		this.movingRight = b;
     }
 
 

@@ -11,11 +11,11 @@ public class PowerUp extends StillSprite {
     public static final String PLAYER_FILEPATH = "images/soldierwalk.png";
 
     public PowerUp(Body body) {
-	super(body);
-
-	Texture t = new Texture(Gdx.files.internal(PLAYER_FILEPATH));
-	Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
-
-	setAnimation(1 / 12.0f, sprites);
+		super(body);
+	
+		Texture t = new Texture(Gdx.files.internal(PLAYER_FILEPATH));
+		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 80, 64)[0]);
+	
+		setAnimation(1 / 12.0f, sprites);
     }
 }

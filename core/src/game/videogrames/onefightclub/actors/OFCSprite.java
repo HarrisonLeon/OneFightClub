@@ -20,38 +20,38 @@ public abstract class OFCSprite {
     protected float stateTime;
 
     public OFCSprite(Body body) {
-	this.body = body;
+    	this.body = body;
     }
 
     public Body getBody() {
-	return body;
+    	return body;
     }
 
     public Vector2 getPosition() {
-	return body.getPosition();
+    	return body.getPosition();
     }
 
     public float getWidth() {
-	return width;
+    	return width;
     }
 
     public float getHeight() {
-	return height;
+    	return height;
     }
 
     public void setAnimation(float frameDuration, Array<TextureRegion> keyFrames) {
-	animation = new Animation(frameDuration, keyFrames);
-	width = keyFrames.get(0).getRegionWidth();
-	height = keyFrames.get(0).getRegionHeight();
+		animation = new Animation(frameDuration, keyFrames);
+		width = keyFrames.get(0).getRegionWidth();
+		height = keyFrames.get(0).getRegionHeight();
     }
 
     public void render(SpriteBatch sb) {
-	stateTime += Gdx.graphics.getDeltaTime();
-	TextureRegion currFrame = animation.getKeyFrame(stateTime, true);
-	sb.begin();
-	sb.draw(currFrame, body.getPosition().x * Constants.PPM - width / 2,
-		body.getPosition().y * Constants.PPM - height / 2);
-	sb.end();
+		stateTime += Gdx.graphics.getDeltaTime();
+		TextureRegion currFrame = animation.getKeyFrame(stateTime, true);
+		sb.begin();
+		sb.draw(currFrame, body.getPosition().x * Constants.PPM - width / 2,
+			body.getPosition().y * Constants.PPM - height / 2);
+		sb.end();
     }
 
 }
