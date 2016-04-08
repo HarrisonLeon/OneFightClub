@@ -3,12 +3,23 @@ package game.videogrames.onefightclub.desktop;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -26,6 +39,8 @@ import game.videogrames.onefightclub.utils.UserInfo;
 
 public class DesktopLauncher extends JFrame
 {
+	  JLabel logo;
+	
 	  JLabel user;
 	  JLabel userSign;
 	  JLabel pass;
@@ -45,12 +60,14 @@ public class DesktopLauncher extends JFrame
 	  JPasswordField passSignUp;
 	  JPasswordField passwordConfirm;
 	
-	  JPanel firstScreen;
+	  CustomJPanel firstScreen;
 	  JPanel loginScreen;
 	  JPanel registerScreen;
 	  JPanel cardLayout;
 	
 	  JFrame jf = this;
+	  
+	  Font customFont;
 	
 	  CardLayout cl;
 	
@@ -62,7 +79,9 @@ public class DesktopLauncher extends JFrame
 		createRegisterGUI();
 		addActions();
 		
-		jf.setSize(300, 400);
+		jf.setSize(400, 500);
+		jf.setLocation(500, 150);
+		jf.setResizable(false);
 		jf.setVisible(true);
 	}
 
@@ -72,6 +91,18 @@ public class DesktopLauncher extends JFrame
 	}
 	
 	private void createGUI() {
+		try {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/leadcoat.ttf")).deriveFont(20f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(customFont);
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
+		UIManager.put("Button.font", new FontUIResource(customFont));
+		
+		logo = new JLabel("2-0: The One Fight Club");
+		//logo.setFont(customFont);
+
 		user = new JLabel("Username: ");
 		//user.setFont(customFont);
 		
@@ -108,8 +139,8 @@ public class DesktopLauncher extends JFrame
 		passSignUp = new JPasswordField();
 		passwordConfirm = new JPasswordField();
 		
-		firstScreen = new JPanel();
-		firstScreen.setBackground(Color.gray);
+		firstScreen = new CustomJPanel(Toolkit.getDefaultToolkit().createImage("clipboard.png"));
+		//firstScreen.setImage();
 		
 		
 		loginScreen = new JPanel();
@@ -129,25 +160,69 @@ public class DesktopLauncher extends JFrame
 		//First Screen
 		
 		firstScreen.setLayout(new BorderLayout());
-		JPanel overall = new JPanel();
-		overall.setLayout(new BoxLayout(overall, BoxLayout.Y_AXIS));
+		JLabel overall = new JLabel();
+		overall.setIcon(new ImageIcon("images/clipboard.png"));
+		overall.setLayout(null);
 		
-		JPanel addLoginSignup = new JPanel();
-		addLoginSignup.add(login);
-		addLoginSignup.add(signup);
-		addLoginSignup.setBackground(Color.gray);
+		Insets insets = overall.getInsets();
 		
-		JPanel offlineP = new JPanel();
-		offlineP.add(offline);
-		offlineP.setBackground(Color.gray);
+		overall.add(login);
+		Dimension size = signup.getPreferredSize();
+		login.setBackground(Color.white);
+		login.setBorderPainted(false);
+		login.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(MouseEvent arg0) {
+				login.setForeground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				login.setForeground(Color.black);
+				
+			}
+			
+		});
+		login.setBounds(100 + insets.left, 200 + insets.top, size.width, size.height);
 		
-		JPanel optionsPanel = new JPanel(new BorderLayout());
-		optionsPanel.add(addLoginSignup, "North");
-		optionsPanel.add(offlineP, "Center");
-		optionsPanel.setBackground(Color.gray);
+		overall.add(signup);
+		signup.setBackground(Color.white);
+		signup.setBorderPainted(false);
+		signup.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(MouseEvent arg0) {
+				signup.setForeground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				signup.setForeground(Color.black);
+				
+			}
+			
+		});
+		signup.setBounds(140 + insets.left + login.getPreferredSize().width, 200 + insets.top, size.width, size.height);
 		
-		overall.add(optionsPanel);
-		firstScreen.add(overall, BorderLayout.CENTER);
+		overall.add(offline);
+		size = offline.getPreferredSize();
+		offline.setBackground(Color.white);
+		offline.setBorderPainted(false);
+		offline.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(MouseEvent arg0) {
+				offline.setForeground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				offline.setForeground(Color.black);
+				
+			}
+			
+		});
+		offline.setBounds(153 + insets.left, 250, size.width, size.height);
+		
+		firstScreen.add(overall);
 		
 		cardLayout.add(firstScreen, "1");
 		
