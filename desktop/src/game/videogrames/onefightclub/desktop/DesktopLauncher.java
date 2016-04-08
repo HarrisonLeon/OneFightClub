@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -40,6 +41,7 @@ import game.videogrames.onefightclub.utils.UserInfo;
 public class DesktopLauncher extends JFrame
 {
 	  JLabel logo;
+	  JLabel slogan;
 	
 	  JLabel user;
 	  JLabel userSign;
@@ -60,7 +62,7 @@ public class DesktopLauncher extends JFrame
 	  JPasswordField passSignUp;
 	  JPasswordField passwordConfirm;
 	
-	  CustomJPanel firstScreen;
+	  JPanel firstScreen;
 	  JPanel loginScreen;
 	  JPanel registerScreen;
 	  JPanel cardLayout;
@@ -68,11 +70,13 @@ public class DesktopLauncher extends JFrame
 	  JFrame jf = this;
 	  
 	  Font customFont;
+	  Font logoFont;
 	
 	  CardLayout cl;
 	
 	DesktopLauncher() {
 		jf = this;
+		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
 		createGUI();
 		createFirstGUI();
 		createLoginGUI();
@@ -95,43 +99,29 @@ public class DesktopLauncher extends JFrame
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/leadcoat.ttf")).deriveFont(20f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(customFont);
+			logoFont = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/italic_bricks.ttf")).deriveFont(16f);
+			ge.registerFont(logoFont);
 		} catch (FontFormatException | IOException e1) {
 			e1.printStackTrace();
 		}
 		UIManager.put("Button.font", new FontUIResource(customFont));
+		UIManager.put("Label.font", new FontUIResource(customFont));
 		
-		logo = new JLabel("2-0: The One Fight Club");
-		//logo.setFont(customFont);
+		logo = new JLabel("2-0:");
+		
+		slogan = new JLabel("The One Fight Club");
 
 		user = new JLabel("Username: ");
-		//user.setFont(customFont);
-		
 		userSign = new JLabel("Username: ");
-		//userSign.setFont(customFont);
-		
 		pass = new JLabel("Password: ");
-		//pass.setFont(customFont);
-		
-		passSign = new JLabel("Password: ");
-		//passSign.setFont(customFont);
-		
+		passSign = new JLabel("Password: ");	
 		repeat = new JLabel("Repeat: ");
-		//repeat.setFont(customFont);
-		
+	
 		login = new JButton("Login");
-		//login.setFont(customFont);
-		
 		signin = new JButton("Sign In");
-		//signin.setFont(customFont);
-		
 		signup = new JButton("Signup");
-		//signup.setFont(customFont);
-		
-		offline = new JButton("Offline");
-		//offline.setFont(customFont);
-		
+		offline = new JButton("Offline");	
 		register = new JButton("Register");
-		//register.setFont(customFont);
 		
 		username = new JTextField();
 		password = new JPasswordField();
@@ -139,16 +129,9 @@ public class DesktopLauncher extends JFrame
 		passSignUp = new JPasswordField();
 		passwordConfirm = new JPasswordField();
 		
-		firstScreen = new CustomJPanel(Toolkit.getDefaultToolkit().createImage("clipboard.png"));
-		//firstScreen.setImage();
-		
-		
-		loginScreen = new JPanel();
-		loginScreen.setBackground(Color.gray);
-		
+		firstScreen = new JPanel();
+		loginScreen = new JPanel();	
 		registerScreen = new JPanel();
-		registerScreen.setBackground(Color.gray);
-		
 		
 		cardLayout = new JPanel();
 		cl = new CardLayout();
@@ -164,10 +147,24 @@ public class DesktopLauncher extends JFrame
 		overall.setIcon(new ImageIcon("images/clipboard.png"));
 		overall.setLayout(null);
 		
+		
 		Insets insets = overall.getInsets();
+		Dimension size;
+		
+		overall.add(logo);
+		logo.setFont(logoFont);
+		logo.setBackground(Color.white);
+		size = logo.getPreferredSize();
+		logo.setBounds(170 + insets.left, 120 + insets.top, size.width, size.height);
+		
+		overall.add(slogan);
+		slogan.setFont(logoFont);
+		slogan.setBackground(Color.white);
+		size = slogan.getPreferredSize();
+		slogan.setBounds(80 + insets.left, 150 + insets.top, size.width, size.height);
 		
 		overall.add(login);
-		Dimension size = signup.getPreferredSize();
+		size = signup.getPreferredSize();
 		login.setBackground(Color.white);
 		login.setBorderPainted(false);
 		login.addMouseListener(new MouseAdapter() {
@@ -183,7 +180,7 @@ public class DesktopLauncher extends JFrame
 			}
 			
 		});
-		login.setBounds(100 + insets.left, 200 + insets.top, size.width, size.height);
+		login.setBounds(120 + insets.left, 200 + insets.top, size.width, size.height);
 		
 		overall.add(signup);
 		signup.setBackground(Color.white);
@@ -201,7 +198,7 @@ public class DesktopLauncher extends JFrame
 			}
 			
 		});
-		signup.setBounds(140 + insets.left + login.getPreferredSize().width, 200 + insets.top, size.width, size.height);
+		signup.setBounds(120 + insets.left + login.getPreferredSize().width, 200 + insets.top, size.width, size.height);
 		
 		overall.add(offline);
 		size = offline.getPreferredSize();
@@ -231,50 +228,95 @@ public class DesktopLauncher extends JFrame
 	}
 	
 	private void createLoginGUI() {
-
-		JPanel overall = new JPanel();
-		overall.setLayout(new BoxLayout(overall, BoxLayout.Y_AXIS));
-		overall.setBackground(Color.gray);
 		
-		JPanel usernamePassword = new JPanel();
-		usernamePassword.setLayout(new GridLayout(0,2));
-		usernamePassword.setBackground(Color.gray);
-		usernamePassword.add(user);
-		usernamePassword.add(username);
-		usernamePassword.add(pass);
-		usernamePassword.add(password);
+		loginScreen.setLayout(new BorderLayout());
+		JLabel overall = new JLabel();
+		overall.setIcon(new ImageIcon("images/clipboard.png"));
+		overall.setLayout(null);
 		
-		overall.add(usernamePassword);
+		Insets insets = overall.getInsets();
+		Dimension size = user.getPreferredSize();
+		
+		overall.add(user);
+		user.setBackground(Color.white);
+		user.setBounds(95 + insets.left, 120 + insets.top, size.width, size.height);
+		
+		overall.add(username);
+		size = username.getPreferredSize();
+		username.setBounds(95 + insets.left + pass.getPreferredSize().width, 120 + insets.top, 100, size.height);
+		
+		overall.add(pass);
+		size = pass.getPreferredSize();
+		pass.setBounds(95 + insets.left, 175 + insets.top, size.width, size.height);
+		
+		overall.add(password);
+		size = password.getPreferredSize();
+		password.setBounds(95 + insets.left + pass.getPreferredSize().width, 175 + insets.top, 100, size.height);
 		
 		overall.add(signin);
+		size = signin.getPreferredSize();
+		signin.setBorderPainted(false);
+		signin.setBackground(Color.white);
+		signin.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(MouseEvent arg0) {
+				signin.setForeground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				signin.setForeground(Color.black);
+				
+			}
+			
+		});
+		signin.setBounds(150 + insets.left, 225 + insets.top, size.width, size.height);
 		
 		loginScreen.add(overall);
-		
-		loginScreen.setBackground(Color.gray);
 		
 		cardLayout.add(loginScreen, "2");
 		
 	}
 	
 	private void createRegisterGUI() {
+		registerScreen.setLayout(new BorderLayout());
+		JLabel overall = new JLabel();
+		overall.setIcon(new ImageIcon("images/clipboard.png"));
+		overall.setLayout(null);
+	
+		Insets insets = overall.getInsets();
+		Dimension size = user.getPreferredSize();
 		
-		JPanel overall = new JPanel();
-		overall.setLayout(new BoxLayout(overall, BoxLayout.Y_AXIS));
-		overall.setBackground(Color.gray);
+		overall.add(userSign);
+		userSign.setBackground(Color.white);
+		userSign.setBounds(100 + insets.left, 120 + insets.top, size.width, size.height);
 		
-		JPanel usernamePassword = new JPanel();
-		usernamePassword.setLayout(new GridLayout(0,2));
-		usernamePassword.setBackground(Color.gray);
-		usernamePassword.add(userSign);
-		usernamePassword.add(userSignUp);
-		usernamePassword.add(passSign);
-		usernamePassword.add(passSignUp);
-		usernamePassword.add(repeat);
-		usernamePassword.add(passwordConfirm);
+		overall.add(userSignUp);
+		size = userSignUp.getPreferredSize();
+		userSignUp.setBounds(95 + insets.left + passSign.getPreferredSize().width, 120 + insets.top, 100, size.height);
 		
-		overall.add(usernamePassword);
+		overall.add(passSign);
+		size = passSign.getPreferredSize();
+		passSign.setBounds(95 + insets.left, 175 + insets.top, size.width, size.height);
+		
+		overall.add(passSignUp);
+		size = passSignUp.getPreferredSize();
+		passSignUp.setBounds(95 + insets.left + passSign.getPreferredSize().width, 175 + insets.top, 100, size.height);
+		
+		overall.add(repeat);
+		size = repeat.getPreferredSize();
+		repeat.setBackground(Color.white);
+		repeat.setBounds(122 + insets.left, 230 + insets.top, size.width, size.height);
+		
+		overall.add(passwordConfirm);
+		size = passwordConfirm.getPreferredSize();
+		passwordConfirm.setBounds(95 + insets.left + passSign.getPreferredSize().width, 230 + insets.top, 100, size.height);
 		
 		overall.add(register);
+		size = register.getPreferredSize();
+		register.setBackground(Color.white);
+		register.setBorderPainted(false);
+		register.setBounds(140 + insets.left, 285 + insets.top, size.width, size.height);
 		
 		registerScreen.add(overall);
 		
