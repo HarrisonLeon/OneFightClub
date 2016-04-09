@@ -7,7 +7,7 @@ public abstract class OFCScreen implements Screen {
     Game game;
 
     public OFCScreen(final Game game) {
-	this.game = game;
+    	this.game = game;
     }
 
     @Override

@@ -13,8 +13,8 @@ import game.videogrames.onefightclub.utils.Constants;
 public class Player extends MovingSprite {
     public static final String PLAYER_FILEPATH = "images/soldierwalk.png";
 
-	private Sound				sound_jump;
-	private Sound				sound_walk;
+	private Sound sound_jump;
+	private Sound sound_walk;
 
     private boolean movingLeft = false;
     private boolean movingRight = false;

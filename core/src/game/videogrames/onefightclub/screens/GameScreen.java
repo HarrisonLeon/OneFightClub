@@ -10,6 +10,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -48,9 +49,13 @@ public class GameScreen extends OFCScreen {
     private Vector<Enemy> enemies;
     private Vector<PowerUp> powerups;
     private Vector<Weapon> weapons;
+    
+    private Sound theme1;
 
     public GameScreen(Game game) {
     	super(game);
+    	theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
+    	theme1.loop(0.3f);
     }
 
     @Override
