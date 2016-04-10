@@ -18,7 +18,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,15 +39,25 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
+import com.badlogic.gdx.backends.lwjgl.audio.OpenALAudio;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.UserInfo;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import sun.applet.Main;
 
 public class DesktopLauncher extends JFrame
-{
+{	
+	  static Mixer mixer;
+	  static Clip clip;
+	
 	  JLabel logo;
 	  JLabel slogan;
 	
@@ -73,8 +91,12 @@ public class DesktopLauncher extends JFrame
 	  Font logoFont;
 	
 	  CardLayout cl;
+	  
+	  File sound_clicked;
 	
 	DesktopLauncher() {
+		sound_clicked = new File("Button_Click");
+	
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
 		createGUI();
@@ -136,7 +158,6 @@ public class DesktopLauncher extends JFrame
 		cardLayout = new JPanel();
 		cl = new CardLayout();
 		cardLayout.setLayout(cl);
-		
 	}
 	
 	private void createFirstGUI() {
@@ -176,7 +197,10 @@ public class DesktopLauncher extends JFrame
 			@Override
 			public void mouseExited(MouseEvent e) {
 				login.setForeground(Color.black);
-				
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				sound_clicked();
 			}
 			
 		});
@@ -194,7 +218,10 @@ public class DesktopLauncher extends JFrame
 			@Override
 			public void mouseExited(MouseEvent e) {
 				signup.setForeground(Color.black);
-				
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				sound_clicked();
 			}
 			
 		});
@@ -213,7 +240,10 @@ public class DesktopLauncher extends JFrame
 			@Override
 			public void mouseExited(MouseEvent e) {
 				offline.setForeground(Color.black);
-				
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				sound_clicked();
 			}
 			
 		});
@@ -266,7 +296,10 @@ public class DesktopLauncher extends JFrame
 			@Override
 			public void mouseExited(MouseEvent e) {
 				signin.setForeground(Color.black);
-				
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				sound_clicked();
 			}
 			
 		});
@@ -381,5 +414,24 @@ public class DesktopLauncher extends JFrame
 		new LwjglApplication(new OneFightClub(), config);
 	}
 	
-	
+	void sound_clicked() {
+		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
+		mixer = AudioSystem.getMixer(mixInfos[0]);
+		
+		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
+		try { clip = (Clip)mixer.getLine(dataInfo); }
+		catch (LineUnavailableException lue){lue.printStackTrace();}
+		
+		try
+		{
+			File file = new File("Desktop_Sounds/Button_Click.wav");
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+			clip.open(audioStream);
+		} catch (LineUnavailableException lue) { lue.printStackTrace();}
+		  catch (UnsupportedAudioFileException uafe) {uafe.printStackTrace(); }	
+		  catch (IOException ioe) {ioe.printStackTrace();}
+		clip.start();
+	}
 }
+
+
