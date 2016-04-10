@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
@@ -15,6 +16,7 @@ public class Enemy extends MovingSprite {
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private boolean isGrounded = false;
+    private boolean isDead = false;
     
     public Enemy(Body body) {
 		super(body);
@@ -51,5 +53,9 @@ public class Enemy extends MovingSprite {
     
     public void setGrounded(boolean b) {
     	this.isGrounded = b;
+    }
+    
+    public void killEnemy() {
+    	this.getBody().getWorld().destroyBody(this.getBody());
     }
 }
