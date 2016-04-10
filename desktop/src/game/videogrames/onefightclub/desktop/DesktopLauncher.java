@@ -101,8 +101,8 @@ public class DesktopLauncher extends JFrame
 	
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
-		new Thread(Constant.s = new Server(3306)).start();
-		new Thread(Constant.c = new Client()).start();
+		//new Thread(Constant.s = new Server(3306)).start();
+		//new Thread(Constant.c = new Client()).start();
 		createGUI();
 		createFirstGUI();
 		createLoginGUI();
