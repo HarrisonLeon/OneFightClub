@@ -191,6 +191,7 @@ public class DesktopLauncher extends JFrame
 		login.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(MouseEvent arg0) {
+				sound_woosh();
 				login.setForeground(Color.red);
 			}
 
@@ -212,6 +213,7 @@ public class DesktopLauncher extends JFrame
 		signup.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(MouseEvent arg0) {
+				sound_woosh();
 				signup.setForeground(Color.red);
 			}
 
@@ -234,6 +236,7 @@ public class DesktopLauncher extends JFrame
 		offline.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(MouseEvent arg0) {
+				sound_woosh();
 				offline.setForeground(Color.red);
 			}
 
@@ -290,6 +293,7 @@ public class DesktopLauncher extends JFrame
 		signin.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(MouseEvent arg0) {
+				sound_woosh();
 				signin.setForeground(Color.red);
 			}
 
@@ -425,6 +429,25 @@ public class DesktopLauncher extends JFrame
 		try
 		{
 			File file = new File("Desktop_Sounds/Button_Click.wav");
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+			clip.open(audioStream);
+		} catch (LineUnavailableException lue) { lue.printStackTrace();}
+		  catch (UnsupportedAudioFileException uafe) {uafe.printStackTrace(); }	
+		  catch (IOException ioe) {ioe.printStackTrace();}
+		clip.start();
+	}
+	
+	void sound_woosh() { // I hate copy-pasting codeeeeee (but libgdx sound isn't working in desktop launcher)
+		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
+		mixer = AudioSystem.getMixer(mixInfos[0]);
+		
+		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
+		try { clip = (Clip)mixer.getLine(dataInfo); }
+		catch (LineUnavailableException lue){lue.printStackTrace();}
+		
+		try
+		{
+			File file = new File("Desktop_Sounds/Whoosh.wav");
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
 			clip.open(audioStream);
 		} catch (LineUnavailableException lue) { lue.printStackTrace();}
