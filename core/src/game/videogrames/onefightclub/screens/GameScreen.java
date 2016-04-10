@@ -23,6 +23,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.actors.Enemy;
@@ -49,6 +51,7 @@ public class GameScreen extends OFCScreen {
     private Vector<Enemy> enemies;
     private Vector<PowerUp> powerups;
     private Vector<Weapon> weapons;
+    private Timer timer;
     
     private Sound theme1;
 
@@ -112,11 +115,20 @@ public class GameScreen extends OFCScreen {
 		weapons = new Vector<Weapon>();
 	
 		createPlayer();
-		for (int i = 0; i < 5; i++) {
+		/*for (int i = 0; i < 5; i++) {
 		    createEnemy();
-		}
-		createPowerUp();
-		createWeapon();
+		}*/
+		/*createPowerUp();
+		createWeapon();*/
+		
+		//set up timer
+		timer = new Timer();
+		Task task = new Task() {
+			public void run() {
+				createEnemy();
+			}
+		};
+		timer.scheduleTask(task, 3, 3);
 	
 		// create platform
 		bdef = new BodyDef();
@@ -164,7 +176,7 @@ public class GameScreen extends OFCScreen {
     public void createEnemy() {
 		// create player
 		Random rand = new Random();
-		int randval = rand.nextInt(1000);
+		int randval = rand.nextInt(Constants.APP_WIDTH);
 		BodyDef bdef2 = new BodyDef();
 		bdef2.position.set(randval / PPM, 200.0f / PPM);
 		bdef2.type = BodyType.DynamicBody;

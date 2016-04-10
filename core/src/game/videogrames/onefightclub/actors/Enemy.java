@@ -12,6 +12,10 @@ import game.videogrames.onefightclub.utils.Constants;
 public class Enemy extends MovingSprite {
     public static final String PLAYER_FILEPATH = "images/bunny.png";
 
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
+    private boolean isGrounded = false;
+    
     public Enemy(Body body) {
 		super(body);
 	
@@ -29,5 +33,23 @@ public class Enemy extends MovingSprite {
     
     public void jump() {
     	body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
+    }
+    
+    public void setMovingLeft(boolean b) {
+		if (movingRight && b) {
+		    movingRight = false;
+		}
+		this.movingLeft = b;
+    }
+
+    public void setMovingRight(boolean b) {
+		if (movingLeft && b) {
+		    movingLeft = false;
+		}
+		this.movingRight = b;
+    }
+    
+    public void setGrounded(boolean b) {
+    	this.isGrounded = b;
     }
 }
