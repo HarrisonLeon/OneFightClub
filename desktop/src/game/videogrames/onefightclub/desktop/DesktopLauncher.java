@@ -31,8 +31,10 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -99,16 +101,18 @@ public class DesktopLauncher extends JFrame
 	
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
+		new Thread(Constant.s = new Server(3306)).start();
+		new Thread(Constant.c = new Client()).start();
 		createGUI();
 		createFirstGUI();
 		createLoginGUI();
 		createRegisterGUI();
 		addActions();
-		
 		jf.setSize(400, 500);
 		jf.setLocation(500, 150);
 		jf.setResizable(false);
 		jf.setVisible(true);
+		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] arg)
@@ -353,6 +357,51 @@ public class DesktopLauncher extends JFrame
 		size = register.getPreferredSize();
 		register.setBackground(Color.white);
 		register.setBorderPainted(false);
+		register.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(MouseEvent arg0) {
+				sound_woosh();
+				register.setForeground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				register.setForeground(Color.black);
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				sound_clicked();
+				
+				String alphabetUpper = "ABCDEFHIJKLMNOPQRSTUVWXYZ";
+				String numbers = "1234567890";
+				
+				String password = new String(passSignUp.getPassword());
+				
+				boolean hasAlpha = false;
+				boolean hasNumeric = false;
+				
+				for(int i = 0; i < alphabetUpper.length(); i++) {
+					if(password.contains(Character.toString(alphabetUpper.charAt(i)))){
+						hasAlpha = true;
+					}
+					if(i < numbers.length()) {
+						if(password.contains(Character.toString(numbers.charAt(i)))) {
+							hasNumeric = true;
+						}
+					}
+				}
+				
+				if(!hasAlpha || !hasNumeric) {
+					JOptionPane.showMessageDialog(null, "Passwords require 1 alpha character and 1 number", "Register Failed!", JOptionPane.WARNING_MESSAGE);
+				}
+				
+				else if(passSignUp.getPassword() != passwordConfirm.getPassword()) {
+					JOptionPane.showMessageDialog(null, "Passwords don't match!", "Register Failed!", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+			
+		});
+		
 		register.setBounds(140 + insets.left, 285 + insets.top, size.width, size.height);
 		
 		registerScreen.add(overall);
