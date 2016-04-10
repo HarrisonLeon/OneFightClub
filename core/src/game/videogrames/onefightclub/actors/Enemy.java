@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 
 import game.videogrames.onefightclub.utils.Constants;
@@ -57,5 +56,13 @@ public class Enemy extends MovingSprite {
     
     public void killEnemy() {
     	this.getBody().getWorld().destroyBody(this.getBody());
+    }
+    
+    public boolean isDead() {
+    	return isDead;
+    }
+    
+    public void setIsDead(boolean b) {
+    	isDead = b;
     }
 }

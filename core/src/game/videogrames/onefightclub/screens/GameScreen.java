@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -260,6 +261,7 @@ public class GameScreen extends OFCScreen {
     @Override
     public void render(float delta) {
 		// processInput();
+    	Vector<Enemy> toBeRemoved = new Vector<Enemy>();
     	if (currentEnemies >= Constants.NUM_ENEMIES) {
     		enemy_timer.stop();
     	}
@@ -276,7 +278,12 @@ public class GameScreen extends OFCScreen {
 		player.render(sb);
 	
 		for (Enemy e : enemies) {
-		    e.render(sb);
+			if (e.isDead()) {
+				toBeRemoved.add(e);
+			}
+			else { 
+				e.render(sb);
+			}
 		}
 	
 		for (PowerUp p : powerups) {
@@ -286,6 +293,12 @@ public class GameScreen extends OFCScreen {
 		for (Weapon w : weapons) {
 		    w.render(sb);
 		}
+		
+		for (Enemy e : toBeRemoved) {
+			e.killEnemy();
+			enemies.remove(e);
+		}
+		toBeRemoved.clear();
 	
 		debugRenderer.render(world, b2dCamera.combined);
 	

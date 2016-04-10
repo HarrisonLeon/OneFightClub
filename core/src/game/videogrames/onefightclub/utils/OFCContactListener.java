@@ -1,10 +1,14 @@
 package game.videogrames.onefightclub.utils;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+
+import game.videogrames.onefightclub.actors.Enemy;
 
 public class OFCContactListener implements ContactListener {
     private boolean playerGrounded;
@@ -17,7 +21,16 @@ public class OFCContactListener implements ContactListener {
     public void beginContact(Contact contact) {
 		Fixture fa = contact.getFixtureA();
 		Fixture fb = contact.getFixtureB();
-	
+		
+		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player"))  {
+			JOptionPane.showMessageDialog(null, "Username and Password do not match", "Login Error", JOptionPane.ERROR_MESSAGE);
+			((Enemy)fa.getBody().getUserData()).setIsDead(true);
+		}
+		else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
+			JOptionPane.showMessageDialog(null, "Username and Password do not match", "Login Error", JOptionPane.ERROR_MESSAGE);
+			((Enemy)fb.getBody().getUserData()).setIsDead(true);
+		}
+		
 		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
 		    playerGrounded = true;
 		}
