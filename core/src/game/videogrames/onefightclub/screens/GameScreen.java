@@ -55,12 +55,25 @@ public class GameScreen extends OFCScreen {
     private Timer enemy_timer;
     private int currentEnemies = 0;
     
+    private Timer ambience_timer;
+    private Sound ambience_fizzle;
+    private Sound ambience_beep1;
+    private Sound ambience_beep2;
+    private Sound ambience_robot;
+    private Sound ambience_scifi;
     private Sound theme1;
 
     public GameScreen(Game game) {
     	super(game);
+    	
     	theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
     	theme1.loop(0.3f);
+    	
+    	ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
+    	ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
+    	ambience_beep2 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep2.wav"));
+    	ambience_robot = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_robot.wav"));
+    	ambience_scifi = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_scifi.wav"));
     }
 
     @Override
@@ -132,6 +145,16 @@ public class GameScreen extends OFCScreen {
 			}
 		};
 		enemy_timer.scheduleTask(task, 3, 3);
+		
+		ambience_timer = new Timer();
+		Task task2 = new Task() {
+			public void run() {
+				playAmbience();
+			}
+		};
+		Random random = new Random();
+        int randomNumber = random.nextInt(35-15) + 15;
+		ambience_timer.scheduleTask(task2, randomNumber);
 	
 		// create platform
 		bdef = new BodyDef();
@@ -295,5 +318,36 @@ public class GameScreen extends OFCScreen {
     @Override
     public void hide() {
     	Gdx.app.debug("One Fight Club", "dispose game screen");
+    }
+    
+    private void playAmbience() {
+    	Random random = new Random();
+        int randomNumber = random.nextInt(5);
+    	
+        if (randomNumber == 0) {
+        	ambience_beep1.play(0.1f);
+        }
+        else if (randomNumber == 1) {
+        	ambience_beep2.play(0.6f);
+        }
+        else if (randomNumber == 2) {
+        	ambience_fizzle.play(0.3f);
+        }
+        else if (randomNumber == 3) {
+        	ambience_robot.play(0.2f);
+        }
+        else if (randomNumber == 4) {
+        	ambience_scifi.play(0.1f);
+        }
+    	
+    	ambience_timer = new Timer();
+		Task task2 = new Task() {
+			public void run() {
+				playAmbience();
+			}
+		};
+		Random random2 = new Random();
+        int randomNumber2 = random2.nextInt(25-10) + 10;
+		ambience_timer.scheduleTask(task2, randomNumber2);
     }
 }
