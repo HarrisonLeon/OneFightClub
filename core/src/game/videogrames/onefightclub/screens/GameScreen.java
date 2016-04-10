@@ -51,7 +51,9 @@ public class GameScreen extends OFCScreen {
     private Vector<Enemy> enemies;
     private Vector<PowerUp> powerups;
     private Vector<Weapon> weapons;
-    private Timer timer;
+    
+    private Timer enemy_timer;
+    private int currentEnemies = 0;
     
     private Sound theme1;
 
@@ -122,13 +124,14 @@ public class GameScreen extends OFCScreen {
 		createWeapon();*/
 		
 		//set up timer
-		timer = new Timer();
+		enemy_timer = new Timer();
 		Task task = new Task() {
 			public void run() {
 				createEnemy();
+				currentEnemies += 1;
 			}
 		};
-		timer.scheduleTask(task, 3, 3);
+		enemy_timer.scheduleTask(task, 3, 3);
 	
 		// create platform
 		bdef = new BodyDef();
@@ -257,6 +260,9 @@ public class GameScreen extends OFCScreen {
     @Override
     public void render(float delta) {
 		// processInput();
+    	if (currentEnemies >= Constants.NUM_ENEMIES) {
+    		enemy_timer.stop();
+    	}
 	
 		b2dCamera.update();
 		mainCam.update();
