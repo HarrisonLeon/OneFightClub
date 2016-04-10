@@ -15,6 +15,7 @@ public class Enemy extends MovingSprite {
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private boolean isGrounded = false;
+    private boolean isDead = false;
     
     public Enemy(Body body) {
 		super(body);
@@ -51,5 +52,17 @@ public class Enemy extends MovingSprite {
     
     public void setGrounded(boolean b) {
     	this.isGrounded = b;
+    }
+    
+    public void killEnemy() {
+    	this.getBody().getWorld().destroyBody(this.getBody());
+    }
+    
+    public boolean isDead() {
+    	return isDead;
+    }
+    
+    public void setIsDead(boolean b) {
+    	isDead = b;
     }
 }
