@@ -21,5 +21,7 @@ public class Constants {
     
     public static final Vector2[] spawns  = new Vector2[] {new Vector2((Constants.APP_WIDTH / PPM)/4,200.0f / PPM), new Vector2((Constants.APP_WIDTH/PPM)/2, 200.0f/PPM), new Vector2(((Constants.APP_WIDTH/PPM)*3)/4, 200.0f/PPM) };
 
+    public static final int NUM_ENEMIES = 10;
+    
     public static UserInfo ui;
 }
