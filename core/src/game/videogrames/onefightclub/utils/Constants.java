@@ -1,5 +1,9 @@
 package game.videogrames.onefightclub.utils;
 
+import static game.videogrames.onefightclub.utils.Constants.PPM;
+
+import com.badlogic.gdx.math.Vector2;
+
 public class Constants {
     public static final String TITLE = "2-0: One Fight Club";
     public static final int APP_WIDTH = 960;
@@ -14,6 +18,8 @@ public class Constants {
 
     public static final short BIT_GROUND = 2;
     public static final short BIT_PLAYER = 4;
+    
+    public static final Vector2[] spawns  = new Vector2[] {new Vector2((Constants.APP_WIDTH / PPM)/4,200.0f / PPM), new Vector2((Constants.APP_WIDTH/PPM)/2, 200.0f/PPM), new Vector2(((Constants.APP_WIDTH/PPM)*3)/4, 200.0f/PPM) };
 
     public static UserInfo ui;
 }

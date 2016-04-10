@@ -176,9 +176,9 @@ public class GameScreen extends OFCScreen {
     public void createEnemy() {
 		// create player
 		Random rand = new Random();
-		int randval = rand.nextInt(Constants.APP_WIDTH);
+		int randval = rand.nextInt(3);
 		BodyDef bdef2 = new BodyDef();
-		bdef2.position.set(randval / PPM, 200.0f / PPM);
+		bdef2.position.set(Constants.spawns[randval]);
 		bdef2.type = BodyType.DynamicBody;
 		Body enemyBody = world.createBody(bdef2);
 		PolygonShape shape = new PolygonShape();
