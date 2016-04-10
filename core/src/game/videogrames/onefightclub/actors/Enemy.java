@@ -24,12 +24,22 @@ public class Enemy extends MovingSprite {
 		Array<TextureRegion> sprites = new Array<TextureRegion>(TextureRegion.split(t, 32, 32)[0]);
 	
 		setAnimation(1 / 12.0f, sprites);
+		movingRight = true;
     }
     
     public void render(SpriteBatch sb) {
     	super.render(sb);
     	
     	
+    }
+    
+    public void updateMotion() {
+		if (movingLeft) {
+		    body.setLinearVelocity(-Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+		}
+		if (movingRight) {
+		    body.setLinearVelocity(Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+		}
     }
     
     public void jump() {
