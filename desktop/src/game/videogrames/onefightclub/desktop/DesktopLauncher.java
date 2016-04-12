@@ -57,46 +57,46 @@ import sun.applet.Main;
 
 public class DesktopLauncher extends JFrame
 {	
-	  static Mixer mixer;
-	  static Clip clip;
+	static Mixer mixer;
+	static Clip clip;
 	
-	  JLabel logo;
-	  JLabel slogan;
+	JLabel logo;
+	JLabel slogan;
 	
-	  JLabel user;
-	  JLabel userSign;
-	  JLabel pass;
-	  JLabel passSign;
-	  JLabel repeat;
+	JLabel user;
+	JLabel userSign;
+	JLabel pass;
+	JLabel passSign;
+	JLabel repeat;
 	
-	  JButton login;
-	  JButton signin;
-	  JButton signup;
-	  JButton register;
-	  JButton offline;
+	JButton login;
+	JButton signin;
+	JButton signup;
+	JButton register;
+	JButton offline;
+
+	JTextField username;
+	JPasswordField password;
 	
-	  JTextField username;
-	  JPasswordField password;
-	
-	  JTextField userSignUp;
-	  JPasswordField passSignUp;
-	  JPasswordField passwordConfirm;
-	
-	  JPanel firstScreen;
-	  JPanel loginScreen;
-	  JPanel registerScreen;
-	  JPanel cardLayout;
-	
-	  JFrame jf = this;
-	  
-	  Font customFont;
-	  Font logoFont;
-	
-	  CardLayout cl;
-	  Server s;
-	  Client c;
-	  
-	  File sound_clicked;
+	JTextField userSignUp;
+	JPasswordField passSignUp;
+	JPasswordField passwordConfirm;
+
+	JPanel firstScreen;
+	JPanel loginScreen;
+	JPanel registerScreen;
+	JPanel cardLayout;
+
+	JFrame jf = this;
+  
+	Font customFont;
+	Font logoFont;
+
+	CardLayout cl;
+	Server s;
+	Client c;
+  
+	File sound_clicked;
 	
 	DesktopLauncher() {
 		sound_clicked = new File("Button_Click");

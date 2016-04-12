@@ -14,10 +14,10 @@ public class Server implements Runnable {
 	private ClientDatabase cd;
 	
 	Server(int port) {
-			this.port = port;
-			serverThreads = new Vector<ServerThread>();
-			cd = new ClientDatabase();
-			this.start();
+		this.port = port;
+		serverThreads = new Vector<ServerThread>();
+		cd = new ClientDatabase();
+		this.start();
 	}
 	
 	public void start() {
