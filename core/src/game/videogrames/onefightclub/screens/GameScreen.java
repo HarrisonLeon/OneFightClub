@@ -156,21 +156,18 @@ public class GameScreen extends OFCScreen {
     int randomNumber = random.nextInt(35-15) + 15;
 	ambience_timer.scheduleTask(task2, randomNumber);
 	
+	createPlatform(0.0f, 0.0f, APP_WIDTH, 5.0f); // Base
 	
-	// create platform
-	bdef = new BodyDef();
-	bdef.position.set(0.0f / PPM, 0.0f / PPM);
-	bdef.type = BodyType.StaticBody;
-	body = world.createBody(bdef);
-	PolygonShape shape = new PolygonShape();
-	shape.setAsBox(APP_WIDTH / PPM, 5.0f / PPM);
-	FixtureDef fdef = new FixtureDef();
-	fdef.shape = shape;
-	fdef.filter.categoryBits = Constants.BIT_GROUND;
-	fdef.filter.maskBits = Constants.BIT_PLAYER;
-	body.createFixture(fdef).setUserData("ground");
-
-	shape.dispose();
+	createPlatform(APP_WIDTH*.88f, APP_HEIGHT*.15f, APP_WIDTH*.12f, APP_HEIGHT*.01f); // Lower right
+	createPlatform(APP_WIDTH*.83f, APP_HEIGHT*.45f, APP_WIDTH*.06f, APP_HEIGHT*.01f); // Upper right
+	
+	createPlatform(APP_WIDTH*.12f, APP_HEIGHT*.15f, APP_WIDTH*.12f, APP_HEIGHT*.01f); // Lower left
+	createPlatform(APP_WIDTH*.17f, APP_HEIGHT*.45f, APP_WIDTH*.06f, APP_HEIGHT*.01f); // Upper left
+	
+	createPlatform(APP_WIDTH*.50f, APP_HEIGHT*.30f, APP_WIDTH*.12f, APP_HEIGHT*.01f); // Lower middle
+	createPlatform(APP_WIDTH*.35f, APP_HEIGHT*.62f, APP_WIDTH*.08f, APP_HEIGHT*.01f); // Upper middle
+	createPlatform(APP_WIDTH*.65f, APP_HEIGHT*.62f, APP_WIDTH*.08f, APP_HEIGHT*.01f); // Upper middle
+    
     }
 
     public void createPlayer() {
@@ -280,6 +277,22 @@ public class GameScreen extends OFCScreen {
 	Weapon weapon = new Weapon(weaponBody);
 	weaponBody.setUserData(weapon);
 	weapons.add(weapon);
+    }
+    
+    public void createPlatform(float x, float y, float width, float height) { // Parameters: x position, y position, width, height
+    	bdef = new BodyDef();
+    	bdef.position.set(x / PPM, y / PPM);
+    	bdef.type = BodyType.StaticBody;
+    	body = world.createBody(bdef);
+    	PolygonShape shape = new PolygonShape();
+    	shape.setAsBox(width / PPM, height / PPM);
+    	FixtureDef fdef = new FixtureDef();
+    	fdef.shape = shape;
+    	fdef.filter.categoryBits = Constants.BIT_GROUND;
+    	fdef.filter.maskBits = Constants.BIT_PLAYER;
+    	body.createFixture(fdef).setUserData("ground");
+
+    	shape.dispose();
     }
 
     @Override
