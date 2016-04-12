@@ -16,8 +16,8 @@ public class Server implements Runnable {
 	Server(int port) {
 			this.port = port;
 			serverThreads = new Vector<ServerThread>();
-			started = false;
 			cd = new ClientDatabase();
+			this.start();
 	}
 	
 	public void start() {

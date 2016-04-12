@@ -11,14 +11,20 @@ public class ClientDatabase {
 	Statement st = null;
 	
 	public ClientDatabase() {
+		System.out.println("starting database");
+		String url = "jdbc:mysql://onefightclub.cvylzfevzynk.us-west-2.rds.amazonaws.com:3306/";
+		String userName = "onefightclub";
+		String password = "2lawrence01";
+		String dbName = "onefightclub";
+		String driver = "com.mysql.jdbc.Driver";
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://" + Constant.ip + "/" + "?user=" + Constant.username + "&password=" + Constant.password); //import java.sql
-			st = conn.createStatement();
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch(ClassNotFoundException ioe) {
-			ioe.printStackTrace();
+			Class.forName(driver);
+			System.out.println("named class");
+			Connection connection = DriverManager.getConnection(url + dbName, userName, password);
+			System.out.println("connected");
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

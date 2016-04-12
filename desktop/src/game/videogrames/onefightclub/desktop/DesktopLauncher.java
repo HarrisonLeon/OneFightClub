@@ -93,6 +93,8 @@ public class DesktopLauncher extends JFrame
 	  Font logoFont;
 	
 	  CardLayout cl;
+	  Server s;
+	  Client c;
 	  
 	  File sound_clicked;
 	
@@ -101,8 +103,8 @@ public class DesktopLauncher extends JFrame
 	
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
-		//new Thread(Constant.s = new Server(3306)).start();
-		//new Thread(Constant.c = new Client()).start();
+		new Thread(s = new Server(1234)).start();
+		new Thread(c = new Client()).start();
 		createGUI();
 		createFirstGUI();
 		createLoginGUI();
@@ -435,13 +437,13 @@ public class DesktopLauncher extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				jf.setVisible(false);
 				String[] userinfo = {"offline"};
-				start(userinfo);
+				startGame(userinfo);
 			}
 			
 		});
 	}
 	  
-	void start(String[] args) {
+	void startGame(String[] args) {
 		String line = "";
 		String username = "";
 		
