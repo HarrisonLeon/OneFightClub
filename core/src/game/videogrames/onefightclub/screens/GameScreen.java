@@ -53,6 +53,7 @@ public class GameScreen extends OFCScreen {
     private Vector<Weapon> weapons;
 
     private Timer enemy_timer;
+    private boolean enemiesResume = false;
     private int currentEnemies = 0;
 
     private Timer ambience_timer;
@@ -141,7 +142,6 @@ public class GameScreen extends OFCScreen {
 	Task task = new Task() {
 	    public void run() {
 		createEnemy();
-		currentEnemies += 1;
 	    }
 	};
 	enemy_timer.scheduleTask(task, 3, 3);
@@ -227,6 +227,7 @@ public class GameScreen extends OFCScreen {
 	Enemy enemy = new Enemy(enemyBody);
 	enemyBody.setUserData(enemy);
 	enemies.add(enemy);
+	currentEnemies += 1;
     }
 
     public void createPowerUp() {
@@ -287,6 +288,10 @@ public class GameScreen extends OFCScreen {
 	Vector<Enemy> toBeRemoved = new Vector<Enemy>();
 	if (currentEnemies >= Constants.NUM_ENEMIES) {
 	    enemy_timer.stop();
+	    enemiesResume = true;
+	} else if (enemiesResume) {
+		enemy_timer.start();
+		enemiesResume = false;
 	}
 
 	b2dCamera.update();
@@ -319,6 +324,7 @@ public class GameScreen extends OFCScreen {
 	for (Enemy e : toBeRemoved) {
 	    e.killEnemy();
 	    enemies.remove(e);
+	    currentEnemies-=1;
 	}
 	toBeRemoved.clear();
 
