@@ -80,7 +80,7 @@ public class Player extends MovingSprite {
     }
 
     public void jump() {
-		sound_jump.play(0.3f);
+		sound_jump.play(0.08f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
     }
 }
