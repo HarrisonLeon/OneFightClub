@@ -414,7 +414,8 @@ public class DesktopLauncher extends JFrame
 				}
 				else {
 					String encryptPass = PasswordEncryption.encrypt(passthis);
-					if(!c.checkUser(user)) {
+					if(c.checkUser(user)) {
+						System.out.println("adding:" + user + " " + encryptPass);
 						c.addUser(user, encryptPass);
 						System.out.println("success!");
 					}
