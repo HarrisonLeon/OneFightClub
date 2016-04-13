@@ -310,6 +310,11 @@ public class DesktopLauncher extends JFrame
 			
 			public void mousePressed(MouseEvent e) {
 				sound_clicked();
+				String passThis = new String(password.getPassword());
+				passThis = PasswordEncryption.encrypt(passThis);
+				if(c.authenticate(username.getText(), passThis)) {
+					System.out.println("YAY");
+				}
 			}
 			
 		});
@@ -377,28 +382,42 @@ public class DesktopLauncher extends JFrame
 				String alphabetUpper = "ABCDEFHIJKLMNOPQRSTUVWXYZ";
 				String numbers = "1234567890";
 				
-				String password = new String(passSignUp.getPassword());
+				boolean hasNumber = false;
+				boolean hasUpper = false;
 				
-				boolean hasAlpha = false;
-				boolean hasNumeric = false;
+				String passthis = new String(passSignUp.getPassword());
+				passthis = passthis.toUpperCase();
+				
+				String user = userSignUp.getText();
+				String passCon = new String(passwordConfirm.getPassword());
+				passCon = passCon.toUpperCase();
+				
+				System.out.println(passthis + " " + passCon);
 				
 				for(int i = 0; i < alphabetUpper.length(); i++) {
-					if(password.contains(Character.toString(alphabetUpper.charAt(i)))){
-						hasAlpha = true;
+					if(passthis.contains(Character.toString(alphabetUpper.charAt(i)))){
+						hasUpper = true;
 					}
 					if(i < numbers.length()) {
-						if(password.contains(Character.toString(numbers.charAt(i)))) {
-							hasNumeric = true;
+						if(passthis.contains(Character.toString(numbers.charAt(i)))) {
+							hasNumber = true;
 						}
 					}
 				}
 				
-				if(!hasAlpha || !hasNumeric) {
+				if(!hasNumber || !hasUpper) {
 					JOptionPane.showMessageDialog(null, "Passwords require 1 alpha character and 1 number", "Register Failed!", JOptionPane.WARNING_MESSAGE);
 				}
 				
-				else if(passSignUp.getPassword() != passwordConfirm.getPassword()) {
+				else if(!passthis.equals(passCon)) {
 					JOptionPane.showMessageDialog(null, "Passwords don't match!", "Register Failed!", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					String encryptPass = PasswordEncryption.encrypt(passthis);
+					if(!c.checkUser(user)) {
+						c.addUser(user, encryptPass);
+						System.out.println("success!");
+					}
 				}
 			}
 			

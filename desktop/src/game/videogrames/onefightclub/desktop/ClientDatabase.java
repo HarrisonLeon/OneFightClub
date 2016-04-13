@@ -20,21 +20,23 @@ public class ClientDatabase {
 		try {
 			Class.forName(driver);
 			System.out.println("named class");
-			Connection connection = DriverManager.getConnection(url + dbName, userName, password);
+			conn = DriverManager.getConnection(url + dbName, userName, password);
 			System.out.println("connected");
+			st = conn.createStatement();
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-
+	
 	public String findPassword(String username) {
 		String password = "";
 		try {
-			ResultSet rs = st.executeQuery("SELECT * FROM passandfiles");
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM passandfiles WHERE username=?");
-			
+			System.out.println("trying");
+			ResultSet rs = st.executeQuery("SELECT * FROM userpass");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userpass WHERE username=?");
+			System.out.println("yay");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			
@@ -54,7 +56,7 @@ public class ClientDatabase {
 
 	public void addUser(String username, String password) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO passandfiles(username,pass) VALUES(?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO userpass(username,pass) VALUES(?,?)");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			ps.executeUpdate();
