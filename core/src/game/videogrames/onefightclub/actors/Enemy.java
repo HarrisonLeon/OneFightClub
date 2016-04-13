@@ -35,10 +35,10 @@ public class Enemy extends MovingSprite {
     
     public void updateMotion() {
 		if (movingLeft) {
-		    body.setLinearVelocity(-Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+		    body.setLinearVelocity(-Constants.RUN_VELOCITY/2, body.getLinearVelocity().y);
 		}
 		if (movingRight) {
-		    body.setLinearVelocity(Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+		    body.setLinearVelocity(Constants.RUN_VELOCITY/2, body.getLinearVelocity().y);
 		}
     }
     
@@ -58,6 +58,14 @@ public class Enemy extends MovingSprite {
 		    movingLeft = false;
 		}
 		this.movingRight = b;
+    }
+    
+    public boolean getMovingRight() {
+    	return movingRight;
+    }
+    
+    public boolean getMovingLeft() {
+    	return movingLeft;
     }
     
     public void setGrounded(boolean b) {

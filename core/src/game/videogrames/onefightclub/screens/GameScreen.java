@@ -393,6 +393,7 @@ public class GameScreen extends OFCScreen {
 			if (e.isDead()) {
 				toBeRemoved.add(e);
 			} else {
+				e.updateMotion();
 				e.render(sb);
 			}
 		}
