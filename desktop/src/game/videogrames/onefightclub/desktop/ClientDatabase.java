@@ -64,17 +64,11 @@ public class ClientDatabase {
 			System.out.println("executed");
 			ps.close();
 			
-			ps = conn.prepareStatement("INSERT INTO userinfo(user,maxlevel,character,kills,deaths,jumps,longestkillstreak) VALUES(?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO userinfo(user) VALUES(?)");
 			ps.setString(1, username);
-			ps.setInt(1, 1);
-			ps.setInt(2, 1);
-			ps.setInt(3, 0);
-			ps.setInt(4, 0);
-			ps.setInt(5, 0);
-			ps.setInt(6, 0);
-			ps.setInt(7, 0);
-			ps.executeQuery();
+			ps.executeUpdate();
 			ps.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
