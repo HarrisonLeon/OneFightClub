@@ -34,7 +34,7 @@ public class Client extends Thread{
 		authenticate = new Hashtable<String, Boolean>();
 		Font customFont; 
 		try {
-				s = new Socket("onefightclub.cvylzfevzynk.us-west-2.rds.amazonaws.com", 3306);
+				s = new Socket("localhost", 1234);
 				System.out.println("connected!");
 				oos = new ObjectOutputStream(s.getOutputStream());
 				System.out.println("oos working");

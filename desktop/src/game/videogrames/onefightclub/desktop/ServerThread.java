@@ -17,6 +17,7 @@ public class ServerThread extends Thread {
 	private ClientDatabase cd;
 	public ServerThread(Socket s, Server serv, ClientDatabase cd) {
 		try {
+			System.out.println("starting server thread");
 			this.serv = serv;
 			oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());

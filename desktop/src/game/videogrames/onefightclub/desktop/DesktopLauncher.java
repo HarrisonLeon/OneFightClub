@@ -57,52 +57,54 @@ import sun.applet.Main;
 
 public class DesktopLauncher extends JFrame
 {	
-	  static Mixer mixer;
-	  static Clip clip;
+	static Mixer mixer;
+	static Clip clip;
 	
-	  JLabel logo;
-	  JLabel slogan;
+	JLabel logo;
+	JLabel slogan;
 	
-	  JLabel user;
-	  JLabel userSign;
-	  JLabel pass;
-	  JLabel passSign;
-	  JLabel repeat;
+	JLabel user;
+	JLabel userSign;
+	JLabel pass;
+	JLabel passSign;
+	JLabel repeat;
 	
-	  JButton login;
-	  JButton signin;
-	  JButton signup;
-	  JButton register;
-	  JButton offline;
+	JButton login;
+	JButton signin;
+	JButton signup;
+	JButton register;
+	JButton offline;
+
+	JTextField username;
+	JPasswordField password;
 	
-	  JTextField username;
-	  JPasswordField password;
-	
-	  JTextField userSignUp;
-	  JPasswordField passSignUp;
-	  JPasswordField passwordConfirm;
-	
-	  JPanel firstScreen;
-	  JPanel loginScreen;
-	  JPanel registerScreen;
-	  JPanel cardLayout;
-	
-	  JFrame jf = this;
-	  
-	  Font customFont;
-	  Font logoFont;
-	
-	  CardLayout cl;
-	  
-	  File sound_clicked;
+	JTextField userSignUp;
+	JPasswordField passSignUp;
+	JPasswordField passwordConfirm;
+
+	JPanel firstScreen;
+	JPanel loginScreen;
+	JPanel registerScreen;
+	JPanel cardLayout;
+
+	JFrame jf = this;
+  
+	Font customFont;
+	Font logoFont;
+
+	CardLayout cl;
+	Server s;
+	Client c;
+  
+	File sound_clicked;
 	
 	DesktopLauncher() {
 		sound_clicked = new File("Button_Click");
 	
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
-		//new Thread(Constant.s = new Server(3306)).start();
-		//new Thread(Constant.c = new Client()).start();
+		new Thread(s = new Server(1234)).start();
+		new Thread(c = new Client()).start();
 		createGUI();
 		createFirstGUI();
 		createLoginGUI();
@@ -308,6 +310,11 @@ public class DesktopLauncher extends JFrame
 			
 			public void mousePressed(MouseEvent e) {
 				sound_clicked();
+				String passThis = new String(password.getPassword());
+				passThis = PasswordEncryption.encrypt(passThis);
+				if(c.authenticate(username.getText(), passThis)) {
+					System.out.println("YAY");
+				}
 			}
 			
 		});
@@ -375,28 +382,43 @@ public class DesktopLauncher extends JFrame
 				String alphabetUpper = "ABCDEFHIJKLMNOPQRSTUVWXYZ";
 				String numbers = "1234567890";
 				
-				String password = new String(passSignUp.getPassword());
+				boolean hasNumber = false;
+				boolean hasUpper = false;
 				
-				boolean hasAlpha = false;
-				boolean hasNumeric = false;
+				String passthis = new String(passSignUp.getPassword());
+				passthis = passthis.toUpperCase();
+				
+				String user = userSignUp.getText();
+				String passCon = new String(passwordConfirm.getPassword());
+				passCon = passCon.toUpperCase();
+				
+				System.out.println(passthis + " " + passCon);
 				
 				for(int i = 0; i < alphabetUpper.length(); i++) {
-					if(password.contains(Character.toString(alphabetUpper.charAt(i)))){
-						hasAlpha = true;
+					if(passthis.contains(Character.toString(alphabetUpper.charAt(i)))){
+						hasUpper = true;
 					}
 					if(i < numbers.length()) {
-						if(password.contains(Character.toString(numbers.charAt(i)))) {
-							hasNumeric = true;
+						if(passthis.contains(Character.toString(numbers.charAt(i)))) {
+							hasNumber = true;
 						}
 					}
 				}
 				
-				if(!hasAlpha || !hasNumeric) {
+				if(!hasNumber || !hasUpper) {
 					JOptionPane.showMessageDialog(null, "Passwords require 1 alpha character and 1 number", "Register Failed!", JOptionPane.WARNING_MESSAGE);
 				}
 				
-				else if(passSignUp.getPassword() != passwordConfirm.getPassword()) {
+				else if(!passthis.equals(passCon)) {
 					JOptionPane.showMessageDialog(null, "Passwords don't match!", "Register Failed!", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					String encryptPass = PasswordEncryption.encrypt(passthis);
+					if(c.checkUser(user)) {
+						System.out.println("adding:" + user + " " + encryptPass);
+						c.addUser(user, encryptPass);
+						System.out.println("success!");
+					}
 				}
 			}
 			
@@ -435,13 +457,13 @@ public class DesktopLauncher extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				jf.setVisible(false);
 				String[] userinfo = {"offline"};
-				start(userinfo);
+				startGame(userinfo);
 			}
 			
 		});
 	}
 	  
-	void start(String[] args) {
+	void startGame(String[] args) {
 		String line = "";
 		String username = "";
 		
