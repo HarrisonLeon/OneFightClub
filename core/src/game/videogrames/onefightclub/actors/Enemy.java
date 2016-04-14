@@ -16,6 +16,7 @@ public class Enemy extends MovingSprite {
     private boolean movingRight = false;
     private boolean isGrounded = false;
     private boolean isDead = false;
+    private int spawnpoint;
     
     public Enemy(Body body) {
 		super(body);
@@ -31,6 +32,10 @@ public class Enemy extends MovingSprite {
     	super.render(sb);
     	
     	
+    }
+    
+    public void setSpawn(int num) {
+    	spawnpoint = num;
     }
     
     public void updateMotion() {
@@ -82,5 +87,9 @@ public class Enemy extends MovingSprite {
     
     public void setIsDead(boolean b) {
     	isDead = b;
+    }
+    
+    public int getSpawn() {
+    	return spawnpoint;
     }
 }

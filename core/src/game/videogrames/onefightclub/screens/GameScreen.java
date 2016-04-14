@@ -63,6 +63,8 @@ public class GameScreen extends OFCScreen {
 	private Vector<Enemy> enemies;
 	private Vector<PowerUp> powerups;
 	private Vector<Weapon> weapons;
+	
+	private Vector<Boolean> spawnuses;
 
 	private Timer enemy_timer;
 	private boolean enemiesResume = false;
@@ -90,6 +92,12 @@ public class GameScreen extends OFCScreen {
 
 	@Override
 	public void show() {
+		
+		spawnuses = new Vector<Boolean>();
+		for (int i = 0; i < Constants.spawns.length; i++) {
+			spawnuses.add(true);
+		}
+		
 		world = new World(new Vector2(0.0f, Constants.GRAVITY), true);
 		cl = new OFCContactListener();
 		world.setContactListener(cl);
@@ -222,30 +230,80 @@ public class GameScreen extends OFCScreen {
 		// create player
 		Random rand = new Random();
 		int randval = rand.nextInt(3);
-		BodyDef bdef2 = new BodyDef();
-		bdef2.position.set(Constants.spawns[randval]);
-		bdef2.type = BodyType.DynamicBody;
-		Body enemyBody = world.createBody(bdef2);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
-		FixtureDef fdef2 = new FixtureDef();
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-		fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
-		fdef2.friction = 2.0f;
-		enemyBody.createFixture(fdef2).setUserData("enemy");
+		if (spawnuses.elementAt(randval)) {
+			BodyDef bdef2 = new BodyDef();
+			bdef2.position.set(Constants.spawns[randval]);
+			bdef2.type = BodyType.DynamicBody;
+			Body enemyBody = world.createBody(bdef2);
+			PolygonShape shape = new PolygonShape();
+			shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+			FixtureDef fdef2 = new FixtureDef();
+			fdef2.shape = shape;
+			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
+			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+			fdef2.friction = 2.0f;
+			enemyBody.createFixture(fdef2).setUserData("enemy");
 
-		// create foot sensor
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-		fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
-		fdef2.isSensor = true;
-		enemyBody.createFixture(fdef2).setUserData("enemy.foot");
-		Enemy enemy = new Enemy(enemyBody);
-		enemyBody.setUserData(enemy);
-		enemies.add(enemy);
-		currentEnemies += 1;
+			// create foot sensor
+			shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+			fdef2.shape = shape;
+			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
+			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+			fdef2.isSensor = true;
+			enemyBody.createFixture(fdef2).setUserData("enemy.foot");
+			Enemy enemy = new Enemy(enemyBody);
+			enemyBody.setUserData(enemy);
+			enemies.add(enemy);
+			currentEnemies += 1;
+			enemy.setSpawn(randval);
+			spawnuses.setElementAt(false, randval);
+		}
+		else {
+			int index = findNextOpen(randval);
+			if (!(index == -1)) {
+				BodyDef bdef2 = new BodyDef();
+				bdef2.position.set(Constants.spawns[index]);
+				bdef2.type = BodyType.DynamicBody;
+				Body enemyBody = world.createBody(bdef2);
+				PolygonShape shape = new PolygonShape();
+				shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+				FixtureDef fdef2 = new FixtureDef();
+				fdef2.shape = shape;
+				fdef2.filter.categoryBits = Constants.BIT_ENEMY;
+				fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+				fdef2.friction = 2.0f;
+				enemyBody.createFixture(fdef2).setUserData("enemy");
+
+				// create foot sensor
+				shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+				fdef2.shape = shape;
+				fdef2.filter.categoryBits = Constants.BIT_ENEMY;
+				fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+				fdef2.isSensor = true;
+				enemyBody.createFixture(fdef2).setUserData("enemy.foot");
+				Enemy enemy = new Enemy(enemyBody);
+				enemyBody.setUserData(enemy);
+				enemies.add(enemy);
+				currentEnemies += 1;
+				enemy.setSpawn(index);
+				spawnuses.setElementAt(false, index);
+			}
+		}
+	}
+	
+	public int findNextOpen(int val) {
+		int n = Constants.spawns.length;
+		int i = val;
+		for (int j = 0; j < n; j++) {
+			if (spawnuses.elementAt(i)) {
+				return i;
+			}
+			i++;
+			if (i == n) {
+				i = 0;
+			}
+		}
+		return -1;
 	}
 
 	public void createPowerUp() {
@@ -407,6 +465,8 @@ public class GameScreen extends OFCScreen {
 		}
 
 		for (Enemy e : toBeRemoved) {
+			int spawn = e.getSpawn();
+			spawnuses.setElementAt(true, spawn);
 			e.killEnemy();
 			enemies.remove(e);
 			currentEnemies -= 1;
