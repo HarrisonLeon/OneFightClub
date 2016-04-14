@@ -418,8 +418,13 @@ public class DesktopLauncher extends JFrame
 						System.out.println("adding:" + user + " " + encryptPass);
 						c.addUser(user, encryptPass);
 						System.out.println("success!");
+						
+						
 						String[] userinfo = {"online", user};
 						startGame(userinfo);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "User already exists!", "Register Failed!", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}

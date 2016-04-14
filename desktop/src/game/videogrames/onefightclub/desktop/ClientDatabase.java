@@ -64,8 +64,14 @@ public class ClientDatabase {
 			System.out.println("executed");
 			ps.close();
 			
-			ps = conn.prepareStatement("INSERT INTO userinfo(user) VALUES(?)");
+			ps = conn.prepareStatement("INSERT INTO userinfo(user,maxlevel,charSprite,numKills,numDeaths,jump,killstreak) VALUES(?,?,?,?,?,?,?)");
 			ps.setString(1, username);
+			ps.setString(2, "1");
+			ps.setString(3, "1");
+			ps.setString(4, "0");
+			ps.setString(5, "0");
+			ps.setString(6, "0");
+			ps.setString(7, "0");
 			ps.executeUpdate();
 			ps.close();
 			
@@ -90,9 +96,9 @@ public class ClientDatabase {
 	
 	public void setLevel(String username, int ml) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo(user,maxlevel) SET VALUES(?,?)");
-			ps.setString(1, username);
-			ps.setInt(2, ml);
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET maxlevel=? WHERE user=?");
+			ps.setString(2, username);
+			ps.setInt(1, ml);
 			ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -102,13 +108,26 @@ public class ClientDatabase {
 	
 	public void setKillsDeathsJumpsKillStreak(String username, int k, int d, int j, int ks) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo(user,kills,deaths,jumps,longestkillstreak) SET VALUES(?,?,?,?,?)");
-			ps.setString(1, username);
-			ps.setInt(2, k);
-			ps.setInt(2, d);
-			ps.setInt(4, j);
-			ps.setInt(5, ks);
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? jump=? killstreak=? WHERE user=?");
+			ps.setString(5, username);
+			ps.setString(1, Integer.toString(k));
+			ps.setString(2, Integer.toString(d));
+			ps.setString(3, Integer.toString(j));
+			ps.setString(4, Integer.toString(ks));
 			ps.executeQuery();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setCharacter(String username, int charS) {
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("UPDATE userinfo SET charSprite=? WHERE user=?");
+			ps.setString(1, Integer.toString(charS));
+			ps.setString(2, username);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
