@@ -59,6 +59,7 @@ public class ServerThread extends Thread {
 						}
 				}
 				if(info[0].equals("@")) {
+					System.out.println(info[1]);
 					String pass = cd.findPassword(info[1]);
 						if(pass == "") {
 							sendMessage("@:" + info[1] + ":" + "true");
@@ -66,6 +67,12 @@ public class ServerThread extends Thread {
 						else {
 							sendMessage("@:" + info[1] + ":" + "false");
 						}
+				}
+				if(info[0].equals("#")) {
+					cd.setCharacter(info[1], info[2]);
+				}
+				if(info[0].equals("*")) {
+					cd.setKillsDeathsJumpsKillStreak(info[1], info[2], info[3], info[4], info[5]);
 				}
 				
 			}

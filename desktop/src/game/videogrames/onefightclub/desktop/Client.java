@@ -91,16 +91,26 @@ public class Client extends Thread{
 	
 	public boolean checkUser(String username) {
 		boolean pass = false;
+		System.out.println("checking " + username);
 		sendMessage("@:" + username);
 		
 		while(!exists.containsKey(username)) {
 			
 		}
+		System.out.println("output");
 		pass = exists.get(username);
 			
 		return pass;
 	}
 
+	public void changeCharacter(String username, String charSprite) {
+		sendMessage("#:" + username + ":" + charSprite);
+	}
+
+	public void updateStats(String username, int k, int d, int j, int killstreak) {
+		sendMessage("*:" + username + ":" + k + ":" + d + ":" + j + ":" + killstreak);
+	}
+	
 	public void close() {
 		try {
 			if (s != null) {
@@ -130,7 +140,9 @@ public class Client extends Thread{
 					if(info[2].equals("true")) {
 						bo = true;
 					}
+					System.out.println(info[1] + " " + bo);
 					exists.put(info[1], bo);
+					System.out.println("put exists");
 				}
 				if(info[0].equals("+")) {
 					if(info[1].equals("Server Stopped")) {
