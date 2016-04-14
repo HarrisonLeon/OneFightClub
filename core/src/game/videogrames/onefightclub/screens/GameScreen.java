@@ -442,10 +442,13 @@ public class GameScreen extends OFCScreen {
 		tmRenderer.render();
 
 		sb.setProjectionMatrix(mainCam.combined);
-
-		player.updateMotion();
-		player.setGrounded(cl.isPlayerGrounded());
-		player.render(sb);
+		
+		if (!player.getIsDead()) {
+			player.updateMotion();
+			player.setGrounded(cl.isPlayerGrounded());
+			player.render(sb);
+		}
+		else {System.out.println("im dead");}
 
 		for (Enemy e : enemies) {
 			if (e.isDead()) {

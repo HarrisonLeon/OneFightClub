@@ -19,6 +19,9 @@ public class Player extends MovingSprite {
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private boolean isGrounded = false;
+    private boolean isDead = false;
+    
+    private int health = 6;
 
     public Player(Body body) {
 		super(body);
@@ -82,5 +85,21 @@ public class Player extends MovingSprite {
     public void jump() {
 		sound_jump.play(0.08f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
+    }
+    
+    public void setIsDead(boolean b) {
+    	isDead = b;
+    }
+    
+    public boolean getIsDead() {
+    	return isDead;
+    }
+    
+    public void takeDamage(int damage) {
+    	health += -damage;
+    	if (health == 0) {
+    		isDead = true;
+    		//this.getBody().getWorld().destroyBody(this.getBody());
+    	}
     }
 }
