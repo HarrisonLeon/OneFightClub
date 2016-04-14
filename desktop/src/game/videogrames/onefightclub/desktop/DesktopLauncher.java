@@ -315,6 +315,10 @@ public class DesktopLauncher extends JFrame
 				passThis = PasswordEncryption.encrypt(passThis);
 				if(c.authenticate(username.getText(), passThis)) {
 					System.out.println("YAY");
+					String[] userinfo = {"online", username.getText()};
+					setVisible(false);
+					startGame(userinfo);
+					
 				}
 			}
 			
