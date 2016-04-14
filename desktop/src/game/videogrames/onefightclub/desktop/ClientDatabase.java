@@ -35,13 +35,13 @@ public class ClientDatabase {
 		try {
 			System.out.println("trying");
 			ResultSet rs = st.executeQuery("SELECT * FROM userpass");
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userpass WHERE username=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userpass WHERE user=?");
 			System.out.println("yay");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				String user = rs.getString("username");
+				String user = rs.getString("user");
 				if(user.equals(username)) {
 					password = rs.getString("pass");
 				}
@@ -56,7 +56,7 @@ public class ClientDatabase {
 
 	public void addUser(String username, String password) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO userpass(username,pass) VALUES(?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO userpass(user,pass) VALUES(?,?)");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			System.out.println("prepared");
@@ -81,19 +81,6 @@ public class ClientDatabase {
 		
 	}
 	
-	public void setChar(String username, int c) {
-		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo(user,character) SET VALUES(?,?)");
-			ps.setString(1, username);
-			ps.setInt(3, c);
-			ps.executeQuery();
-			ps.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 	public void setLevel(String username, int ml) {
 		try {
 			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET maxlevel=? WHERE user=?");
@@ -106,14 +93,14 @@ public class ClientDatabase {
 		}
 	}
 	
-	public void setKillsDeathsJumpsKillStreak(String username, int k, int d, int j, int ks) {
+	public void setKillsDeathsJumpsKillStreak(String username, String k, String d, String j, String ks) {
 		try {
 			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? jump=? killstreak=? WHERE user=?");
 			ps.setString(5, username);
-			ps.setString(1, Integer.toString(k));
-			ps.setString(2, Integer.toString(d));
-			ps.setString(3, Integer.toString(j));
-			ps.setString(4, Integer.toString(ks));
+			ps.setString(1, k);
+			ps.setString(2, d);
+			ps.setString(3, j);
+			ps.setString(4, ks);
 			ps.executeQuery();
 			ps.close();
 		} catch (SQLException e) {
@@ -122,12 +109,14 @@ public class ClientDatabase {
 		}
 	}
 	
-	public void setCharacter(String username, int charS) {
+	public void setCharacter(String username, String charS) {
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement("UPDATE userinfo SET charSprite=? WHERE user=?");
-			ps.setString(1, Integer.toString(charS));
+			ps.setString(1, charS);
 			ps.setString(2, username);
+			ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

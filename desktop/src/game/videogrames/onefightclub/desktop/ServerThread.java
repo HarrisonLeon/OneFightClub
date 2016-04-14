@@ -69,6 +69,7 @@ public class ServerThread extends Thread {
 						}
 				}
 				if(info[0].equals("#")) {
+					System.out.println(info[1] + " " + info[2]);
 					cd.setCharacter(info[1], info[2]);
 				}
 				if(info[0].equals("*")) {

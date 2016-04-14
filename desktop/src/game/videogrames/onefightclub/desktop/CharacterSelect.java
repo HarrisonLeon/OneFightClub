@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -40,12 +41,16 @@ public class CharacterSelect extends JFrame{
 	private Server s;
 	private Client c;
 	private String user;
+	private ArrayList<ImageIcon> charSprite;
+	private int i = 0;
+	private DesktopLauncher dl;
 	
-	public CharacterSelect(Server s, Client c, String username) {
+	public CharacterSelect(Server s, Client c, String username, DesktopLauncher dl) {
 		jf = this;
 		this.s = s;
 		this.c = c;
 		this.user = username;
+		this.dl = dl;
 		try {
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/leadcoat.ttf")).deriveFont(20f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -56,6 +61,9 @@ public class CharacterSelect extends JFrame{
 		UIManager.put("Button.font", new FontUIResource(customFont));
 		UIManager.put("Label.font", new FontUIResource(customFont));
 		setTitle("Character Selection");
+		charSprite = new ArrayList<ImageIcon>();
+		charSprite.add(new ImageIcon("images/basic.png"));
+		charSprite.add(new ImageIcon("images/Red_Soldier.png"));
 		init();
 		createGUI();
 		addActions();
@@ -120,6 +128,13 @@ public class CharacterSelect extends JFrame{
 		left.addMouseListener(new MouseAdapter() {		
 			public void mousePressed(MouseEvent e) {
 				sound_clicked();
+				if(i == 0) {
+					i = charSprite.size() -1;
+				}
+				else {
+					i -=1;
+				}
+				image.setIcon(charSprite.get(i));
 				
 			}
 		});
@@ -127,6 +142,13 @@ public class CharacterSelect extends JFrame{
 		right.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				sound_clicked();
+				if(i == charSprite.size()-1) {
+					i = 0;
+				}
+				else {
+					i += 1;
+				}
+				image.setIcon(charSprite.get(i));
 				
 			}
 		});
@@ -144,6 +166,12 @@ public class CharacterSelect extends JFrame{
 			
 			public void mousePressed(MouseEvent e) {
 				sound_clicked();
+				if(c != null) {
+					c.changeCharacter(user, Integer.toString(i + 1));
+					setVisible(false);
+					String[] userinfo = {"online", user};
+					dl.startGame(userinfo);
+				}
 				
 			}
 		});
@@ -187,8 +215,6 @@ public class CharacterSelect extends JFrame{
 		clip.start();
 	}
 	
-	public static void main(String[] args) {
-		CharacterSelect cs = new CharacterSelect(null,null,"test");
-	}
+
 	
 }

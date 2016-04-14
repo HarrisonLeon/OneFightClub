@@ -97,10 +97,11 @@ public class DesktopLauncher extends JFrame
 	Client c;
   
 	File sound_clicked;
+	DesktopLauncher dl;
 	
 	DesktopLauncher() {
 		sound_clicked = new File("Button_Click");
-	
+		dl = this;
 		jf = this;
 		jf.setIconImage(new ImageIcon("images/basic-sword.png").getImage());
 		new Thread(s = new Server(1234)).start();
@@ -418,10 +419,9 @@ public class DesktopLauncher extends JFrame
 						System.out.println("adding:" + user + " " + encryptPass);
 						c.addUser(user, encryptPass);
 						System.out.println("success!");
+						setVisible(false);
+						CharacterSelect cs = new CharacterSelect(s, c, user, dl);
 						
-						
-						String[] userinfo = {"online", user};
-						startGame(userinfo);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "User already exists!", "Register Failed!", JOptionPane.WARNING_MESSAGE);
