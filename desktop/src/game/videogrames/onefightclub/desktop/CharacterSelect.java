@@ -64,6 +64,9 @@ public class CharacterSelect extends JFrame{
 		charSprite = new ArrayList<ImageIcon>();
 		charSprite.add(new ImageIcon("images/basic.png"));
 		charSprite.add(new ImageIcon("images/Red_Soldier.png"));
+		charSprite.add(new ImageIcon("images/Green_Soldier.png"));
+		charSprite.add(new ImageIcon("images/Pink_Soldier.png"));
+		charSprite.add(new ImageIcon("images/Yellow_Soldier.png"));
 		init();
 		createGUI();
 		addActions();
