@@ -10,10 +10,12 @@ import game.videogrames.onefightclub.actors.Enemy;
 import game.videogrames.onefightclub.actors.Weapon;
 
 public class OFCContactListener implements ContactListener {
-	private boolean playerGrounded;
+	// private boolean playerGrounded;
+
+	int numFootContacts = 0;
 
 	public boolean isPlayerGrounded() {
-		return playerGrounded;
+		return (numFootContacts > 0);
 	}
 
 	@Override
@@ -49,10 +51,10 @@ public class OFCContactListener implements ContactListener {
 		}
 
 		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
-			playerGrounded = true;
+			numFootContacts++;
 		}
 		if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
-			playerGrounded = true;
+			numFootContacts++;
 		}
 	}
 
@@ -62,10 +64,10 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {
-			playerGrounded = false;
+			numFootContacts--;
 		}
 		if (fb.getUserData() != null && fb.getUserData().equals("player.foot")) {
-			playerGrounded = false;
+			numFootContacts--;
 		}
 	}
 
