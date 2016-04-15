@@ -1,4 +1,4 @@
-package game.videogrames.onefightclub.desktop;
+package client;
 	import java.awt.Font;
 	import java.awt.FontFormatException;
 	import java.awt.GraphicsEnvironment;
@@ -27,11 +27,13 @@ public class Client extends Thread{
 	private boolean toSleep = false;
 	private Hashtable<String, Boolean> exists;
 	private Hashtable<String, Boolean> authenticate;
+	private Hashtable<String, Vector<String>> stats;
 	
-	Client() {
+	public Client() {
 		System.out.println("Starting Client");
 		exists = new Hashtable<String, Boolean>();
 		authenticate = new Hashtable<String, Boolean>();
+		stats = new Hashtable<String, Vector<String>>();
 		Font customFont; 
 		try {
 				s = new Socket("localhost", 1234);
@@ -111,6 +113,15 @@ public class Client extends Thread{
 		sendMessage("*:" + username + ":" + k + ":" + d + ":" + j + ":" + killstreak);
 	}
 	
+	public Vector<String> getStats(String username) {
+		sendMessage("%:" + username);
+		while(!stats.containsKey(username)) {
+			
+		}
+		Vector<String> stat = stats.get(username);
+		return stat;
+	}
+	
 	public void close() {
 		try {
 			if (s != null) {
@@ -151,6 +162,18 @@ public class Client extends Thread{
 					else {
 						online = true;
 					}
+				}
+				if(info[0].equals("%")) {
+					Vector<String> stat = new Vector<String>();
+					stat.add(info[2]); //maxlevel
+					stat.add(info[3]); //charsprite
+					stat.add(info[4]); //kills
+					stat.add(info[5]); //deaths
+					stat.add(info[6]); //jumps
+					stat.add(info[7]); //killstreak
+					
+					stats.put(info[1], stat);
+					
 				}
 				
 			}

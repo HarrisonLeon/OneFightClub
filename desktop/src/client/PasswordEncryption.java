@@ -1,4 +1,4 @@
-package game.videogrames.onefightclub.desktop;
+package client;
 
 public class PasswordEncryption {
 	public static String encrypt(String password) {

@@ -1,10 +1,12 @@
-package game.videogrames.onefightclub.desktop;
+package server;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Vector;
 
 public class ClientDatabase {
 	Connection conn = null;
@@ -107,6 +109,34 @@ public class ClientDatabase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Vector<String> getStats(String username) {
+		Vector<String> Stats = new Vector<String>();
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM userinfo");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userinfo WHERE user=?");
+			
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			
+			System.out.println("adding");
+			
+			System.out.println(rs.getString("maxlevel"));
+			
+			
+			Stats.add(rs.getString("maxlevel"));
+			Stats.add(rs.getString("charSprite"));
+			Stats.add(rs.getString("numKills"));
+			Stats.add(rs.getString("numDeaths"));
+			Stats.add(rs.getString("jump"));
+			Stats.add(rs.getString("killstreak"));
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Stats;
 	}
 	
 	public void setCharacter(String username, String charS) {

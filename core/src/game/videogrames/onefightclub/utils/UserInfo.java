@@ -1,31 +1,56 @@
 package game.videogrames.onefightclub.utils;
 
-public class UserInfo {
-    boolean online;
-    String username;
-    int maxlevel;
-    int character;
-    int kills;
-    int deaths = 0;
-    int longestKillStreak;
-    int jumps;
+import java.util.Vector;
 
-    public UserInfo(String line, String username) {
-	if (line.equals("online")) {
+import client.Client;
+
+public class UserInfo {
+    private boolean online;
+    private String username;
+    private int maxlevel;
+    private int character;
+    private int kills;
+    private int deaths = 0;
+    private int longestKillStreak;
+    private int jumps;
+    private Client c;
+
+    public UserInfo(String line, String username, Client c2) {
+	
+    if (line.equals("online")) {
+    	this.c = c2;
 	    online = true;
 	    this.username = username;
+	   
 	    // get info from database
+	    Vector<String> stats = c.getStats(username);
+	    maxlevel = Integer.parseInt(stats.get(0));
+	    character = Integer.parseInt(stats.get(1));
+	    kills = Integer.parseInt(stats.get(2));
+	    deaths = Integer.parseInt(stats.get(3));
+	    jumps = Integer.parseInt(stats.get(4));
+	    longestKillStreak = Integer.parseInt(stats.get(5));
+	    
+	    System.out.println(character);
 
 	} else {
 	    online = false;
 	    username = "";
-	    maxlevel = 0;
-	    character = 0;
+	    maxlevel = 1;
+	    character = 1;
 	    kills = 0;
 	    deaths = 0;
 	    longestKillStreak = 0;
 	    jumps = 0;
 	}
+    }
+    
+    public void updateStats(String username, int kills, int deaths, int jumps, int killstreak) {
+    	this.kills = kills;
+    	this.deaths = deaths;
+    	this.jumps = jumps;
+    	this.longestKillStreak = killstreak;
+    	c.updateStats(username, kills, deaths, jumps, killstreak);
     }
 
     public String userName() {
@@ -55,4 +80,5 @@ public class UserInfo {
     public int killStreak() {
 	return longestKillStreak;
     }
+    
 }

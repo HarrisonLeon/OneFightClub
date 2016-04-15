@@ -1,4 +1,4 @@
-package game.videogrames.onefightclub.desktop;
+package server;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class ServerThread extends Thread {
 
@@ -74,6 +75,11 @@ public class ServerThread extends Thread {
 				}
 				if(info[0].equals("*")) {
 					cd.setKillsDeathsJumpsKillStreak(info[1], info[2], info[3], info[4], info[5]);
+				}
+				if(info[0].equals("%")) {
+					Vector<String> stats = cd.getStats(info[1]);
+					System.out.println(stats.size());
+					sendMessage("%:" + info[1] + ":" + stats.elementAt(0) +":" + stats.elementAt(1) + ":" + stats.elementAt(2) + ":" + stats.elementAt(3) + ":" + stats.elementAt(4) + ":" + stats.elementAt(5));
 				}
 				
 			}

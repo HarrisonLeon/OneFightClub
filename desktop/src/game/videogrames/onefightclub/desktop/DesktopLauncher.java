@@ -34,9 +34,13 @@ import javax.swing.plaf.FontUIResource;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
+import client.Client;
+import client.PasswordEncryption;
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.utils.Constants;
 import game.videogrames.onefightclub.utils.UserInfo;
+import server.Server;
 
 public class DesktopLauncher extends JFrame
 {	
@@ -471,7 +475,7 @@ public class DesktopLauncher extends JFrame
 			}
 		}
 		
-		Constants.ui = new UserInfo(line, username);
+		Constants.ui = new UserInfo(line, username,c);
 		
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

@@ -28,6 +28,9 @@ import javax.swing.JRootPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import client.Client;
+import server.Server;
+
 public class CharacterSelect extends JFrame{
 	private JPanel background;
 	private JButton left;

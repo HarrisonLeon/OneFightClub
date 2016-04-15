@@ -1,4 +1,4 @@
-package game.videogrames.onefightclub.desktop;
+package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,7 +13,7 @@ public class Server implements Runnable {
 	private Socket s;
 	private ClientDatabase cd;
 	
-	Server(int port) {
+	public Server(int port) {
 		this.port = port;
 		serverThreads = new Vector<ServerThread>();
 		cd = new ClientDatabase();
