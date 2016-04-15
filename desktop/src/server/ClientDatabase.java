@@ -114,23 +114,23 @@ public class ClientDatabase {
 	public Vector<String> getStats(String username) {
 		Vector<String> Stats = new Vector<String>();
 		try {
-			ResultSet rs = st.executeQuery("SELECT * FROM userinfo");
+			String query ="SELECT * FROM userinfo";
+			ResultSet rs = st.executeQuery(query);
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userinfo WHERE user=?");
 			
 			ps.setString(1, username);
 			rs = ps.executeQuery();
-			
 			System.out.println("adding");
 			
-			System.out.println(rs.getString("maxlevel"));
-			
-			
-			Stats.add(rs.getString("maxlevel"));
-			Stats.add(rs.getString("charSprite"));
-			Stats.add(rs.getString("numKills"));
-			Stats.add(rs.getString("numDeaths"));
-			Stats.add(rs.getString("jump"));
-			Stats.add(rs.getString("killstreak"));
+			while(rs.next()) {
+				Stats.add(rs.getString(2));
+				Stats.add(rs.getString(3));
+				Stats.add(rs.getString(4));
+				Stats.add(rs.getString(5));
+				Stats.add(rs.getString(6));
+				Stats.add(rs.getString(7));
+			}
+			ps.close();
 			
 			
 		} catch (SQLException e) {

@@ -77,6 +77,7 @@ public class ServerThread extends Thread {
 					cd.setKillsDeathsJumpsKillStreak(info[1], info[2], info[3], info[4], info[5]);
 				}
 				if(info[0].equals("%")) {
+					System.out.println(info[1]);
 					Vector<String> stats = cd.getStats(info[1]);
 					System.out.println(stats.size());
 					sendMessage("%:" + info[1] + ":" + stats.elementAt(0) +":" + stats.elementAt(1) + ":" + stats.elementAt(2) + ":" + stats.elementAt(3) + ":" + stats.elementAt(4) + ":" + stats.elementAt(5));
