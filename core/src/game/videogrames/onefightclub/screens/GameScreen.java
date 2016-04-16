@@ -15,7 +15,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -50,9 +49,6 @@ public class GameScreen extends OFCScreen {
 	private SpriteBatch sb;
 
 	private TiledMap tileMap;
-	private int tileMapWidth;
-	private int tileMapHeight;
-	private int tileSize;
 	private OrthogonalTiledMapRenderer tmRenderer;
 
 	private BodyDef bdef;
@@ -60,7 +56,7 @@ public class GameScreen extends OFCScreen {
 
 	private Body playerBody;
 	private Player player;
-	private Weapon weapon;
+
 	private Vector<Enemy> enemies;
 	private Vector<PowerUp> powerups;
 	private Vector<Weapon> weapons;
@@ -81,6 +77,7 @@ public class GameScreen extends OFCScreen {
 
 	public GameScreen(Game game) {
 		super(game);
+
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
@@ -190,8 +187,6 @@ public class GameScreen extends OFCScreen {
 
 		player = new Player(playerBody);
 		playerBody.setUserData(player);
-
-		weapon = player.getWeapon();
 	}
 
 	public void spawnEnemy() {
@@ -290,19 +285,17 @@ public class GameScreen extends OFCScreen {
 
 	public void createPlatforms() {
 		tileMap = new TmxMapLoader().load("maps/onefightclubmap.tmx");
-		MapProperties props = tileMap.getProperties();
-
-		tileMapWidth = props.get("width", Integer.class);
-		tileMapHeight = props.get("height", Integer.class);
-		tileSize = props.get("tilewidth", Integer.class);
 		tmRenderer = new OrthogonalTiledMapRenderer(tileMap);
 
 		TiledMapTileLayer layer;
 		layer = (TiledMapTileLayer) tileMap.getLayers().get("floor");
-		drawTiles(layer, Constants.BIT_GROUND);
+		drawTiles(layer, Constants.BIT_GROUND, "floor");
+
+		layer = (TiledMapTileLayer) tileMap.getLayers().get("edge");
+		drawTiles(layer, Constants.BIT_EDGE, "edge");
 	}
 
-	public void drawTiles(TiledMapTileLayer layer, short bits) {
+	public void drawTiles(TiledMapTileLayer layer, short bits, String data) {
 		float tileSize = layer.getTileWidth();
 
 		for (int r = 0; r < layer.getHeight(); r++) {
@@ -330,7 +323,7 @@ public class GameScreen extends OFCScreen {
 				fd.shape = cs;
 				fd.filter.categoryBits = bits;
 				fd.filter.maskBits = Constants.BIT_PLAYER | Constants.BIT_ENEMY;
-				world.createBody(bdef).createFixture(fd).setUserData("ground");
+				world.createBody(bdef).createFixture(fd).setUserData(data);
 				cs.dispose();
 			}
 		}

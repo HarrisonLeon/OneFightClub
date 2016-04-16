@@ -15,9 +15,10 @@ public class Constants {
 	public static final float RUN_VELOCITY = 4.0f;
 
 	public static final short BIT_GROUND = 2;
-	public static final short BIT_PLAYER = 4;
-	public static final short BIT_ENEMY = 6;
-	public static final short BIT_WEAPON = 8;
+	public static final short BIT_EDGE = 4;
+	public static final short BIT_PLAYER = 6;
+	public static final short BIT_ENEMY = 8;
+	public static final short BIT_WEAPON = 10;
 
 	public static final Vector2[] spawns = new Vector2[] { new Vector2((Constants.APP_WIDTH / PPM) / 4, 200.0f / PPM),
 			new Vector2((Constants.APP_WIDTH / PPM) / 2, 200.0f / PPM),
