@@ -19,11 +19,9 @@ import game.videogrames.onefightclub.utils.Constants;
 public class Player extends MovingSprite {
 	public static final String IDLE_FILEPATH = "images/soldier_idle.png";
 	public static final String WALK_FILEPATH = "images/soldier_walk.png";
-	public static final String ATTACK_FILEPATH = "images/soldier_attack.png";
 
 	private Array<TextureRegion> idleAnimation;
 	private Array<TextureRegion> walkAnimation;
-	// private Array<TextureRegion> attackAnimation;
 
 	private Sound sound_jump;
 	private Sound sound_walk;
@@ -32,7 +30,6 @@ public class Player extends MovingSprite {
 	private boolean movingRight = false;
 	private boolean isGrounded = false;
 	private boolean isDead = false;
-	private boolean isAttacking = false;
 
 	private Weapon weapon;
 	private int health = 6;
@@ -48,17 +45,40 @@ public class Player extends MovingSprite {
 		Texture walkTexture = new Texture(Gdx.files.internal(WALK_FILEPATH));
 		walkAnimation = new Array<TextureRegion>(TextureRegion.split(walkTexture, 36, 60)[0]);
 
-		// create attack animation
-		// Texture attackTexture = new Texture(Gdx.files.internal(ATTACK_FILEPATH));
-		// attackAnimation = new Array<TextureRegion>(TextureRegion.split(attackTexture, 60, 60)[0]);
-
 		setAnimation(1 / 12.0f, idleAnimation);
 
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
-
 		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
 		sound_walk.loop(0.1f);
 		sound_walk.pause();
+
+		// create main bounding box
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(18.0f / PPM, 30.0f / PPM);
+		FixtureDef fdef = new FixtureDef();
+		fdef.shape = shape;
+		fdef.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef.filter.maskBits = Constants.BIT_GROUND;
+		fdef.friction = 0.0f;
+		body.createFixture(fdef).setUserData("player");
+
+		// create left foot sensor
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(-14.0f / PPM, -29.5f / PPM), 0);
+		fdef.shape = shape;
+		fdef.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
+		fdef.friction = 4.0f;
+		fdef.isSensor = false;
+		body.createFixture(fdef).setUserData("player.foot");
+
+		// create right foot sensor
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(14.0f / PPM, -29.5f / PPM), 0);
+		fdef.shape = shape;
+		fdef.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
+		fdef.friction = 4.0f;
+		fdef.isSensor = false;
+		body.createFixture(fdef).setUserData("player.foot");
 
 		weapon = new Melee(body, this);
 	}
@@ -102,7 +122,7 @@ public class Player extends MovingSprite {
 			fdef.shape = shape;
 			fdef.filter.categoryBits = Constants.BIT_WEAPON;
 			fdef.filter.maskBits = Constants.BIT_ENEMY;
-			fdef.isSensor = true;
+			fdef.isSensor = false;
 			body.createFixture(fdef).setUserData(weapon);
 			weapon.setActive(true);
 		}
@@ -155,5 +175,9 @@ public class Player extends MovingSprite {
 			isDead = true;
 			// this.getBody().getWorld().destroyBody(this.getBody());
 		}
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
 	}
 }

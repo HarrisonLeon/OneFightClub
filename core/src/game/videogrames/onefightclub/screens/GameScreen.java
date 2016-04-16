@@ -35,7 +35,6 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.actors.Enemy;
-import game.videogrames.onefightclub.actors.Melee;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
@@ -61,7 +60,7 @@ public class GameScreen extends OFCScreen {
 
 	private Body playerBody;
 	private Player player;
-	private Melee melee;
+	private Weapon weapon;
 	private Vector<Enemy> enemies;
 	private Vector<PowerUp> powerups;
 	private Vector<Weapon> weapons;
@@ -124,6 +123,7 @@ public class GameScreen extends OFCScreen {
 					if (cl.isPlayerGrounded()) {
 						player.jump();
 					}
+					player.stopAttack();
 					break;
 				case Keys.SPACE: // attack
 					player.startAttack();
@@ -186,27 +186,11 @@ public class GameScreen extends OFCScreen {
 		bdef.position.set(160.0f / PPM, 200.0f / PPM); // spawn location
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(18.0f / PPM, 30.0f / PPM);
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		fdef.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef.filter.maskBits = Constants.BIT_GROUND;
-		fdef.friction = 2.0f;
-		playerBody.createFixture(fdef).setUserData("player");
-
-		// create foot sensor
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
-		fdef.isSensor = true;
-		playerBody.createFixture(fdef).setUserData("player.foot");
 
 		player = new Player(playerBody);
 		playerBody.setUserData(player);
 
-		melee = new Melee(playerBody, player);
+		weapon = player.getWeapon();
 	}
 
 	public void createEnemy() {
@@ -219,7 +203,7 @@ public class GameScreen extends OFCScreen {
 			bdef2.type = BodyType.DynamicBody;
 			Body enemyBody = world.createBody(bdef2);
 			PolygonShape shape = new PolygonShape();
-			shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+			shape.setAsBox(16.0f / PPM, 16.0f / PPM);
 			FixtureDef fdef2 = new FixtureDef();
 			fdef2.shape = shape;
 			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
@@ -371,13 +355,14 @@ public class GameScreen extends OFCScreen {
 				bdef.type = BodyType.StaticBody;
 				bdef.position.set((c + 0.5f) * tileSize / PPM, (r + 0.5f) * tileSize / PPM);
 				ChainShape cs = new ChainShape();
-				Vector2[] v = new Vector2[3];
-				v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
-				v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
-				v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
+				Vector2[] v = new Vector2[4];
+				v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM); // bottom left
+				v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM); // top left
+				v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM); // top right
+				v[3] = new Vector2(tileSize / 2 / PPM, -tileSize / 2 / PPM); // bottom right
 				cs.createChain(v);
 				FixtureDef fd = new FixtureDef();
-				fd.friction = 1.0f;
+				fd.friction = 2.0f;
 				fd.shape = cs;
 				fd.filter.categoryBits = bits;
 				fd.filter.maskBits = Constants.BIT_PLAYER | Constants.BIT_ENEMY;
