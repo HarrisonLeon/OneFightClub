@@ -107,6 +107,7 @@ public class GameScreen extends OFCScreen {
 		sb = ((OneFightClub) game).getSpriteBatch();
 		mainCam = ((OneFightClub) game).getMainCam();
 
+		// set up input for the game
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown(int keycode) {
@@ -162,7 +163,7 @@ public class GameScreen extends OFCScreen {
 		enemy_timer = new Timer();
 		Task task = new Task() {
 			public void run() {
-				createEnemy();
+				spawnEnemy();
 			}
 		};
 		enemy_timer.scheduleTask(task, 3, 3);
@@ -193,68 +194,31 @@ public class GameScreen extends OFCScreen {
 		weapon = player.getWeapon();
 	}
 
-	public void createEnemy() {
-		// create player
+	public void spawnEnemy() {
 		Random rand = new Random();
 		int randval = rand.nextInt(3);
 		if (spawnuses.elementAt(randval)) {
-			BodyDef bdef2 = new BodyDef();
-			bdef2.position.set(Constants.spawns[randval]);
-			bdef2.type = BodyType.DynamicBody;
-			Body enemyBody = world.createBody(bdef2);
-			PolygonShape shape = new PolygonShape();
-			shape.setAsBox(16.0f / PPM, 16.0f / PPM);
-			FixtureDef fdef2 = new FixtureDef();
-			fdef2.shape = shape;
-			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER | Constants.BIT_WEAPON;
-			fdef2.friction = 2.0f;
-			enemyBody.createFixture(fdef2).setUserData("enemy");
-
-			// create foot sensor
-			shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-			fdef2.shape = shape;
-			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
-			fdef2.isSensor = true;
-			enemyBody.createFixture(fdef2).setUserData("enemy.foot");
-			Enemy enemy = new Enemy(enemyBody);
-			enemyBody.setUserData(enemy);
-			enemies.add(enemy);
-			currentEnemies += 1;
-			enemy.setSpawn(randval);
-			spawnuses.setElementAt(false, randval);
+			createEnemy(randval);
 		} else {
 			int index = findNextOpen(randval);
 			if (!(index == -1)) {
-				BodyDef bdef2 = new BodyDef();
-				bdef2.position.set(Constants.spawns[index]);
-				bdef2.type = BodyType.DynamicBody;
-				Body enemyBody = world.createBody(bdef2);
-				PolygonShape shape = new PolygonShape();
-				shape.setAsBox(40.0f / PPM, 32.0f / PPM);
-				FixtureDef fdef2 = new FixtureDef();
-				fdef2.shape = shape;
-				fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-				fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
-				fdef2.friction = 2.0f;
-				enemyBody.createFixture(fdef2).setUserData("enemy");
-
-				// create foot sensor
-				shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-				fdef2.shape = shape;
-				fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-				fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
-				fdef2.isSensor = true;
-				enemyBody.createFixture(fdef2).setUserData("enemy.foot");
-				Enemy enemy = new Enemy(enemyBody);
-				enemyBody.setUserData(enemy);
-				enemies.add(enemy);
-				currentEnemies += 1;
-				enemy.setSpawn(index);
-				spawnuses.setElementAt(false, index);
+				createEnemy(index);
 			}
 		}
+	}
+
+	public void createEnemy(int spawnLoc) {
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(Constants.spawns[spawnLoc]);
+		bdef.type = BodyType.DynamicBody;
+		Body enemyBody = world.createBody(bdef);
+
+		Enemy enemy = new Enemy(enemyBody);
+		enemyBody.setUserData(enemy);
+		enemies.add(enemy);
+		currentEnemies += 1;
+		enemy.setSpawn(spawnLoc);
+		spawnuses.setElementAt(false, spawnLoc);
 	}
 
 	public int findNextOpen(int val) {

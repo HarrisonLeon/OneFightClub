@@ -52,7 +52,7 @@ public class Player extends MovingSprite {
 		sound_walk.loop(0.1f);
 		sound_walk.pause();
 
-		// create main bounding box
+		// main bounding box
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(18.0f / PPM, 30.0f / PPM);
 		FixtureDef fdef = new FixtureDef();
@@ -62,22 +62,20 @@ public class Player extends MovingSprite {
 		fdef.friction = 0.0f;
 		body.createFixture(fdef).setUserData("player");
 
-		// create left foot sensor
+		// left foot fixture
 		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(-14.0f / PPM, -29.5f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
 		fdef.friction = 4.0f;
-		fdef.isSensor = false;
 		body.createFixture(fdef).setUserData("player.foot");
 
-		// create right foot sensor
+		// right foot fixture
 		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(14.0f / PPM, -29.5f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
 		fdef.friction = 4.0f;
-		fdef.isSensor = false;
 		body.createFixture(fdef).setUserData("player.foot");
 
 		weapon = new Melee(body, this);
