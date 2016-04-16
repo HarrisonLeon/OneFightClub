@@ -2,6 +2,8 @@ package game.videogrames.onefightclub.actors;
 
 import static game.videogrames.onefightclub.utils.Constants.PPM;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +15,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 import game.videogrames.onefightclub.utils.Constants;
 
@@ -30,12 +34,27 @@ public class Player extends MovingSprite {
 	private boolean movingRight = false;
 	private boolean isGrounded = false;
 	private boolean isDead = false;
+	private Random rand;
+	
+	private Array<Float> modifiers;
+	
+	private Timer powerup_timer;
+	
+	//private float runmodifier  = 1.0f ;
 
 	private Weapon weapon;
 	private int health = 6;
 
 	public Player(Body body) {
 		super(body);
+		
+		rand = new Random();
+		modifiers = new Array<Float>();
+		for (int i = 0; i < 2; i++) {
+			modifiers.add(1.0f);
+		}
+		
+		powerup_timer = new Timer();
 
 		// create idle animation
 		Texture idleTexture = new Texture(Gdx.files.internal(IDLE_FILEPATH));
@@ -83,11 +102,11 @@ public class Player extends MovingSprite {
 
 	public void updateMotion() {
 		if (movingLeft) {
-			body.setLinearVelocity(-Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+			body.setLinearVelocity(-Constants.RUN_VELOCITY * modifiers.get(0), body.getLinearVelocity().y);
 			this.setAnimation(1 / 12.0f, walkAnimation);
 			this.setFacingRight(false);
 		} else if (movingRight) {
-			body.setLinearVelocity(Constants.RUN_VELOCITY, body.getLinearVelocity().y);
+			body.setLinearVelocity(Constants.RUN_VELOCITY * modifiers.get(0), body.getLinearVelocity().y);
 			this.setAnimation(1 / 12.0f, walkAnimation);
 			this.setFacingRight(true);
 		} else {
@@ -156,7 +175,7 @@ public class Player extends MovingSprite {
 
 	public void jump() {
 		sound_jump.play(0.08f);
-		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
+		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
 	}
 
 	public void setIsDead(boolean b) {
@@ -177,5 +196,21 @@ public class Player extends MovingSprite {
 
 	public Weapon getWeapon() {
 		return weapon;
+	}
+	
+	public void GetPowerUp() {
+		System.out.println("getting powerup");
+		int i = rand.nextInt(2);
+		modifiers.set(i, modifiers.get(i) * 2.0f);
+		Task task = new Task() {
+			public void run() {
+				endPowerUp(i);
+			}
+		};
+		powerup_timer.scheduleTask(task, 5);
+	}
+	
+	public void endPowerUp(int num) {
+		modifiers.set(num, modifiers.get(num) / 2.0f);
 	}
 }

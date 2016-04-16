@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import game.videogrames.onefightclub.actors.Enemy;
+import game.videogrames.onefightclub.actors.Player;
+import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
 
 public class OFCContactListener implements ContactListener {
@@ -74,6 +76,15 @@ public class OFCContactListener implements ContactListener {
 				fbEnemy.setMovingLeft(false);
 				fbEnemy.setMovingRight(true);
 			}
+		}
+		
+		if (fa.getUserData().equals("player") && fb.getUserData().equals("powerup")) {
+			((Player)fa.getBody().getUserData()).GetPowerUp();
+			((PowerUp)fb.getBody().getUserData()).setIsDead(true);
+		}
+		if (fb.getUserData().equals("powerup") && fb.getUserData().equals("player")) {
+			((Player)fb.getBody().getUserData()).GetPowerUp();
+			((PowerUp)fa.getBody().getUserData()).setIsDead(true);
 		}
 
 		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {

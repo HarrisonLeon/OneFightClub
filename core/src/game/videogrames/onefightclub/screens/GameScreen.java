@@ -156,6 +156,8 @@ public class GameScreen extends OFCScreen {
 
 		createPlayer();
 
+		createPowerUp();
+		
 		// set up timer
 		enemy_timer = new Timer();
 		Task task = new Task() {
@@ -174,6 +176,13 @@ public class GameScreen extends OFCScreen {
 		Random random = new Random();
 		int randomNumber = random.nextInt(35 - 15) + 15;
 		ambience_timer.scheduleTask(task2, randomNumber);
+		
+		Task task3 = new Task() {
+			public void run() {
+				createPowerUp();
+			}
+		};
+		enemy_timer.scheduleTask(task3, 10, 10);
 
 		createPlatforms();
 	}
@@ -237,12 +246,12 @@ public class GameScreen extends OFCScreen {
 		bdef2.type = BodyType.DynamicBody;
 		Body powerupBody = world.createBody(bdef2);
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		shape.setAsBox(13.0f / PPM, 15.0f / PPM);
 		FixtureDef fdef2 = new FixtureDef();
 		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+		fdef2.filter.categoryBits = Constants.BIT_WEAPON;
 		fdef2.filter.maskBits = Constants.BIT_GROUND;
-		fdef2.friction = 2.0f;
+		//fdef2.friction = 2.0f;
 		powerupBody.createFixture(fdef2).setUserData("powerup");
 
 		// create foot sensor
@@ -356,6 +365,8 @@ public class GameScreen extends OFCScreen {
 			enemy_timer.start();
 			enemiesResume = false;
 		}
+		
+		Vector<PowerUp> powerupRemoval = new Vector<PowerUp>();
 
 		b2dCamera.update();
 		mainCam.update();
@@ -385,7 +396,12 @@ public class GameScreen extends OFCScreen {
 		}
 
 		for (PowerUp p : powerups) {
-			p.render(sb);
+			if (p.getIsDead()) {
+				powerupRemoval.add(p);
+			}
+			else {
+				p.render(sb);
+			}
 		}
 
 		for (Weapon w : weapons) {
@@ -400,6 +416,12 @@ public class GameScreen extends OFCScreen {
 			currentEnemies -= 1;
 		}
 		toBeRemoved.clear();
+		
+		for (PowerUp p : powerupRemoval) {
+			p.killPowerUp();
+			powerups.remove(p);
+		}
+		powerupRemoval.clear();
 
 		debugRenderer.render(world, b2dCamera.combined);
 
