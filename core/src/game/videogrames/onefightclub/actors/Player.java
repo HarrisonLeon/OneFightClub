@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 
+import game.videogrames.onefightclub.screens.Hud;
 import game.videogrames.onefightclub.utils.Constants;
 
 public class Player extends MovingSprite {
@@ -33,10 +34,13 @@ public class Player extends MovingSprite {
 
 	private Weapon weapon;
 	private int health = 6;
+	
+	private Hud hud;
 
-	public Player(Body body) {
+	public Player(Body body, Hud hud) {
 		super(body);
-
+		this.hud = hud;
+		
 		// create idle animation
 		Texture idleTexture = new Texture(Gdx.files.internal(IDLE_FILEPATH));
 		idleAnimation = new Array<TextureRegion>(TextureRegion.split(idleTexture, 36, 60)[0]);
@@ -169,6 +173,7 @@ public class Player extends MovingSprite {
 
 	public void takeDamage(int damage) {
 		health += -damage;
+		hud.setHealth(health);
 		if (health == 0) {
 			isDead = true;
 			// this.getBody().getWorld().destroyBody(this.getBody());

@@ -48,6 +48,7 @@ public class GameScreen extends OFCScreen {
 	private OrthographicCamera b2dCamera;
 	private OrthographicCamera mainCam;
 	private SpriteBatch sb;
+	private Hud hud;
 
 	private TiledMap tileMap;
 	private int tileMapWidth;
@@ -81,6 +82,7 @@ public class GameScreen extends OFCScreen {
 
 	public GameScreen(Game game) {
 		super(game);
+		
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
@@ -106,7 +108,8 @@ public class GameScreen extends OFCScreen {
 
 		sb = ((OneFightClub) game).getSpriteBatch();
 		mainCam = ((OneFightClub) game).getMainCam();
-
+		hud = new Hud(sb);
+		
 		// set up input for the game
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
@@ -188,7 +191,7 @@ public class GameScreen extends OFCScreen {
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
 
-		player = new Player(playerBody);
+		player = new Player(playerBody, hud);
 		playerBody.setUserData(player);
 
 		weapon = player.getWeapon();
@@ -411,6 +414,8 @@ public class GameScreen extends OFCScreen {
 		debugRenderer.render(world, b2dCamera.combined);
 
 		world.step(1 / 60f, 6, 2);
+		sb.setProjectionMatrix(hud.stage.getCamera().combined);
+		hud.stage.draw();
 	}
 
 	@Override

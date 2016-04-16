@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import game.videogrames.onefightclub.actors.Enemy;
+import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.Weapon;
 
 public class OFCContactListener implements ContactListener {
@@ -29,6 +30,14 @@ public class OFCContactListener implements ContactListener {
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			// ((Player) fa.getBody().getUserData()).takeDamage(1);
+		}
+		
+		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
+			((Enemy) fa.getBody().getUserData()).setIsDead(true);
+			 ((Player) fb.getBody().getUserData()).takeDamage(1);
+		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
+			((Enemy) fb.getBody().getUserData()).setIsDead(true);
+			 ((Player) fa.getBody().getUserData()).takeDamage(1);
 		}
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
