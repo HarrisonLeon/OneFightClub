@@ -289,7 +289,7 @@ public class GameScreen extends OFCScreen {
 	}
 
 	public void createPlatforms() {
-		tileMap = new TmxMapLoader().load("onefightclubmap.tmx");
+		tileMap = new TmxMapLoader().load("maps/onefightclubmap.tmx");
 		MapProperties props = tileMap.getProperties();
 
 		tileMapWidth = props.get("width", Integer.class);
