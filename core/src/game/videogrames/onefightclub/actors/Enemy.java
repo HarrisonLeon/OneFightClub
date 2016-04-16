@@ -46,7 +46,7 @@ public class Enemy extends MovingSprite {
 		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(-13.5f / PPM, -15.0f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_ENEMY;
-		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
 		fdef.friction = 2.0f;
 		body.createFixture(fdef).setUserData("enemy.foot");
 
@@ -54,7 +54,7 @@ public class Enemy extends MovingSprite {
 		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(13.5f / PPM, -15.0f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_ENEMY;
-		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
 		fdef.friction = 2.0f;
 		body.createFixture(fdef).setUserData("enemy.foot");
 	}

@@ -46,16 +46,42 @@ public class OFCContactListener implements ContactListener {
 				faEnemy.setMovingRight(false);
 				faEnemy.setMovingLeft(true);
 			} else {
-				faEnemy.setMovingRight(true);
 				faEnemy.setMovingLeft(false);
+				faEnemy.setMovingRight(true);
 			}
 			Enemy fbEnemy = (Enemy) fb.getBody().getUserData();
 			if (fbEnemy.getMovingRight()) {
 				fbEnemy.setMovingRight(false);
 				fbEnemy.setMovingLeft(true);
 			} else {
-				fbEnemy.setMovingRight(true);
 				fbEnemy.setMovingLeft(false);
+				fbEnemy.setMovingRight(true);
+			}
+		}
+		
+		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("edge")) {
+			Enemy faEnemy = (Enemy) fa.getBody().getUserData();
+			if (faEnemy.getMovingRight()) {
+				//System.out.println("in enemy 1");
+				faEnemy.setMovingRight(false);
+				faEnemy.setMovingLeft(true);
+			} else {
+				//System.out.println("in enemy 1 reverse");
+				faEnemy.setMovingLeft(false);
+				faEnemy.setMovingRight(true);
+			}
+		}
+		
+		if (fa.getUserData().equals("edge") && fb.getUserData().equals("enemy")) {
+			Enemy fbEnemy = (Enemy) fb.getBody().getUserData();
+			if (fbEnemy.getMovingRight()) {
+				//System.out.println("in enemy 2");
+				fbEnemy.setMovingRight(false);
+				fbEnemy.setMovingLeft(true);
+			} else {
+				//System.out.println("in enemy 2 reverse");
+				fbEnemy.setMovingLeft(false);
+				fbEnemy.setMovingRight(true);
 			}
 		}
 
