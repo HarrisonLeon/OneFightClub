@@ -78,6 +78,7 @@ public class GameScreen extends OFCScreen {
 
 	public GameScreen(Game game) {
 		super(game);
+
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
@@ -104,7 +105,7 @@ public class GameScreen extends OFCScreen {
 		sb = ((OneFightClub) game).getSpriteBatch();
 		mainCam = ((OneFightClub) game).getMainCam();
 		hud = new Hud(sb);
-		
+
 		// set up input for the game
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
@@ -158,7 +159,7 @@ public class GameScreen extends OFCScreen {
 		createPlayer();
 
 		createPowerUp();
-		
+
 		// set up timer
 		enemy_timer = new Timer();
 		Task task = new Task() {
@@ -177,7 +178,7 @@ public class GameScreen extends OFCScreen {
 		Random random = new Random();
 		int randomNumber = random.nextInt(35 - 15) + 15;
 		ambience_timer.scheduleTask(task2, randomNumber);
-		
+
 		Task task3 = new Task() {
 			public void run() {
 				createPowerUp();
@@ -252,7 +253,7 @@ public class GameScreen extends OFCScreen {
 		fdef2.shape = shape;
 		fdef2.filter.categoryBits = Constants.BIT_WEAPON;
 		fdef2.filter.maskBits = Constants.BIT_GROUND;
-		//fdef2.friction = 2.0f;
+		// fdef2.friction = 2.0f;
 		powerupBody.createFixture(fdef2).setUserData("powerup");
 
 		// create foot sensor
@@ -339,22 +340,6 @@ public class GameScreen extends OFCScreen {
 		}
 	}
 
-	public void createPlatform(float x, float y, float width, float height) {
-		bdef = new BodyDef();
-		bdef.position.set(x / PPM, y / PPM);
-		bdef.type = BodyType.StaticBody;
-		body = world.createBody(bdef);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width / PPM, height / PPM);
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		fdef.filter.categoryBits = Constants.BIT_GROUND;
-		fdef.filter.maskBits = Constants.BIT_PLAYER;
-		body.createFixture(fdef).setUserData("ground");
-
-		shape.dispose();
-	}
-
 	@Override
 	public void render(float delta) {
 		// processInput();
@@ -366,7 +351,7 @@ public class GameScreen extends OFCScreen {
 			enemy_timer.start();
 			enemiesResume = false;
 		}
-		
+
 		Vector<PowerUp> powerupRemoval = new Vector<PowerUp>();
 
 		b2dCamera.update();
@@ -399,8 +384,7 @@ public class GameScreen extends OFCScreen {
 		for (PowerUp p : powerups) {
 			if (p.getIsDead()) {
 				powerupRemoval.add(p);
-			}
-			else {
+			} else {
 				p.render(sb);
 			}
 		}
@@ -417,7 +401,7 @@ public class GameScreen extends OFCScreen {
 			currentEnemies -= 1;
 		}
 		toBeRemoved.clear();
-		
+
 		for (PowerUp p : powerupRemoval) {
 			p.killPowerUp();
 			powerups.remove(p);
