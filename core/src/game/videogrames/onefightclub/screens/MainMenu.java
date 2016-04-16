@@ -5,12 +5,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MainMenu extends OFCScreen {
     TextureRegion title;
     TextureRegion play;
+    
+    TextureAtlas atlas;
+    Skin skin;
+    TextButton achievements;
+    BitmapFont pixels;
+    Stage stage;
+    
     SpriteBatch batch;
     float time = 0;
 
@@ -20,10 +34,24 @@ public class MainMenu extends OFCScreen {
 
     @Override
     public void show() {
-		title = new TextureRegion(new Texture(Gdx.files.internal("images/temptitle.png")), 0, 0, 960, 640);
+    	stage = new Stage();
+    	TextureRegion upRegion = new TextureRegion();
+    	TextureRegion downRegion = new TextureRegion();
+    	pixels = new BitmapFont();
+    	
+    	TextButtonStyle style = new TextButtonStyle();
+    	style.up = new TextureRegionDrawable(upRegion);
+    	style.down = new TextureRegionDrawable(downRegion);
+    	style.font = pixels;
+    	achievements = new TextButton("Achievements", style);
+    	
+    	title = new TextureRegion(new Texture(Gdx.files.internal("images/temptitle.png")), 0, 0, 960, 640);
 		play = new TextureRegion(new Texture(Gdx.files.internal("images/bunny.png")), 0, 0, 128, 32);
+		
 		batch = new SpriteBatch();
 		batch.getProjectionMatrix().setToOrtho2D(0, 0, 960, 640);
+		
+		stage.addActor(achievements);
     }
 
     @Override

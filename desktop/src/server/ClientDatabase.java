@@ -48,11 +48,12 @@ public class ClientDatabase {
 					password = rs.getString("pass");
 				}
 			}
+			rs.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return password;
 	}
 
