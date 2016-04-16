@@ -50,7 +50,7 @@ public class UserInfo {
     	this.deaths = deaths;
     	this.jumps = jumps;
     	this.longestKillStreak = killstreak;
-    	if(online) {
+    	if(online || c != null) {
     		c.updateStats(username, kills, deaths, jumps, killstreak);	
     	}
     }
