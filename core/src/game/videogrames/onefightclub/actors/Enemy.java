@@ -3,6 +3,7 @@ package game.videogrames.onefightclub.actors;
 import static game.videogrames.onefightclub.utils.Constants.PPM;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,6 +17,8 @@ import game.videogrames.onefightclub.utils.Constants;
 
 public class Enemy extends MovingSprite {
 	public static final String PLAYER_FILEPATH = "images/bunny.png";
+	
+	private Sound sound_death;
 
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
@@ -57,6 +60,8 @@ public class Enemy extends MovingSprite {
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
 		fdef.friction = 2.0f;
 		body.createFixture(fdef).setUserData("enemy.foot");
+		
+		sound_death = Gdx.audio.newSound(Gdx.files.internal("sounds/Enemy_Death.wav"));
 	}
 
 	public void render(SpriteBatch sb) {
@@ -108,6 +113,7 @@ public class Enemy extends MovingSprite {
 	}
 
 	public void killEnemy() {
+		sound_death.play(0.045f);
 		this.getBody().getWorld().destroyBody(this.getBody());
 	}
 

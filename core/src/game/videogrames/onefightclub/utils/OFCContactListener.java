@@ -25,6 +25,7 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
+			System.out.println("wtf");
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			// ((Player) fb.getBody().getUserData()).takeDamage(1);
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {

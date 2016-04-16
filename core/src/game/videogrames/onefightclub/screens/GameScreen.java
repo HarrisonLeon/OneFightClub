@@ -78,11 +78,7 @@ public class GameScreen extends OFCScreen {
 
 	public GameScreen(Game game) {
 		super(game);
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 7cb39adb51607ed1c524928a60280a5fd389dd37
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
