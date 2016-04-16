@@ -32,6 +32,14 @@ public class OFCContactListener implements ContactListener {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			// ((Player) fa.getBody().getUserData()).takeDamage(1);
 		}
+		
+		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
+			((Enemy) fa.getBody().getUserData()).setIsDead(true);
+			 ((Player) fb.getBody().getUserData()).takeDamage(1);
+		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
+			((Enemy) fb.getBody().getUserData()).setIsDead(true);
+			 ((Player) fa.getBody().getUserData()).takeDamage(1);
+		}
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
 			Enemy faEnemy = (Enemy) fa.getBody().getUserData();

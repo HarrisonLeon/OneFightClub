@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import game.videogrames.onefightclub.screens.Hud;
 import game.videogrames.onefightclub.screens.MainMenu;
 import game.videogrames.onefightclub.utils.Constants;
 
