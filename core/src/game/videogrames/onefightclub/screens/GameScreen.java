@@ -191,7 +191,7 @@ public class GameScreen extends OFCScreen {
 
 	public void spawnEnemy() {
 		Random rand = new Random();
-		int randval = rand.nextInt(3);
+		int randval = rand.nextInt(Constants.spawns.length);
 		if (spawnuses.elementAt(randval)) {
 			createEnemy(randval);
 		} else {
