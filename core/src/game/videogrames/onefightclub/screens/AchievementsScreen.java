@@ -3,13 +3,16 @@ package game.videogrames.onefightclub.screens;
 import com.badlogic.gdx.Game;
 
 public class AchievementsScreen extends OFCScreen{
+	private Stage stage;
+	
 	public AchievementsScreen(Game game) {
 		super(game);
 	}
 
 	@Override
     public void show() {
-    }
+		stage = new Stage();
+	}
 
     @Override
     public void render(float delta) {
@@ -33,5 +36,6 @@ public class AchievementsScreen extends OFCScreen{
 
     @Override
     public void dispose() {
+    	stage.dispose();
     }
 }
