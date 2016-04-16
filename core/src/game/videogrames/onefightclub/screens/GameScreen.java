@@ -243,8 +243,11 @@ public class GameScreen extends OFCScreen {
 	}
 
 	public void createPowerUp() {
+		Random rand = new Random();
+		int i = rand.nextInt(Constants.powerupSpawns.length);
+		
 		BodyDef bdef2 = new BodyDef();
-		bdef2.position.set(200.0f / PPM, 200.0f / PPM);
+		bdef2.position.set(Constants.powerupSpawns[i]);
 		bdef2.type = BodyType.DynamicBody;
 		Body powerupBody = world.createBody(bdef2);
 		PolygonShape shape = new PolygonShape();
