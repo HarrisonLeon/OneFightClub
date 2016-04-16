@@ -35,6 +35,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import game.videogrames.onefightclub.OneFightClub;
 import game.videogrames.onefightclub.actors.Enemy;
+import game.videogrames.onefightclub.actors.Melee;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
@@ -60,10 +61,11 @@ public class GameScreen extends OFCScreen {
 
 	private Body playerBody;
 	private Player player;
+	private Melee melee;
 	private Vector<Enemy> enemies;
 	private Vector<PowerUp> powerups;
 	private Vector<Weapon> weapons;
-	
+
 	private Vector<Boolean> spawnuses;
 
 	private Timer enemy_timer;
@@ -92,12 +94,12 @@ public class GameScreen extends OFCScreen {
 
 	@Override
 	public void show() {
-		
+
 		spawnuses = new Vector<Boolean>();
 		for (int i = 0; i < Constants.spawns.length; i++) {
 			spawnuses.add(true);
 		}
-		
+
 		world = new World(new Vector2(0.0f, Constants.GRAVITY), true);
 		cl = new OFCContactListener();
 		world.setContactListener(cl);
@@ -112,9 +114,11 @@ public class GameScreen extends OFCScreen {
 				switch (keycode) {
 				case Keys.A: // move left
 					player.setMovingLeft(true);
+					player.stopAttack();
 					break;
 				case Keys.D: // move right
 					player.setMovingRight(true);
+					player.stopAttack();
 					break;
 				case Keys.W: // jump
 					if (cl.isPlayerGrounded()) {
@@ -122,7 +126,7 @@ public class GameScreen extends OFCScreen {
 					}
 					break;
 				case Keys.SPACE: // attack
-					player.attack();
+					player.startAttack();
 					break;
 				}
 				return true;
@@ -137,6 +141,9 @@ public class GameScreen extends OFCScreen {
 				case Keys.D: // stopped moving right
 					player.setMovingRight(false);
 					break;
+				case Keys.SPACE: // stop attacking
+					player.stopAttack();
+					break;
 				}
 				return true;
 			}
@@ -150,12 +157,6 @@ public class GameScreen extends OFCScreen {
 		weapons = new Vector<Weapon>();
 
 		createPlayer();
-		/*
-		 * for (int i = 0; i < 5; i++) { createEnemy(); }
-		 */
-		/*
-		 * createPowerUp(); createWeapon();
-		 */
 
 		// set up timer
 		enemy_timer = new Timer();
@@ -177,36 +178,16 @@ public class GameScreen extends OFCScreen {
 		ambience_timer.scheduleTask(task2, randomNumber);
 
 		createPlatforms();
-
-		// createPlatform(0.0f, 0.0f, APP_WIDTH, 5.0f); // Base
-		//
-		// createPlatform(APP_WIDTH * .88f, APP_HEIGHT * .15f, APP_WIDTH * .12f, APP_HEIGHT * .01f); // Lower
-		// // right
-		// createPlatform(APP_WIDTH * .83f, APP_HEIGHT * .45f, APP_WIDTH * .06f, APP_HEIGHT * .01f); // Upper
-		// // right
-		//
-		// createPlatform(APP_WIDTH * .12f, APP_HEIGHT * .15f, APP_WIDTH * .12f, APP_HEIGHT * .01f); // Lower
-		// // left
-		// createPlatform(APP_WIDTH * .17f, APP_HEIGHT * .45f, APP_WIDTH * .06f, APP_HEIGHT * .01f); // Upper
-		// // left
-		//
-		// createPlatform(APP_WIDTH * .50f, APP_HEIGHT * .30f, APP_WIDTH * .12f, APP_HEIGHT * .01f); // Lower
-		// // middle
-		// createPlatform(APP_WIDTH * .35f, APP_HEIGHT * .62f, APP_WIDTH * .08f, APP_HEIGHT * .01f); // Upper
-		// // middle
-		// createPlatform(APP_WIDTH * .65f, APP_HEIGHT * .62f, APP_WIDTH * .08f, APP_HEIGHT * .01f); // Upper
-		// // middle
-
 	}
 
 	public void createPlayer() {
 		// create player
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(160.0f / PPM, 200.0f / PPM);
+		bdef.position.set(160.0f / PPM, 200.0f / PPM); // spawn location
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+		shape.setAsBox(18.0f / PPM, 30.0f / PPM);
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
@@ -224,6 +205,8 @@ public class GameScreen extends OFCScreen {
 
 		player = new Player(playerBody);
 		playerBody.setUserData(player);
+
+		melee = new Melee(playerBody, player);
 	}
 
 	public void createEnemy() {
@@ -240,7 +223,7 @@ public class GameScreen extends OFCScreen {
 			FixtureDef fdef2 = new FixtureDef();
 			fdef2.shape = shape;
 			fdef2.filter.categoryBits = Constants.BIT_ENEMY;
-			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER;
+			fdef2.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_PLAYER | Constants.BIT_WEAPON;
 			fdef2.friction = 2.0f;
 			enemyBody.createFixture(fdef2).setUserData("enemy");
 
@@ -257,8 +240,7 @@ public class GameScreen extends OFCScreen {
 			currentEnemies += 1;
 			enemy.setSpawn(randval);
 			spawnuses.setElementAt(false, randval);
-		}
-		else {
+		} else {
 			int index = findNextOpen(randval);
 			if (!(index == -1)) {
 				BodyDef bdef2 = new BodyDef();
@@ -290,7 +272,7 @@ public class GameScreen extends OFCScreen {
 			}
 		}
 	}
-	
+
 	public int findNextOpen(int val) {
 		int n = Constants.spawns.length;
 		int i = val;
@@ -442,13 +424,14 @@ public class GameScreen extends OFCScreen {
 		tmRenderer.render();
 
 		sb.setProjectionMatrix(mainCam.combined);
-		
+
 		if (!player.getIsDead()) {
 			player.updateMotion();
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
+		} else {
+			System.out.println("im dead");
 		}
-		else {System.out.println("im dead");}
 
 		for (Enemy e : enemies) {
 			if (e.isDead()) {
