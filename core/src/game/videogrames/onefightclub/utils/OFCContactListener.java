@@ -26,7 +26,6 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
-			System.out.println("wtf");
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			// ((Player) fb.getBody().getUserData()).takeDamage(1);
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
@@ -34,13 +33,77 @@ public class OFCContactListener implements ContactListener {
 			// ((Player) fa.getBody().getUserData()).takeDamage(1);
 		}
 		
-		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		if (fa.getUserData().equals("enemy") && (fb.getUserData().equals("player"))) {
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			 ((Player) fb.getBody().getUserData()).takeDamage(1);
 		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			 ((Player) fa.getBody().getUserData()).takeDamage(1);
 		}
+		
+		if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
+			System.out.println("PLZ");
+			//((Player)fa.getBody().getUserData()).GetPowerUp();
+			//((PowerUp)fb.getBody().getUserData()).setIsDead(true);
+		}
+		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
+			System.out.println("PLZZZZ");
+			//((Player)fb.getBody().getUserData()).GetPowerUp();
+			//((PowerUp)fa.getBody().getUserData()).setIsDead(true);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
 			Enemy faEnemy = (Enemy) fa.getBody().getUserData();
