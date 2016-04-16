@@ -32,131 +32,47 @@ public class OFCContactListener implements ContactListener {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			// ((Player) fa.getBody().getUserData()).takeDamage(1);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		if (fa.getUserData().equals("enemy") && (fb.getUserData().equals("player"))) {
-			((Enemy) fa.getBody().getUserData()).setIsDead(true);
-			 ((Player) fb.getBody().getUserData()).takeDamage(1);
-		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
-			((Enemy) fb.getBody().getUserData()).setIsDead(true);
-			 ((Player) fa.getBody().getUserData()).takeDamage(1);
-		}
-		
-		if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
-			System.out.println("PLZ");
-			//((Player)fa.getBody().getUserData()).GetPowerUp();
-			//((PowerUp)fb.getBody().getUserData()).setIsDead(true);
-		}
-		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
-			System.out.println("PLZZZZ");
-			//((Player)fb.getBody().getUserData()).GetPowerUp();
-			//((PowerUp)fa.getBody().getUserData()).setIsDead(true);
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
-			Enemy faEnemy = (Enemy) fa.getBody().getUserData();
-			if (faEnemy.getMovingRight()) {
-				faEnemy.setMovingRight(false);
-				faEnemy.setMovingLeft(true);
+			Enemy enemyA = (Enemy) fa.getBody().getUserData();
+			if (enemyA.getBody().getLinearVelocity().x > 0.0f) {
+				enemyA.moveLeft();
 			} else {
-				faEnemy.setMovingLeft(false);
-				faEnemy.setMovingRight(true);
+				enemyA.moveRight();
 			}
-			Enemy fbEnemy = (Enemy) fb.getBody().getUserData();
-			if (fbEnemy.getMovingRight()) {
-				fbEnemy.setMovingRight(false);
-				fbEnemy.setMovingLeft(true);
+			Enemy enemyB = (Enemy) fb.getBody().getUserData();
+			if (enemyB.getBody().getLinearVelocity().x > 0.0f) {
+				enemyB.moveLeft();
 			} else {
-				fbEnemy.setMovingLeft(false);
-				fbEnemy.setMovingRight(true);
+				enemyB.moveRight();
 			}
 		}
-		
+
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("edge")) {
-			Enemy faEnemy = (Enemy) fa.getBody().getUserData();
-			if (faEnemy.getMovingRight()) {
-				//System.out.println("in enemy 1");
-				faEnemy.setMovingRight(false);
-				faEnemy.setMovingLeft(true);
+			Enemy enemy = (Enemy) fa.getBody().getUserData();
+			if (enemy.getBody().getLinearVelocity().x > 0.0f) {
+				enemy.moveLeft();
 			} else {
-				//System.out.println("in enemy 1 reverse");
-				faEnemy.setMovingLeft(false);
-				faEnemy.setMovingRight(true);
+				enemy.moveRight();
 			}
 		}
-		
+
 		if (fa.getUserData().equals("edge") && fb.getUserData().equals("enemy")) {
-			Enemy fbEnemy = (Enemy) fb.getBody().getUserData();
-			if (fbEnemy.getMovingRight()) {
-				//System.out.println("in enemy 2");
-				fbEnemy.setMovingRight(false);
-				fbEnemy.setMovingLeft(true);
+			Enemy enemy = (Enemy) fb.getBody().getUserData();
+			if (enemy.getBody().getLinearVelocity().x > 0.0f) {
+				enemy.moveLeft();
 			} else {
-				//System.out.println("in enemy 2 reverse");
-				fbEnemy.setMovingLeft(false);
-				fbEnemy.setMovingRight(true);
+				enemy.moveRight();
 			}
 		}
-		
+
 		if (fa.getUserData().equals("player") && fb.getUserData().equals("powerup")) {
-			((Player)fa.getBody().getUserData()).GetPowerUp();
-			((PowerUp)fb.getBody().getUserData()).setIsDead(true);
+			((Player) fa.getBody().getUserData()).GetPowerUp();
+			((PowerUp) fb.getBody().getUserData()).setIsDead(true);
 		}
 		if (fb.getUserData().equals("powerup") && fb.getUserData().equals("player")) {
-			((Player)fb.getBody().getUserData()).GetPowerUp();
-			((PowerUp)fa.getBody().getUserData()).setIsDead(true);
+			((Player) fb.getBody().getUserData()).GetPowerUp();
+			((PowerUp) fa.getBody().getUserData()).setIsDead(true);
 		}
 
 		if (fa.getUserData() != null && fa.getUserData().equals("player.foot")) {

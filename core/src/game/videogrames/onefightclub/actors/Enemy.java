@@ -17,7 +17,7 @@ import game.videogrames.onefightclub.utils.Constants;
 
 public class Enemy extends MovingSprite {
 	public static final String PLAYER_FILEPATH = "images/bunny.png";
-	
+
 	private Sound sound_death;
 
 	private boolean movingLeft = false;
@@ -34,6 +34,7 @@ public class Enemy extends MovingSprite {
 
 		setAnimation(1 / 12.0f, enemyAnimation);
 		movingRight = true;
+		setFacingRight(true);
 
 		// main bounding box
 		PolygonShape shape = new PolygonShape();
@@ -60,7 +61,7 @@ public class Enemy extends MovingSprite {
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
 		fdef.friction = 2.0f;
 		body.createFixture(fdef).setUserData("enemy.foot");
-		
+
 		sound_death = Gdx.audio.newSound(Gdx.files.internal("sounds/Enemy_Death.wav"));
 	}
 
@@ -86,26 +87,20 @@ public class Enemy extends MovingSprite {
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 	}
 
-	public void setMovingLeft(boolean b) {
-		if (movingRight && b) {
+	public void moveLeft() {
+		if (movingRight) {
 			movingRight = false;
 		}
-		this.movingLeft = b;
+		this.movingLeft = true;
+		setFacingRight(false);
 	}
 
-	public void setMovingRight(boolean b) {
-		if (movingLeft && b) {
+	public void moveRight() {
+		if (movingLeft) {
 			movingLeft = false;
 		}
-		this.movingRight = b;
-	}
-
-	public boolean getMovingRight() {
-		return movingRight;
-	}
-
-	public boolean getMovingLeft() {
-		return movingLeft;
+		this.movingRight = true;
+		setFacingRight(true);
 	}
 
 	public void setGrounded(boolean b) {

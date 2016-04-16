@@ -12,7 +12,7 @@ public class Constants {
 
 	public static final float GRAVITY = -15.0f;
 	public static final float JUMP_VELOCITY = 6.5f;
-	public static final float RUN_VELOCITY = 3.5f;
+	public static final float RUN_VELOCITY = 2.5f;
 
 	public static final short BIT_GROUND = 2;
 	public static final short BIT_EDGE = 4;
@@ -35,6 +35,12 @@ public class Constants {
 					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM),
 			new Vector2(((((float) Constants.APP_WIDTH) * (3.0f / 8.0f)) / PPM),
 					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM) };
+	
+	public static final Vector2[] powerupSpawns = new Vector2[] {
+			new Vector2((Constants.APP_WIDTH / PPM) / 2, ((float) Constants.APP_HEIGHT) / PPM / 2),
+			new Vector2((((float) Constants.APP_WIDTH * (7.0f/8.0f))/ PPM), (((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
+			new Vector2(((((float) Constants.APP_WIDTH) * (1.5f / 8.0f)) / PPM),
+					(((float) Constants.APP_HEIGHT) * (2.0f / 8.0f)) / PPM) };
 
 	public static final int NUM_ENEMIES = 10;
 

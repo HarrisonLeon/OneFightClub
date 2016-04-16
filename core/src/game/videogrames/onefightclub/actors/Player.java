@@ -80,7 +80,7 @@ public class Player extends MovingSprite {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef.filter.maskBits = Constants.BIT_GROUND;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
 		fdef.friction = 0.0f;
 		body.createFixture(fdef).setUserData("player");
 
