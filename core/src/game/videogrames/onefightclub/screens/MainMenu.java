@@ -4,12 +4,15 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -43,8 +46,11 @@ public class MainMenu extends OFCScreen {
     	Gdx.input.setInputProcessor(stage);
     	TextureRegion upRegion = new TextureRegion();
     	TextureRegion downRegion = new TextureRegion();
-    	pixels = new BitmapFont();
-    	
+
+		pixels = new BitmapFont();
+    	//pixels = new BitmapFont(Gdx.files.internal("font.fnt"));
+    	pixels.setColor(Color.WHITE);
+		
     	skin = new Skin();
     	TextButtonStyle style = new TextButtonStyle();
     	style.font = pixels;
@@ -60,7 +66,7 @@ public class MainMenu extends OFCScreen {
     	play.setWidth(100);
     	play.setHeight(50);
     	
-    	title = new Image(new TextureRegion(new Texture(Gdx.files.internal("images/temptitle.png")), 0, 0, 800, 500));
+    	title = new Image(new TextureRegion(new Texture(Gdx.files.internal("images/temptitle.png")), -75, 0, 850, 500));
 		//achievements = new Image(new TextureRegion(new Texture(Gdx.files.internal("images/achievements.png")), 0, 0, 600, 600));
 		
 		
