@@ -36,29 +36,29 @@ public class Player extends MovingSprite {
 	private boolean isGrounded = false;
 	private boolean isDead = false;
 	private Random rand;
-	
+
 	private Array<Float> modifiers;
-	
+
 	private Timer powerup_timer;
 
 	private Weapon weapon;
 	private int health = 6;
-	
+
 	private Hud hud;
 
 	public Player(Body body, Hud hud) {
 		super(body);
-		
+
 		rand = new Random();
 		modifiers = new Array<Float>();
 		for (int i = 0; i < 2; i++) {
 			modifiers.add(1.0f);
 		}
-		
+
 		powerup_timer = new Timer();
 
 		this.hud = hud;
-		
+
 		// create idle animation
 		Texture idleTexture = new Texture(Gdx.files.internal(IDLE_FILEPATH));
 		idleAnimation = new Array<TextureRegion>(TextureRegion.split(idleTexture, 36, 60)[0]);
@@ -201,10 +201,10 @@ public class Player extends MovingSprite {
 	public Weapon getWeapon() {
 		return weapon;
 	}
-	
+
 	public void GetPowerUp() {
 		System.out.println("getting powerup");
-		int i = rand.nextInt(2);
+		final int i = rand.nextInt(2);
 		modifiers.set(i, modifiers.get(i) * 2.0f);
 		Task task = new Task() {
 			public void run() {
@@ -213,7 +213,7 @@ public class Player extends MovingSprite {
 		};
 		powerup_timer.scheduleTask(task, 5);
 	}
-	
+
 	public void endPowerUp(int num) {
 		modifiers.set(num, modifiers.get(num) / 2.0f);
 	}
