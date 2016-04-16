@@ -50,35 +50,41 @@ public class UserInfo {
     	this.deaths = deaths;
     	this.jumps = jumps;
     	this.longestKillStreak = killstreak;
-    	c.updateStats(username, kills, deaths, jumps, killstreak);
+    	if(online) {
+    		c.updateStats(username, kills, deaths, jumps, killstreak);	
+    	}
     }
 
     public String userName() {
-	return username;
+    	return username;
     }
 
     public boolean isOnline() {
-	return online;
+    	return online;
     }
 
+    public int maxLevel() {
+    	return maxlevel;
+    }
+    
     public int character() {
-	return character;
+    	return character;
     }
 
     public int numKills() {
-	return kills;
+    	return kills;
     }
 
     public int numDeaths() {
-	return deaths;
+    	return deaths;
     }
 
     public int numJumps() {
-	return jumps;
+    	return jumps;
     }
 
     public int killStreak() {
-	return longestKillStreak;
+    	return longestKillStreak;
     }
     
 }
