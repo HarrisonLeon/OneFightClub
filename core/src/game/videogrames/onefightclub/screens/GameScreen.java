@@ -78,13 +78,16 @@ public class GameScreen extends OFCScreen {
 	private Sound theme1;
 	private Sound fanfare;
 	private Sound gameover;
+	
 	private boolean fanfareIsPlaying = false;
-
 	private static boolean gameOver = false;
 
 	public GameScreen(Game game) {
 		super(game);
-
+		
+		fanfareIsPlaying = false;
+		gameOver = false;
+		
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
@@ -120,6 +123,7 @@ public class GameScreen extends OFCScreen {
 		sb = ((OneFightClub) game).getSpriteBatch();
 		mainCam = ((OneFightClub) game).getMainCam();
 		hud = new Hud(sb);
+		hud.resetScore();
 
 		// set up input for the game
 		Gdx.input.setInputProcessor(new InputAdapter() {
@@ -473,6 +477,7 @@ public class GameScreen extends OFCScreen {
 		if (!fanfareIsPlaying) { // Harrison change this once u stop updating
 			fanfare.play();
 			fanfareIsPlaying = true;
+			gameOver = true;
 		}
 		System.out.println(Constants.ui.numKills());
 		System.out.println(Constants.ui.numDeaths());

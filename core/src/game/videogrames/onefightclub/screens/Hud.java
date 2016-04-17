@@ -56,4 +56,9 @@ public class Hud {
 		scoreLabel.setText("Score: " + String.format("%01d", score) + "/" + Constants.LEVEL_1_GOAL);
 	}
 	
+	public void resetScore() {
+		score = 0;
+		scoreLabel.setText("Score: " + String.format("%01d", score) + "/" + Constants.LEVEL_1_GOAL);
+	}
+	
 }

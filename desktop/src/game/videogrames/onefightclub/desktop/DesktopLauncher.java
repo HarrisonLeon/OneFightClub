@@ -156,7 +156,7 @@ public class DesktopLauncher extends JFrame {
 
 	private void createFirstGUI() {
 		// First Screen
-
+		
 		firstScreen.setLayout(new BorderLayout());
 		JLabel overall = new JLabel();
 		overall.setIcon(new ImageIcon("images/clipboard.png"));
