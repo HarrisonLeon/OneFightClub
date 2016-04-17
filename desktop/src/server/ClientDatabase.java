@@ -67,7 +67,7 @@ public class ClientDatabase {
 			System.out.println("executed");
 			ps.close();
 			
-			ps = conn.prepareStatement("INSERT INTO userinfo(username,maxlevel,charSprite,numKills,numDeaths,jump,killstreak) VALUES(?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO userinfo(username,maxlevel,charSprite,numKills,youDed,jump,killstreak) VALUES(?,?,?,?,?,?,?)");
 			ps.setString(1, username);
 			ps.setString(2, "1");
 			ps.setString(3, "1");
@@ -98,7 +98,7 @@ public class ClientDatabase {
 	
 	public void setKillsDeathsJumpsKillStreak(String username, String k, String d, String j, String ks) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? WHERE username=?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? youDed=? WHERE username=?");
 			ps.setString(3, username);
 			ps.setString(1, k);
 			ps.setString(2, d);
