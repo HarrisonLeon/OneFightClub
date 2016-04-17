@@ -22,9 +22,6 @@ import game.videogrames.onefightclub.screens.Hud;
 import game.videogrames.onefightclub.utils.Constants;
 
 public class Player extends MovingSprite {
-	//public static final String IDLE_FILEPATH = "images/soldier_idle.png";
-	//public static final String WALK_FILEPATH = "images/soldier_walk.png";
-
 	private Array<TextureRegion> idleAnimation;
 	private Array<TextureRegion> walkAnimation;
 
@@ -61,11 +58,13 @@ public class Player extends MovingSprite {
 		this.hud = hud;
 
 		// create idle animation
-		Texture idleTexture = new Texture(Gdx.files.internal(Constants.IdleCharacterSprites[Constants.ui.character() - 1]));
+		Texture idleTexture = new Texture(
+				Gdx.files.internal(Constants.IdleCharacterSprites[Constants.ui.character() - 1]));
 		idleAnimation = new Array<TextureRegion>(TextureRegion.split(idleTexture, 36, 60)[0]);
 
 		// create walk animation
-		Texture walkTexture = new Texture(Gdx.files.internal(Constants.WalkingCharacterSprites[Constants.ui.character() - 1]));
+		Texture walkTexture = new Texture(
+				Gdx.files.internal(Constants.WalkingCharacterSprites[Constants.ui.character() - 1]));
 		walkAnimation = new Array<TextureRegion>(TextureRegion.split(walkTexture, 36, 60)[0]);
 
 		setAnimation(1 / 12.0f, idleAnimation);
