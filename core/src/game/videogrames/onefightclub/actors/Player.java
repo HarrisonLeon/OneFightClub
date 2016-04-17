@@ -220,4 +220,8 @@ public class Player extends MovingSprite {
 	public void endPowerUp(int num) {
 		modifiers.set(num, modifiers.get(num) / 1.5f);
 	}
+	
+	public void addScore() {
+		hud.addScore();
+	}
 }

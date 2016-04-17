@@ -18,7 +18,7 @@ public class Hud {
 	private Viewport viewport;
 	
 	private Integer health = 6;
-	private Integer score = 0;
+	private static Integer score = 0;
 	
 	Label healthLabel;
 	Label scoreLabel;;
@@ -33,7 +33,9 @@ public class Hud {
 		
 		healthLabel = new Label("Lives: " + String.format("%01d",  health), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		healthLabel.setFontScale(2, 2);
-		scoreLabel = new Label("Score: " + String.format("%01d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		
+		scoreLabel = new Label("Score: " + String.format("%01d", score) + "/" + Constants.NUM_ENEMIES, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		scoreLabel.setFontScale(2, 2);
 		
 		table.add(healthLabel);
 		table.padTop(15);
@@ -47,8 +49,8 @@ public class Hud {
 		healthLabel.setText("Lives: " + String.format("%01d",  health));
 	}
 	
-	public void addScore() {
-		this.score += 1;
+	public static void addScore() {
+		score += 1;
 	}
 	
 }
