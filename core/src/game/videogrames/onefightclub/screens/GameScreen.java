@@ -77,7 +77,7 @@ public class GameScreen extends OFCScreen {
 	private Sound ambience_scifi;
 	private Sound theme1;
 	private Sound fanfare;
-	private Sound gameover;
+	private Sound gameover = true;
 	private boolean fanfareIsPlaying = false;
 
 	private static boolean gameOver = false;
