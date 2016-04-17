@@ -98,12 +98,17 @@ public class ClientDatabase {
 	
 	public void setKillsDeathsJumpsKillStreak(String username, String k, String d, String j, String ks) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? jump=? killstreak=? WHERE username=?");
-			ps.setString(5, username);
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? WHERE username=?");
+			ps.setString(3, username);
 			ps.setString(1, k);
 			ps.setString(2, d);
-			ps.setString(3, j);
-			ps.setString(4, ks);
+			ps.executeUpdate();
+			ps.close();
+			
+			ps = conn.prepareStatement("UPDATE userinfo SET jump=? killstreak=? WHERE username=?");
+			ps.setString(1, j);
+			ps.setString(2, ks);
+			ps.setString(3, username);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
