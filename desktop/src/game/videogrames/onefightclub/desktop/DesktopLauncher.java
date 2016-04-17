@@ -155,13 +155,7 @@ public class DesktopLauncher extends JFrame
 		cardLayout.setLayout(cl);
 	}
 	
-	private void createFirstGUI() {
-<<<<<<< HEAD
-		// First Screen
-=======
-		//First Screen
->>>>>>> c5cbe1c1bf658358d5ac6f3524735d08f21aba0e
-		
+	private void createFirstGUI() {	
 		firstScreen.setLayout(new BorderLayout());
 		JLabel overall = new JLabel();
 		overall.setIcon(new ImageIcon("images/clipboard.png"));
