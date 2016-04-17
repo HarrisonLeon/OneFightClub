@@ -220,16 +220,22 @@ public class Player extends MovingSprite {
 	public void endPowerUp(int num) {
 		modifiers.set(num, modifiers.get(num) / 1.5f);
 	}
-	
+
 	public void addScore() {
-		hud.addScore();
+		Hud.addScore();
 	}
-	
+
 	public boolean getGameOver() {
 		return gameover;
 	}
-	
+
 	public void setGameOver(boolean b) {
 		gameover = b;
+	}
+
+	public void stop() {
+		sound_jump.stop();
+		sound_walk.stop();
+		sound_powerup.stop();
 	}
 }
