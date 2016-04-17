@@ -264,13 +264,8 @@ public class GameScreen extends OFCScreen {
 		// fdef2.friction = 2.0f;
 		powerupBody.createFixture(fdef2).setUserData("powerup");
 
-		// create foot sensor
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef2.filter.maskBits = Constants.BIT_GROUND;
 		fdef2.isSensor = true;
-		powerupBody.createFixture(fdef2).setUserData("powerup.foot");
+		//powerupBody.createFixture(fdef2).setUserData("powerup.foot");
 		PowerUp powerup = new PowerUp(powerupBody);
 		powerupBody.setUserData(powerup);
 		powerups.add(powerup);
