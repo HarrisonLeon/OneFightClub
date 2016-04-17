@@ -28,11 +28,20 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
-			System.out.println("wtf");
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
 			kills++;
+			if (kills == 2) {
+				if (Constants.ui.killStreak() < killstreak) {
+					Constants.ui.setkillStreak(killstreak);
+				}
+				System.out.println(Constants.ui.numKills());
+				System.out.println(Constants.ui.numDeaths());
+				System.out.println(Constants.ui.numJumps());
+				System.out.println(Constants.ui.killStreak());
+				Constants.ui.updateStats();
+			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
@@ -67,7 +76,7 @@ public class OFCContactListener implements ContactListener {
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		}
-
+		
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
 			Enemy enemyA = (Enemy) fa.getBody().getUserData();
 			if (enemyA.getBody().getLinearVelocity().x > 0.0f) {

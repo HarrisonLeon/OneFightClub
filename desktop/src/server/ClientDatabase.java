@@ -84,12 +84,12 @@ public class ClientDatabase {
 		
 	}
 	
-	public void setLevel(String username, int ml) {
+	public void setLevel(String username, String ml) {
 		try {
 			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET maxlevel=? WHERE user=?");
 			ps.setString(2, username);
-			ps.setInt(1, ml);
-			ps.executeQuery();
+			ps.setString(1, ml);
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class ClientDatabase {
 			ps.setString(2, d);
 			ps.setString(3, j);
 			ps.setString(4, ks);
-			ps.executeQuery();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -30,6 +30,7 @@ public class Player extends MovingSprite {
 
 	private Sound sound_jump;
 	private Sound sound_walk;
+	private Sound sound_powerup;
 
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
@@ -70,6 +71,7 @@ public class Player extends MovingSprite {
 		setAnimation(1 / 12.0f, idleAnimation);
 
 		sound_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Jump.wav"));
+		sound_powerup = Gdx.audio.newSound(Gdx.files.internal("sounds/Powerup.wav"));
 		sound_walk = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Walk.wav"));
 		sound_walk.loop(0.1f);
 		sound_walk.pause();
@@ -80,7 +82,7 @@ public class Player extends MovingSprite {
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef.filter.maskBits = Constants.BIT_GROUND;
+		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_ENEMY;
 		fdef.friction = 0.0f;
 		body.createFixture(fdef).setUserData("player");
 
@@ -204,7 +206,7 @@ public class Player extends MovingSprite {
 	}
 
 	public void GetPowerUp() {
-		System.out.println("getting powerup");
+		sound_powerup.play(0.7f);
 		final int i = rand.nextInt(2);
 		modifiers.set(i, modifiers.get(i) * 2.0f);
 		Task task = new Task() {

@@ -83,6 +83,10 @@ public class ServerThread extends Thread {
 					sendMessage("%:" + info[1] + ":" + stats.elementAt(0) +":" + stats.elementAt(1) + ":" + stats.elementAt(2) + ":" + stats.elementAt(3) + ":" + stats.elementAt(4) + ":" + stats.elementAt(5));
 				}
 				
+				if(info[0].equals("!")) {
+					cd.setLevel(info[1], info[2]);
+				}
+				
 			}
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println("cnfe in run: " + cnfe.getMessage());
