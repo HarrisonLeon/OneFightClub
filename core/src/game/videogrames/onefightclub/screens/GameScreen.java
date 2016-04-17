@@ -77,9 +77,10 @@ public class GameScreen extends OFCScreen {
 	private Sound ambience_scifi;
 	private Sound theme1;
 	private Sound fanfare;
+	private Sound gameover;
 	private boolean fanfareIsPlaying = false;
 
-	private boolean gameOver = false;
+	private static boolean gameOver = false;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -88,6 +89,8 @@ public class GameScreen extends OFCScreen {
 		theme1.loop(0.3f);
 
 		fanfare = Gdx.audio.newSound(Gdx.files.internal("sounds/Fanfare.wav"));
+		
+		gameover = Gdx.audio.newSound(Gdx.files.internal("sounds/GameOver.wav"));
 
 		ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
 		ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
@@ -348,7 +351,9 @@ public class GameScreen extends OFCScreen {
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
 		} else { // Player is dead
+			gameOver = true;
 			theme1.stop();
+			gameover.play();
 			System.out.println(Constants.ui.numKills());
 			System.out.println(Constants.ui.numDeaths());
 			System.out.println(Constants.ui.numJumps());
@@ -421,6 +426,9 @@ public class GameScreen extends OFCScreen {
 	}
 
 	private void playAmbience() {
+		if (gameOver) {
+			return;
+		}
 		Random random = new Random();
 		int randomNumber = random.nextInt(5);
 
@@ -438,11 +446,7 @@ public class GameScreen extends OFCScreen {
 
 		ambience_timer = new Timer();
 		Task task2 = new Task() {
-
 			public void run() {
-				if (gameOver) {
-					return;
-				}
 				playAmbience();
 			}
 		};
@@ -476,5 +480,9 @@ public class GameScreen extends OFCScreen {
 			}
 		};
 		enemy_timer.scheduleTask(task, 5);
+	}
+	
+	public static boolean isOver() {
+		return gameOver;
 	}
 }

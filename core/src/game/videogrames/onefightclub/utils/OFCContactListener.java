@@ -37,7 +37,10 @@ public class OFCContactListener implements ContactListener {
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
 			GameScreen.addScore();
-			sound_death.play(0.07f);
+			if (!GameScreen.isOver()) {
+				sound_death.play(0.07f);
+			}
+			
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -49,7 +52,9 @@ public class OFCContactListener implements ContactListener {
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			GameScreen.addScore();
-			sound_death.play(0.07f);
+			if (!GameScreen.isOver()) {
+				sound_death.play(0.07f);
+			}
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -67,7 +72,10 @@ public class OFCContactListener implements ContactListener {
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
 			}
-			sound_player_damage.play(1.5f);
+			if (!GameScreen.isOver()) {
+				sound_player_damage.play(1.5f);
+			}
+			
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
@@ -76,7 +84,9 @@ public class OFCContactListener implements ContactListener {
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
 			}
-			sound_player_damage.play(2.0f);
+			if (!GameScreen.isOver()) {
+				sound_player_damage.play(2.0f);
+			}
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		}

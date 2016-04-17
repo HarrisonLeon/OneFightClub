@@ -41,18 +41,20 @@ public class AchievementsScreen extends OFCScreen{
     	style.font = pixels;
     	
 		
-		titles.add("First Kill");
-		titles.add("Ten Kills");
-		titles.add("One Hundred Kills");
 		titles.add("First Death");
-		titles.add("Ten Deaths");
-		titles.add("One Hundred Deaths");
-		titles.add("First Jump");
+		titles.add("One Hundred Kills");
+		titles.add("Ten Kills");
+		titles.add("First Kill");
+		
 		titles.add("Ten Jumps");
-		titles.add("One Hundred Jumps");
-		titles.add("Five Killstreak");
-		titles.add("Ten Killstreak");
+		titles.add("First Jump");
+		titles.add("One Hundred Deaths");
+		titles.add("Ten Deaths");
+		
 		titles.add("Twenty Killstreak");
+		titles.add("Ten Killstreak");
+		titles.add("Five Killstreak");
+		titles.add("One Hundred Jumps");
 		
 		Integer[] pointone = {-25, 0, 250, 600};
 		points.add(pointone);
@@ -105,8 +107,8 @@ public class AchievementsScreen extends OFCScreen{
 				}
 				
 				TextButton title = new TextButton(titles.elementAt(i + element), style);
-				title.setX(points.elementAt(i)[0] + 100);
-				title.setY(points.elementAt(i)[1] + 575);
+				title.setX(points.elementAt(i + element)[0] + 100);
+				title.setY(points.elementAt(i + element)[1] + 575);
 				title.setWidth(pointTitle.elementAt(2));
 				title.setHeight(15);
 				stage.addActor(title);
