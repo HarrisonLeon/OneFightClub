@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -128,6 +129,14 @@ public class AchievementsScreen extends OFCScreen{
 		
 		stage.act(30);
 		stage.draw();
+		
+		float time = 0;
+		time += delta;
+		if (time > 0) {
+		    if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
+			game.setScreen(new MainMenu(game));
+		    }
+		}
     }
 
     @Override
