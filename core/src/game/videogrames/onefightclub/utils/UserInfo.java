@@ -97,6 +97,9 @@ public class UserInfo {
 	    System.out.println(character);
 
 	} else {
+		for(int i = 0; i < 12; i++) {
+			achievements.add(false);
+		}
 	    online = false;
 	    username = "";
 	    maxlevel = 1;
