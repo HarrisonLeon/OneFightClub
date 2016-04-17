@@ -17,7 +17,7 @@ public class UserInfo {
     private Vector<Boolean> achievements;
 
     public UserInfo(String line, String username, Client c2) {
-	
+	achievements = new Vector<Boolean>();
     if (line.equals("online")) {
     	this.c = c2;
 	    online = true;
