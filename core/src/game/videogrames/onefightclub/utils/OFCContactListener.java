@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import game.videogrames.onefightclub.actors.Enemy;
+import game.videogrames.onefightclub.actors.Melee;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
@@ -50,6 +51,7 @@ public class OFCContactListener implements ContactListener {
 				System.out.println(Constants.ui.numJumps());
 				System.out.println(Constants.ui.killStreak());
 				Constants.ui.updateStats();
+				((Player)fb.getBody().getUserData()).setGameOver(true);
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			GameScreen.addScore();
@@ -67,6 +69,7 @@ public class OFCContactListener implements ContactListener {
 				System.out.println(Constants.ui.numJumps());
 				System.out.println(Constants.ui.killStreak());
 				Constants.ui.updateStats();
+				((Player)fb.getBody().getUserData()).setGameOver(true);
 			}
 		}
 
