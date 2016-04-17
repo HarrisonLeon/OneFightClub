@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Constants {
 	public static final String TITLE = "2-0: One Fight Club";
-	public static final int APP_WIDTH = 960;
-	public static final int APP_HEIGHT = 640;
+	public static final float APP_WIDTH = 960;
+	public static final float APP_HEIGHT = 640;
 
 	// pixels per meter
 	public static final float PPM = 100.0f;
@@ -22,27 +22,27 @@ public class Constants {
 	public static final short BIT_ITEM = 12;
 
 	public static final Vector2[] enemySpawns = new Vector2[] {
-			new Vector2((Constants.APP_WIDTH / PPM) / 2, (((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
-			new Vector2((Constants.APP_WIDTH / PPM) / 2, (((float) Constants.APP_HEIGHT) * (3.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (1.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (4.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (7.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (4.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (1.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (2.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (7.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (1.5f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (5.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (3.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM) };
+			// top [0]
+			new Vector2((APP_WIDTH / PPM) / 2, (((float) APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
+			// bottom [1]
+			new Vector2((APP_WIDTH / PPM) / 2, (((float) APP_HEIGHT) * (3.0f / 8.0f)) / PPM),
+			// left [2]
+			new Vector2(((APP_WIDTH * (1.0f / 8.0f)) / PPM), ((APP_HEIGHT * (4.0f / 8.0f)) / PPM)),
+			// right [3]
+			new Vector2(((APP_WIDTH * (7.0f / 8.0f)) / PPM), ((APP_HEIGHT * (4.0f / 8.0f)) / PPM)),
+			// bottom left [4]
+			new Vector2(((APP_WIDTH * (1.0f / 8.0f)) / PPM), ((APP_HEIGHT * (2.0f / 8.0f)) / PPM)),
+			// bottom left [5]
+			new Vector2(((APP_WIDTH * (7.0f / 8.0f)) / PPM), ((APP_HEIGHT * (1.5f / 8.0f)) / PPM)),
+			// top right [6]
+			new Vector2(((APP_WIDTH * (5.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)),
+			// top left [7]
+			new Vector2(((APP_WIDTH * (3.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)) };
 
 	public static final Vector2[] powerupSpawns = new Vector2[] {
-			new Vector2((Constants.APP_WIDTH / PPM) / 2, ((float) Constants.APP_HEIGHT) / PPM / 2),
-			new Vector2((((float) Constants.APP_WIDTH * (7.0f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
-			new Vector2(((((float) Constants.APP_WIDTH) * (1.5f / 8.0f)) / PPM),
-					(((float) Constants.APP_HEIGHT) * (2.0f / 8.0f)) / PPM) };
+			new Vector2((APP_WIDTH / PPM) / 2, ((float) APP_HEIGHT) / PPM / 2),
+			new Vector2((((float) APP_WIDTH * (7.0f / 8.0f)) / PPM), (((float) APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
+			new Vector2(((((float) APP_WIDTH) * (1.5f / 8.0f)) / PPM), (((float) APP_HEIGHT) * (2.0f / 8.0f)) / PPM) };
 
 	public static final int NUM_ENEMIES = 10;
 	public static final int LEVEL_1_GOAL = 20;

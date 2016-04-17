@@ -80,7 +80,7 @@ public class GameScreen extends OFCScreen {
 	private Sound gameover;
 	private boolean fanfareIsPlaying = false;
 
-	private boolean gameOver = false;
+	private static boolean gameOver = false;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -351,6 +351,7 @@ public class GameScreen extends OFCScreen {
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
 		} else { // Player is dead
+			gameOver = true;
 			theme1.stop();
 			gameover.play();
 			System.out.println(Constants.ui.numKills());
@@ -425,6 +426,9 @@ public class GameScreen extends OFCScreen {
 	}
 
 	private void playAmbience() {
+		if (gameOver) {
+			return;
+		}
 		Random random = new Random();
 		int randomNumber = random.nextInt(5);
 
@@ -442,11 +446,7 @@ public class GameScreen extends OFCScreen {
 
 		ambience_timer = new Timer();
 		Task task2 = new Task() {
-
 			public void run() {
-				if (gameOver) {
-					return;
-				}
 				playAmbience();
 			}
 		};
@@ -480,5 +480,9 @@ public class GameScreen extends OFCScreen {
 			}
 		};
 		enemy_timer.scheduleTask(task, 5);
+	}
+	
+	public static boolean isOver() {
+		return gameOver;
 	}
 }
