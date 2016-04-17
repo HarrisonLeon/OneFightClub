@@ -17,6 +17,7 @@ public class PowerUp extends StillSprite {
 	public static final String PLAYER_FILEPATH = "images/powerup.png";
 
 	private boolean isDead = false;
+	private int spawn;
 
 	public PowerUp(Body body) {
 		super(body);
@@ -40,6 +41,14 @@ public class PowerUp extends StillSprite {
 
 	public void setIsDead(boolean b) {
 		isDead = b;
+	}
+	
+	public void setSpawn(int i) {
+		spawn = i;
+	}
+	
+	public int getSpawn() {
+		return spawn;
 	}
 
 	public void killPowerUp() {

@@ -258,6 +258,7 @@ public class GameScreen extends OFCScreen {
 
 		player = new Player(playerBody, hud);
 		playerBody.setUserData(player);
+		player.setGameScreen(this);
 	}
 
 	public void spawnEnemy() {
@@ -308,7 +309,12 @@ public class GameScreen extends OFCScreen {
 
 		if (powerupSpawnAvailable.elementAt(randLoc)) {
 			createPowerup(randLoc);
+			powerupSpawnAvailable.setElementAt(false, randLoc);
 		}
+	}
+	
+	public void freePowerupSpawn(int i) {
+		powerupSpawnAvailable.set(i, true);
 	}
 
 	public void createPowerup(int spawnLoc) {
