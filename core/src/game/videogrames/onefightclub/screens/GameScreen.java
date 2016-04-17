@@ -356,14 +356,15 @@ public class GameScreen extends OFCScreen {
 
 		sb.setProjectionMatrix(mainCam.combined);
 
-		if (player.getIsRespawning()) {
-			player.getBody().setTransform(Constants.playerSpawn, 0.0f);
-		}
-
 		if (!player.getIsDead()) {
-			player.updateMotion();
-			player.setGrounded(cl.isPlayerGrounded());
-			player.render(sb);
+			if (player.getIsRespawning()) {
+				player.getBody().setTransform(Constants.playerSpawn, 0.0f);
+				player.setGrounded(true);
+			} else {
+				player.updateMotion();
+				player.setGrounded(cl.isPlayerGrounded());
+				player.render(sb);
+			}
 		} else { // Player is dead
 			gameOver = true;
 			theme1.stop();

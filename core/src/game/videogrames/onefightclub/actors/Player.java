@@ -34,12 +34,11 @@ public class Player extends MovingSprite {
 	private boolean movingRight = false;
 	private boolean isGrounded = false;
 	private boolean isDead = false;
-	private Random rand;
 	private boolean gameover = false;
 
 	private Array<Float> modifiers;
 
-	private Timer powerup_timer;
+	private Timer timer;
 
 	private Weapon weapon;
 	private int health = 6;
@@ -53,13 +52,12 @@ public class Player extends MovingSprite {
 	public Player(Body body, Hud hud) {
 		super(body);
 
-		rand = new Random();
 		modifiers = new Array<Float>();
 		for (int i = 0; i < 2; i++) {
 			modifiers.add(1.0f);
 		}
 
-		powerup_timer = new Timer();
+		timer = new Timer();
 
 		this.hud = hud;
 
@@ -196,10 +194,6 @@ public class Player extends MovingSprite {
 	}
 
 	public void jump() {
-		if (!GameScreen.isOver()) {
-			sound_jump.play(0.08f);
-		}
-
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
 		Constants.ui.setnumJumps(Constants.ui.numJumps() + 1);
 	}
@@ -218,14 +212,13 @@ public class Player extends MovingSprite {
 		isRespawning = true;
 		if (health == 0) {
 			isDead = true;
-			// this.getBody().getWorld().destroyBody(this.getBody());
 		} else {
 			Task task = new Task() {
 				public void run() {
 					isRespawning = false;
 				}
 			};
-			powerup_timer.scheduleTask(task, 3);
+			timer.scheduleTask(task, 2);
 		}
 	}
 
@@ -234,9 +227,7 @@ public class Player extends MovingSprite {
 	}
 
 	public void GetPowerUp(PowerUp pu) {
-		if (!GameScreen.isOver()) {
-			sound_powerup.play(0.7f);
-		}
+		Random rand = new Random();
 		final int i = rand.nextInt(2);
 		modifiers.set(i, modifiers.get(i) * 1.5f);
 		Task task = new Task() {
@@ -244,7 +235,7 @@ public class Player extends MovingSprite {
 				endPowerUp(i);
 			}
 		};
-		powerup_timer.scheduleTask(task, 5);
+		timer.scheduleTask(task, 5);
 		gs.freePowerupSpawn(pu.getSpawn());
 	}
 
