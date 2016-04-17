@@ -79,6 +79,8 @@ public class GameScreen extends OFCScreen {
 	private Sound fanfare;
 	private boolean fanfareIsPlaying = false;
 
+	private boolean gameOver = false;
+
 	public GameScreen(Game game) {
 		super(game);
 
@@ -317,32 +319,6 @@ public class GameScreen extends OFCScreen {
 		powerups.add(powerup);
 	}
 
-	// public void createWeapon() {
-	// BodyDef bdef2 = new BodyDef();
-	// bdef2.position.set(500.0f / PPM, 200.0f / PPM);
-	// bdef2.type = BodyType.DynamicBody;
-	// Body weaponBody = world.createBody(bdef2);
-	// PolygonShape shape = new PolygonShape();
-	// shape.setAsBox(40.0f / PPM, 32.0f / PPM);
-	// FixtureDef fdef2 = new FixtureDef();
-	// fdef2.shape = shape;
-	// fdef2.filter.categoryBits = Constants.BIT_PLAYER;
-	// fdef2.filter.maskBits = Constants.BIT_GROUND;
-	// fdef2.friction = 2.0f;
-	// weaponBody.createFixture(fdef2).setUserData("weapon");
-	//
-	// // create foot sensor
-	// shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-	// fdef2.shape = shape;
-	// fdef2.filter.categoryBits = Constants.BIT_PLAYER;
-	// fdef2.filter.maskBits = Constants.BIT_GROUND;
-	// fdef2.isSensor = true;
-	// weaponBody.createFixture(fdef2).setUserData("weapon.foot");
-	// Weapon weapon = new Weapon(weaponBody);
-	// weaponBody.setUserData(weapon);
-	// weapons.add(weapon);
-	// }
-
 	@Override
 	public void render(float delta) {
 		// processInput();
@@ -412,7 +388,7 @@ public class GameScreen extends OFCScreen {
 		}
 		powerupRemoval.clear();
 
-		debugRenderer.render(world, b2dCamera.combined);
+		// debugRenderer.render(world, b2dCamera.combined);
 
 		world.step(1 / 60f, 6, 2);
 		sb.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -426,6 +402,16 @@ public class GameScreen extends OFCScreen {
 	@Override
 	public void hide() {
 		Gdx.app.debug("One Fight Club", "dispose game screen");
+
+		theme1.stop();
+		fanfare.stop();
+		ambience_fizzle.stop();
+		ambience_beep1.stop();
+		ambience_beep2.stop();
+		ambience_robot.stop();
+		ambience_scifi.stop();
+
+		player.stop();
 	}
 
 	private void playAmbience() {
@@ -446,7 +432,11 @@ public class GameScreen extends OFCScreen {
 
 		ambience_timer = new Timer();
 		Task task2 = new Task() {
+
 			public void run() {
+				if (gameOver) {
+					return;
+				}
 				playAmbience();
 			}
 		};
@@ -461,6 +451,8 @@ public class GameScreen extends OFCScreen {
 	}
 
 	private void GameOver() {
+		gameOver = true;
+
 		theme1.stop();
 		if (!fanfareIsPlaying) { // Harrison change this once u stop updating
 			fanfare.play();
@@ -473,9 +465,10 @@ public class GameScreen extends OFCScreen {
 		Constants.ui.updateStats();
 		Task task = new Task() {
 			public void run() {
+				game.getScreen().dispose();
 				game.setScreen(new AchievementsScreen(game));
 			}
 		};
-		enemy_timer.scheduleTask(task, 5);	
+		enemy_timer.scheduleTask(task, 5);
 	}
 }
