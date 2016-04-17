@@ -69,7 +69,7 @@ public class OFCContactListener implements ContactListener {
 				System.out.println(Constants.ui.numJumps());
 				System.out.println(Constants.ui.killStreak());
 				Constants.ui.updateStats();
-				((Player)fb.getBody().getUserData()).setGameOver(true);
+				((Player)fa.getBody().getUserData()).setGameOver(true);
 			}
 		}
 
