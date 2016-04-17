@@ -482,8 +482,8 @@ public class DesktopLauncher extends JFrame
 
 		config.title = "OneFightClub";
 		config.useGL30 = false;
-		config.width = Constants.APP_WIDTH;
-		config.height = Constants.APP_HEIGHT;
+		config.width = (int)Constants.APP_WIDTH;
+		config.height = (int) Constants.APP_HEIGHT;
 
 		new LwjglApplication(new OneFightClub(), config);
 	}
