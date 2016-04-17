@@ -78,21 +78,21 @@ public class GameScreen extends OFCScreen {
 	private Sound theme1;
 	private Sound fanfare;
 	private Sound gameover;
-	
+
 	private boolean fanfareIsPlaying = false;
 	private static boolean gameOver = false;
 
 	public GameScreen(Game game) {
 		super(game);
-		
+
 		fanfareIsPlaying = false;
 		gameOver = false;
-		
+
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
 
 		fanfare = Gdx.audio.newSound(Gdx.files.internal("sounds/Fanfare.wav"));
-		
+
 		gameover = Gdx.audio.newSound(Gdx.files.internal("sounds/GameOver.wav"));
 
 		ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
@@ -316,7 +316,7 @@ public class GameScreen extends OFCScreen {
 			powerupSpawnAvailable.setElementAt(false, randLoc);
 		}
 	}
-	
+
 	public void freePowerupSpawn(int i) {
 		powerupSpawnAvailable.set(i, true);
 	}
@@ -355,6 +355,10 @@ public class GameScreen extends OFCScreen {
 		tmRenderer.render();
 
 		sb.setProjectionMatrix(mainCam.combined);
+
+		if (player.getIsRespawning()) {
+			player.getBody().setTransform(Constants.playerSpawn, 0.0f);
+		}
 
 		if (!player.getIsDead()) {
 			player.updateMotion();
@@ -492,7 +496,7 @@ public class GameScreen extends OFCScreen {
 		};
 		enemy_timer.scheduleTask(task, 5);
 	}
-	
+
 	public static boolean isOver() {
 		return gameOver;
 	}

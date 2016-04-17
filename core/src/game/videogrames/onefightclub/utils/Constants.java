@@ -21,9 +21,9 @@ public class Constants {
 	public static final short BIT_WEAPON = 10;
 	public static final short BIT_ITEM = 12;
 
+	public static final Vector2 playerSpawn = new Vector2((APP_WIDTH / PPM) / 2, ((APP_HEIGHT * (7.0f / 8.0f)) / PPM));
+
 	public static final Vector2[] enemySpawns = new Vector2[] {
-			// top [0]
-			new Vector2((APP_WIDTH / PPM) / 2, (((float) APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
 			// bottom [1]
 			new Vector2((APP_WIDTH / PPM) / 2, (((float) APP_HEIGHT) * (3.0f / 8.0f)) / PPM),
 			// left [2]

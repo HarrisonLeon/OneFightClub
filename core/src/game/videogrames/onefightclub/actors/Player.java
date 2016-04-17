@@ -45,7 +45,9 @@ public class Player extends MovingSprite {
 	private int health = 6;
 
 	private Hud hud;
-	
+
+	private boolean isRespawning = false;
+
 	private GameScreen gs;
 
 	public Player(Body body, Hud hud) {
@@ -135,9 +137,13 @@ public class Player extends MovingSprite {
 		}
 		this.movingRight = b;
 	}
-	
+
 	public void setGameScreen(GameScreen gsc) {
 		gs = gsc;
+	}
+
+	public boolean getIsRespawning() {
+		return isRespawning;
 	}
 
 	public void startAttack() {
@@ -173,15 +179,14 @@ public class Player extends MovingSprite {
 		if (weapon.isActive()) {
 			weapon.render(sb);
 		}
-		
+
 		if (!GameScreen.isOver()) {
 			if ((movingRight || movingLeft) && isGrounded) {
 				sound_walk.resume();
 			} else {
 				sound_walk.pause();
 			}
-		}
-		else {
+		} else {
 			sound_walk.pause();
 		}
 	}
@@ -194,7 +199,7 @@ public class Player extends MovingSprite {
 		if (!GameScreen.isOver()) {
 			sound_jump.play(0.08f);
 		}
-		
+
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
 		Constants.ui.setnumJumps(Constants.ui.numJumps() + 1);
 	}
@@ -210,9 +215,17 @@ public class Player extends MovingSprite {
 	public void takeDamage(int damage) {
 		health += -damage;
 		hud.setHealth(health);
+		isRespawning = true;
 		if (health == 0) {
 			isDead = true;
 			// this.getBody().getWorld().destroyBody(this.getBody());
+		} else {
+			Task task = new Task() {
+				public void run() {
+					isRespawning = false;
+				}
+			};
+			powerup_timer.scheduleTask(task, 3);
 		}
 	}
 
