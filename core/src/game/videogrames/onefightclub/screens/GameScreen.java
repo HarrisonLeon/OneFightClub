@@ -357,6 +357,7 @@ public class GameScreen extends OFCScreen {
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
 		} else { // Player is dead
+			gameOver = true;
 			theme1.stop();
 			gameover.play();
 			System.out.println(Constants.ui.numKills());

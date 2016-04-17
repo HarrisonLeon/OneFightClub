@@ -181,6 +181,9 @@ public class Player extends MovingSprite {
 				sound_walk.pause();
 			}
 		}
+		else {
+			sound_walk.pause();
+		}
 	}
 
 	public void setGrounded(boolean b) {
