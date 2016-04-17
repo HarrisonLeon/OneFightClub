@@ -372,6 +372,11 @@ public class GameScreen extends OFCScreen {
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
 		} else {
+			System.out.println(Constants.ui.numKills());
+			System.out.println(Constants.ui.numDeaths());
+			System.out.println(Constants.ui.numJumps());
+			System.out.println(Constants.ui.killStreak());
+			Constants.ui.updateStats();
 			game.setScreen(new AchievementsScreen(game));
 			System.out.println("im dead");
 		}
@@ -412,7 +417,7 @@ public class GameScreen extends OFCScreen {
 		}
 		powerupRemoval.clear();
 
-		debugRenderer.render(world, b2dCamera.combined);
+		//debugRenderer.render(world, b2dCamera.combined);
 
 		world.step(1 / 60f, 6, 2);
 		sb.setProjectionMatrix(hud.stage.getCamera().combined);
