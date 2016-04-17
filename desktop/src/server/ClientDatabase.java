@@ -67,13 +67,13 @@ public class ClientDatabase {
 			System.out.println("executed");
 			ps.close();
 			
-			ps = conn.prepareStatement("INSERT INTO userinfo(user,maxlevel,charSprite,numKills,numDeaths,jump,killstreak) VALUES(?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO userinfo(username,maxlevel,charSprite,numKills,numDeaths,jump,killstreak) VALUES(?,?,?,?,?,?,?)");
 			ps.setString(1, username);
 			ps.setString(2, "1");
 			ps.setString(3, "1");
 			ps.setString(4, "0");
 			ps.setString(5, "0");
-			ps.setString(6, "0");
+			ps.setString(6, "0"); 
 			ps.setString(7, "0");
 			ps.executeUpdate();
 			ps.close();
@@ -86,7 +86,7 @@ public class ClientDatabase {
 	
 	public void setLevel(String username, String ml) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET maxlevel=? WHERE user=?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET maxlevel=? WHERE username=?");
 			ps.setString(2, username);
 			ps.setString(1, ml);
 			ps.executeUpdate();
@@ -98,7 +98,7 @@ public class ClientDatabase {
 	
 	public void setKillsDeathsJumpsKillStreak(String username, String k, String d, String j, String ks) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? jump=? killstreak=? WHERE user=?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE userinfo SET numKills=? numDeaths=? jump=? killstreak=? WHERE username=?");
 			ps.setString(5, username);
 			ps.setString(1, k);
 			ps.setString(2, d);
@@ -117,7 +117,7 @@ public class ClientDatabase {
 		try {
 			String query ="SELECT * FROM userinfo";
 			ResultSet rs = st.executeQuery(query);
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userinfo WHERE user=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userinfo WHERE username=?");
 			
 			ps.setString(1, username);
 			rs = ps.executeQuery();
@@ -143,7 +143,7 @@ public class ClientDatabase {
 	public void setCharacter(String username, String charS) {
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("UPDATE userinfo SET charSprite=? WHERE user=?");
+			ps = conn.prepareStatement("UPDATE userinfo SET charSprite=? WHERE username=?");
 			ps.setString(1, charS);
 			ps.setString(2, username);
 			ps.executeUpdate();
