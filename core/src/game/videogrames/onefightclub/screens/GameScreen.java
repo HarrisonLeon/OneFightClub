@@ -371,7 +371,8 @@ public class GameScreen extends OFCScreen {
 			player.updateMotion();
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
-		} else {
+		} else { // Player is dead
+			theme1.stop();
 			game.setScreen(new AchievementsScreen(game));
 			System.out.println("im dead");
 		}
