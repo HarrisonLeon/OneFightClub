@@ -12,6 +12,7 @@ import game.videogrames.onefightclub.actors.Enemy;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
+import game.videogrames.onefightclub.screens.GameScreen;
 import game.videogrames.onefightclub.screens.Hud;
 
 public class OFCContactListener implements ContactListener {
@@ -34,7 +35,7 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
-			Hud.addScore();
+			GameScreen.addScore();
 			sound_death.play(0.07f);
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
@@ -51,7 +52,7 @@ public class OFCContactListener implements ContactListener {
 				Constants.ui.updateStats();
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
-			Hud.addScore();
+			GameScreen.addScore();
 			sound_death.play(0.07f);
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);

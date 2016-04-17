@@ -21,7 +21,7 @@ public class Hud {
 	private static Integer score = 0;
 	
 	Label healthLabel;
-	Label scoreLabel;;
+	static Label scoreLabel;
 	
 	public Hud(SpriteBatch sb) {
 		viewport = new FitViewport(Constants.APP_WIDTH, Constants.APP_HEIGHT);
@@ -34,12 +34,14 @@ public class Hud {
 		healthLabel = new Label("Lives: " + String.format("%01d",  health), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		healthLabel.setFontScale(2, 2);
 		
-		scoreLabel = new Label("Score: " + String.format("%01d", score) + "/" + Constants.NUM_ENEMIES, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		scoreLabel = new Label("Score: " + String.format("%01d", score) + "/" + Constants.LEVEL_1_GOAL, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel.setFontScale(2, 2);
 		
 		table.add(healthLabel);
+		table.row();
+		table.add(scoreLabel);
 		table.padTop(15);
-		table.padLeft(-Constants.APP_WIDTH*.85f);
+		table.padLeft(-Constants.APP_WIDTH*.8f);
 	
 		stage.addActor(table);
 	}
@@ -51,6 +53,7 @@ public class Hud {
 	
 	public static void addScore() {
 		score += 1;
+		scoreLabel.setText("Score: " + String.format("%01d", score) + "/" + Constants.LEVEL_1_GOAL);
 	}
 	
 }
