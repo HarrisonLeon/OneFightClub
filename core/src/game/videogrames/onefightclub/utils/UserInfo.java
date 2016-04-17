@@ -14,6 +14,7 @@ public class UserInfo {
     private int longestKillStreak;
     private int jumps;
     private Client c;
+    private Vector<Boolean> achievements;
 
     public UserInfo(String line, String username, Client c2) {
 	
@@ -31,6 +32,68 @@ public class UserInfo {
 	    jumps = Integer.parseInt(stats.get(4));
 	    longestKillStreak = Integer.parseInt(stats.get(5));
 	    
+	    achievements = new Vector<Boolean>();
+	    if (kills >= 1) { 
+	    	achievements.add(true); 
+	    } else { 
+	    	achievements.add(false); 
+	    }
+	    if (kills >= 10) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (kills >= 100) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (deaths >= 1) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (deaths >= 10) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (deaths >= 100) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (jumps >= 1) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (jumps >= 10) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (jumps >= 100) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (longestKillStreak >= 5) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (longestKillStreak >= 10) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    if (longestKillStreak >= 20) {
+	    	achievements.add(true);
+	    } else {
+	    	achievements.add(false);
+	    }
+	    
 	    System.out.println(character);
 
 	} else {
@@ -47,6 +110,66 @@ public class UserInfo {
     
     public void updateStats() {
     	if(online || c != null) {
+    		if (kills >= 1) { 
+    	    	achievements.set(0, true); 
+    	    } else { 
+    	    	achievements.set(0, false); 
+    	    }
+    	    if (kills >= 10) {
+    	    	achievements.set(1, true);
+    	    } else {
+    	    	achievements.set(1, false);
+    	    }
+    	    if (kills >= 100) {
+    	    	achievements.set(2, true);
+    	    } else {
+    	    	achievements.set(2, false);
+    	    }
+    	    if (deaths >= 1) {
+    	    	achievements.set(3, true);
+    	    } else {
+    	    	achievements.set(3, false);
+    	    }
+    	    if (deaths >= 10) {
+    	    	achievements.set(4, true);
+    	    } else {
+    	    	achievements.set(4, false);
+    	    }
+    	    if (deaths >= 100) {
+    	    	achievements.set(5, true);
+    	    } else {
+    	    	achievements.set(5, false);
+    	    }
+    	    if (jumps >= 1) {
+    	    	achievements.set(6, true);
+    	    } else {
+    	    	achievements.set(6, false);
+    	    }
+    	    if (jumps >= 10) {
+    	    	achievements.set(7, true);
+    	    } else {
+    	    	achievements.set(7, false);
+    	    }
+    	    if (jumps >= 100) {
+    	    	achievements.set(8, true);
+    	    } else {
+    	    	achievements.set(8, false);
+    	    }
+    	    if (longestKillStreak >= 5) {
+    	    	achievements.set(9, true);
+    	    } else {
+    	    	achievements.set(9, false);
+    	    }
+    	    if (longestKillStreak >= 10) {
+    	    	achievements.set(10, true);
+    	    } else {
+    	    	achievements.set(10, false);
+    	    }
+    	    if (longestKillStreak >= 20) {
+    	    	achievements.set(11, true);
+    	    } else {
+    	    	achievements.set(11, false);
+    	    }
     		c.updateStats(username, kills, deaths, jumps, longestKillStreak);	
     	}
     }
@@ -107,4 +230,19 @@ public class UserInfo {
     	longestKillStreak = num;
     }
     
+    
+    /* Index key for achievement vector:
+     * 0 = 1 kill
+     * 1 = 10 kill
+     * 2 = 100 kill
+     * 3 = 1 death
+     * 4 = 10 death
+     * 5 = 100 death
+     * 6 = 1 jump
+     * 7 = 10 jump
+     * 8 = 100 jump
+     * 9 = 5 killstreak
+     * 10 = 10 killstreak
+     * 11 = 20 killstreak
+     */
 }
