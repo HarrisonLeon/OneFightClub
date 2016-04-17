@@ -194,6 +194,8 @@ public class Player extends MovingSprite {
 	}
 
 	public void jump() {
+		sound_jump.play(0.08f);
+
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
 		Constants.ui.setnumJumps(Constants.ui.numJumps() + 1);
 	}
@@ -227,6 +229,8 @@ public class Player extends MovingSprite {
 	}
 
 	public void GetPowerUp(PowerUp pu) {
+		sound_powerup.play(0.7f);
+
 		Random rand = new Random();
 		final int i = rand.nextInt(2);
 		modifiers.set(i, modifiers.get(i) * 1.5f);
