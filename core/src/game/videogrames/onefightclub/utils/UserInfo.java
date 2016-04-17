@@ -245,4 +245,9 @@ public class UserInfo {
      * 10 = 10 killstreak
      * 11 = 20 killstreak
      */
+    
+    public Vector<Boolean> achievements() {
+    	return achievements;
+    }
+    
 }
