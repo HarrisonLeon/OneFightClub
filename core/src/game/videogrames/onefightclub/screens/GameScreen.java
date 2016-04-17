@@ -77,6 +77,7 @@ public class GameScreen extends OFCScreen {
 	private Sound ambience_scifi;
 	private Sound theme1;
 	private Sound fanfare;
+	private Sound gameover;
 	private boolean fanfareIsPlaying = false;
 
 	public GameScreen(Game game) {
@@ -86,6 +87,8 @@ public class GameScreen extends OFCScreen {
 		theme1.loop(0.3f);
 
 		fanfare = Gdx.audio.newSound(Gdx.files.internal("sounds/Fanfare.wav"));
+		
+		gameover = Gdx.audio.newSound(Gdx.files.internal("sounds/GameOver.wav"));
 
 		ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
 		ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
@@ -373,6 +376,7 @@ public class GameScreen extends OFCScreen {
 			player.render(sb);
 		} else { // Player is dead
 			theme1.stop();
+			gameover.play();
 			System.out.println(Constants.ui.numKills());
 			System.out.println(Constants.ui.numDeaths());
 			System.out.println(Constants.ui.numJumps());
