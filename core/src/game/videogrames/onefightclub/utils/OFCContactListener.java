@@ -15,6 +15,8 @@ public class OFCContactListener implements ContactListener {
 	// private boolean playerGrounded;
 
 	int numFootContacts = 0;
+	private int killstreak = 0;
+	private int kills = 0;
 
 	public boolean isPlayerGrounded() {
 		return (numFootContacts > 0);
@@ -28,18 +30,42 @@ public class OFCContactListener implements ContactListener {
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
 			System.out.println("wtf");
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
-			// ((Player) fb.getBody().getUserData()).takeDamage(1);
+			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
+			killstreak++;
+			kills++;
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
-			// ((Player) fa.getBody().getUserData()).takeDamage(1);
+			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
+			killstreak++;
+			kills++;
+			if (kills == 2) {
+				if (Constants.ui.killStreak() < killstreak) {
+					Constants.ui.setkillStreak(killstreak);
+				}
+				System.out.println(Constants.ui.numKills());
+				System.out.println(Constants.ui.numDeaths());
+				System.out.println(Constants.ui.numJumps());
+				System.out.println(Constants.ui.killStreak());
+				Constants.ui.updateStats();
+			}
 		}
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			((Player) fb.getBody().getUserData()).takeDamage(1);
+			if (Constants.ui.killStreak() < killstreak) {
+				Constants.ui.setkillStreak(killstreak);
+			}
+			killstreak = 0;
+			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			((Player) fa.getBody().getUserData()).takeDamage(1);
+			if (Constants.ui.killStreak() < killstreak) {
+				Constants.ui.setkillStreak(killstreak);
+			}
+			killstreak = 0;
+			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		}
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {

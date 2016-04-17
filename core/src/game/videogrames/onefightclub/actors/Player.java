@@ -179,6 +179,7 @@ public class Player extends MovingSprite {
 	public void jump() {
 		sound_jump.play(0.08f);
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
+		Constants.ui.setnumJumps(Constants.ui.numJumps() + 1);
 	}
 
 	public void setIsDead(boolean b) {

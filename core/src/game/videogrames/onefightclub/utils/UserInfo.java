@@ -45,13 +45,9 @@ public class UserInfo {
 	}
     }
     
-    public void updateStats(String username, int kills, int deaths, int jumps, int killstreak) {
-    	this.kills = kills;
-    	this.deaths = deaths;
-    	this.jumps = jumps;
-    	this.longestKillStreak = killstreak;
+    public void updateStats() {
     	if(online || c != null) {
-    		c.updateStats(username, kills, deaths, jumps, killstreak);	
+    		c.updateStats(username, kills, deaths, jumps, longestKillStreak);	
     	}
     }
 
@@ -85,6 +81,30 @@ public class UserInfo {
 
     public int killStreak() {
     	return longestKillStreak;
+    }
+
+    public void setmaxLevel(int ml) {
+    	maxlevel = ml;
+    }
+    
+    public void setcharacter(int ch) {
+    	character = ch;
+    }
+
+    public void setnumKills(int num) {
+    	kills = num;
+    }
+
+    public void setnumDeaths(int num) {
+    	deaths = num;
+    }
+
+    public void setnumJumps(int num) {
+    	jumps = num;
+    }
+
+    public void setkillStreak(int num) {
+    	longestKillStreak = num;
     }
     
 }
