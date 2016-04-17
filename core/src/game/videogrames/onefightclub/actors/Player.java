@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
+import game.videogrames.onefightclub.screens.GameScreen;
 import game.videogrames.onefightclub.screens.Hud;
 import game.videogrames.onefightclub.utils.Constants;
 
@@ -166,11 +167,13 @@ public class Player extends MovingSprite {
 		if (weapon.isActive()) {
 			weapon.render(sb);
 		}
-
-		if ((movingRight || movingLeft) && isGrounded) {
-			sound_walk.resume();
-		} else {
-			sound_walk.pause();
+		
+		if (!GameScreen.isOver()) {
+			if ((movingRight || movingLeft) && isGrounded) {
+				sound_walk.resume();
+			} else {
+				sound_walk.pause();
+			}
 		}
 	}
 
@@ -179,7 +182,10 @@ public class Player extends MovingSprite {
 	}
 
 	public void jump() {
-		sound_jump.play(0.08f);
+		if (!GameScreen.isOver()) {
+			sound_jump.play(0.08f);
+		}
+		
 		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY * modifiers.get(1));
 		Constants.ui.setnumJumps(Constants.ui.numJumps() + 1);
 	}
@@ -206,7 +212,9 @@ public class Player extends MovingSprite {
 	}
 
 	public void GetPowerUp() {
-		sound_powerup.play(0.7f);
+		if (!GameScreen.isOver()) {
+			sound_powerup.play(0.7f);
+		}
 		final int i = rand.nextInt(2);
 		modifiers.set(i, modifiers.get(i) * 1.5f);
 		Task task = new Task() {
