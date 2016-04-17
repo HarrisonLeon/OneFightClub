@@ -91,7 +91,7 @@ public class GameScreen extends OFCScreen {
 		ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
 		ambience_beep2 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep2.wav"));
 		ambience_robot = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_robot.wav"));
-		ambience_scifi = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_scifi.wav"));
+		ambience_scifi = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_scifi.wav")); 
 	}
 
 	@Override
