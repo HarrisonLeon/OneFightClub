@@ -44,6 +44,9 @@ public class Constants {
 
 	public static final int NUM_ENEMIES = 10;
 	public static final int LEVEL_1_GOAL = 20;
+	
+	public static final String[] IdleCharacterSprites = new String[] { "images/soldier_idle.png" };
+	public static final String[] WalkingCharacterSprites = new String[] { "images/soldier_walk.png" };
 
 	public static UserInfo ui;
 }
