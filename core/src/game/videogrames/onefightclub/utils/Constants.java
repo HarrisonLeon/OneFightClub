@@ -35,18 +35,27 @@ public class Constants {
 					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM),
 			new Vector2(((((float) Constants.APP_WIDTH) * (3.0f / 8.0f)) / PPM),
 					(((float) Constants.APP_HEIGHT) * (6.0f / 8.0f)) / PPM) };
-	
+
 	public static final Vector2[] powerupSpawns = new Vector2[] {
 			new Vector2((Constants.APP_WIDTH / PPM) / 2, ((float) Constants.APP_HEIGHT) / PPM / 2),
-			new Vector2((((float) Constants.APP_WIDTH * (7.0f/8.0f))/ PPM), (((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
+			new Vector2((((float) Constants.APP_WIDTH * (7.0f / 8.0f)) / PPM),
+					(((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
 			new Vector2(((((float) Constants.APP_WIDTH) * (1.5f / 8.0f)) / PPM),
 					(((float) Constants.APP_HEIGHT) * (2.0f / 8.0f)) / PPM) };
 
 	public static final int NUM_ENEMIES = 10;
 	public static final int LEVEL_1_GOAL = 20;
-	
-	public static final String[] IdleCharacterSprites = new String[] { "images/soldier_idle.png" };
-	public static final String[] WalkingCharacterSprites = new String[] { "images/soldier_walk.png" };
 
 	public static UserInfo ui;
+
+	// image file locations
+	public static final String[] IdleCharacterSprites = new String[] { "images/soldier_idle_blue.png",
+			"images/soldier_idle_red.png", "images/soldier_idle_green.png", "images/soldier_idle_pink.png",
+			"images/soldier_idle_yello.png" };
+	public static final String[] WalkingCharacterSprites = new String[] { "images/soldier_walk_blue.png",
+			"images/soldier_walk_red.png", "images/soldier_walk_green.png", "images/soldier_walk_pink.png",
+			"images/soldier_walk_yellow.png" };
+	public static final String[] MeleeCharacter = new String[] { "images/weapon_melee_blue.png",
+			"images/weapon_melee_red.png", "images/weapon_melee_green.png", "images/weapon_melee_pink.png",
+			"images/weapon_melee_yellow.png" };
 }
