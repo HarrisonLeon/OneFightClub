@@ -133,7 +133,7 @@ public class AchievementsScreen extends OFCScreen{
 		float time = 0;
 		time += delta;
 		if (time > 0) {
-		    if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
+		    if (Gdx.input.justTouched()) {
 			game.setScreen(new MainMenu(game));
 		    }
 		}

@@ -112,67 +112,67 @@ public class UserInfo {
     }
     
     public void updateStats() {
+    	if (kills >= 1) { 
+	    	achievements.set(0, true); 
+	    } else { 
+	    	achievements.set(0, false); 
+	    }
+	    if (kills >= 10) {
+	    	achievements.set(1, true);
+	    } else {
+	    	achievements.set(1, false);
+	    }
+	    if (kills >= 100) {
+	    	achievements.set(2, true);
+	    } else {
+	    	achievements.set(2, false);
+	    }
+	    if (deaths >= 1) {
+	    	achievements.set(3, true);
+	    } else {
+	    	achievements.set(3, false);
+	    }
+	    if (deaths >= 10) {
+	    	achievements.set(4, true);
+	    } else {
+	    	achievements.set(4, false);
+	    }
+	    if (deaths >= 100) {
+	    	achievements.set(5, true);
+	    } else {
+	    	achievements.set(5, false);
+	    }
+	    if (jumps >= 1) {
+	    	achievements.set(6, true);
+	    } else {
+	    	achievements.set(6, false);
+	    }
+	    if (jumps >= 10) {
+	    	achievements.set(7, true);
+	    } else {
+	    	achievements.set(7, false);
+	    }
+	    if (jumps >= 100) {
+	    	achievements.set(8, true);
+	    } else {
+	    	achievements.set(8, false);
+	    }
+	    if (longestKillStreak >= 5) {
+	    	achievements.set(9, true);
+	    } else {
+	    	achievements.set(9, false);
+	    }
+	    if (longestKillStreak >= 10) {
+	    	achievements.set(10, true);
+	    } else {
+	    	achievements.set(10, false);
+	    }
+	    if (longestKillStreak >= 20) {
+	    	achievements.set(11, true);
+	    } else {
+	    	achievements.set(11, false);
+	    }
     	if(online || c != null) {
-    		if (kills >= 1) { 
-    	    	achievements.set(0, true); 
-    	    } else { 
-    	    	achievements.set(0, false); 
-    	    }
-    	    if (kills >= 10) {
-    	    	achievements.set(1, true);
-    	    } else {
-    	    	achievements.set(1, false);
-    	    }
-    	    if (kills >= 100) {
-    	    	achievements.set(2, true);
-    	    } else {
-    	    	achievements.set(2, false);
-    	    }
-    	    if (deaths >= 1) {
-    	    	achievements.set(3, true);
-    	    } else {
-    	    	achievements.set(3, false);
-    	    }
-    	    if (deaths >= 10) {
-    	    	achievements.set(4, true);
-    	    } else {
-    	    	achievements.set(4, false);
-    	    }
-    	    if (deaths >= 100) {
-    	    	achievements.set(5, true);
-    	    } else {
-    	    	achievements.set(5, false);
-    	    }
-    	    if (jumps >= 1) {
-    	    	achievements.set(6, true);
-    	    } else {
-    	    	achievements.set(6, false);
-    	    }
-    	    if (jumps >= 10) {
-    	    	achievements.set(7, true);
-    	    } else {
-    	    	achievements.set(7, false);
-    	    }
-    	    if (jumps >= 100) {
-    	    	achievements.set(8, true);
-    	    } else {
-    	    	achievements.set(8, false);
-    	    }
-    	    if (longestKillStreak >= 5) {
-    	    	achievements.set(9, true);
-    	    } else {
-    	    	achievements.set(9, false);
-    	    }
-    	    if (longestKillStreak >= 10) {
-    	    	achievements.set(10, true);
-    	    } else {
-    	    	achievements.set(10, false);
-    	    }
-    	    if (longestKillStreak >= 20) {
-    	    	achievements.set(11, true);
-    	    } else {
-    	    	achievements.set(11, false);
-    	    }
     		c.updateStats(username, kills, deaths, jumps, longestKillStreak);	
     	}
     }
