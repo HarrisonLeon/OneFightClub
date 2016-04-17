@@ -1,6 +1,5 @@
 package game.videogrames.onefightclub.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +10,6 @@ import game.videogrames.onefightclub.utils.Constants;
 
 public class Melee extends Weapon {
 
-	public static final String MELEE_FILEPATH = "images/weapon_melee.png";
-
 	private Array<TextureRegion> meleeAnimation;
 	private Player player;
 
@@ -21,7 +18,7 @@ public class Melee extends Weapon {
 		this.player = player;
 
 		// create idle animation
-		Texture idleTexture = new Texture(Gdx.files.internal(MELEE_FILEPATH));
+		Texture idleTexture = new Texture(Constants.MeleeSprites[Constants.ui.character() - 1]);
 		meleeAnimation = new Array<TextureRegion>(TextureRegion.split(idleTexture, 26, 60)[0]);
 
 		setAnimation(1 / 12.0f, meleeAnimation);

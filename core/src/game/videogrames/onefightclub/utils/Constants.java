@@ -55,7 +55,7 @@ public class Constants {
 	public static final String[] WalkingCharacterSprites = new String[] { "images/soldier_walk_blue.png",
 			"images/soldier_walk_red.png", "images/soldier_walk_green.png", "images/soldier_walk_pink.png",
 			"images/soldier_walk_yellow.png" };
-	public static final String[] MeleeCharacter = new String[] { "images/weapon_melee_blue.png",
+	public static final String[] MeleeSprites = new String[] { "images/weapon_melee_blue.png",
 			"images/weapon_melee_red.png", "images/weapon_melee_green.png", "images/weapon_melee_pink.png",
 			"images/weapon_melee_yellow.png" };
 }
