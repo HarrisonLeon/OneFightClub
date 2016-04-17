@@ -27,7 +27,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -62,7 +61,8 @@ public class GameScreen extends OFCScreen {
 	private Vector<PowerUp> powerups;
 	private Vector<Weapon> weapons;
 
-	private Vector<Boolean> spawnuses;
+	private Vector<Boolean> enemySpawnAvailable;
+	private Vector<Boolean> powerupSpawnAvailable;
 
 	private Timer enemy_timer;
 	private boolean enemiesResume = false;
@@ -84,22 +84,27 @@ public class GameScreen extends OFCScreen {
 
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
-		
+
 		fanfare = Gdx.audio.newSound(Gdx.files.internal("sounds/Fanfare.wav"));
 
 		ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
 		ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
 		ambience_beep2 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep2.wav"));
 		ambience_robot = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_robot.wav"));
-		ambience_scifi = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_scifi.wav")); 
+		ambience_scifi = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_scifi.wav"));
 	}
 
 	@Override
 	public void show() {
 
-		spawnuses = new Vector<Boolean>();
-		for (int i = 0; i < Constants.spawns.length; i++) {
-			spawnuses.add(true);
+		enemySpawnAvailable = new Vector<Boolean>();
+		for (int i = 0; i < Constants.enemySpawns.length; i++) {
+			enemySpawnAvailable.add(true);
+		}
+
+		powerupSpawnAvailable = new Vector<Boolean>();
+		for (int i = 0; i < Constants.powerupSpawns.length; i++) {
+			powerupSpawnAvailable.add(true);
 		}
 
 		world = new World(new Vector2(0.0f, Constants.GRAVITY), true);
@@ -163,7 +168,7 @@ public class GameScreen extends OFCScreen {
 
 		createPlayer();
 
-		createPowerUp();
+		spawnPowerup();
 
 		// set up timer
 		enemy_timer = new Timer();
@@ -186,115 +191,12 @@ public class GameScreen extends OFCScreen {
 
 		Task task3 = new Task() {
 			public void run() {
-				createPowerUp();
+				spawnPowerup();
 			}
 		};
 		enemy_timer.scheduleTask(task3, 10, 10);
 
 		createPlatforms();
-	}
-
-	public void createPlayer() {
-		// create player
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(160.0f / PPM, 200.0f / PPM); // spawn location
-		bdef.type = BodyType.DynamicBody;
-		playerBody = world.createBody(bdef);
-
-		player = new Player(playerBody, hud);
-		playerBody.setUserData(player);
-	}
-
-	public void spawnEnemy() {
-		Random rand = new Random();
-		int randval = rand.nextInt(Constants.spawns.length);
-		if (spawnuses.elementAt(randval)) {
-			createEnemy(randval);
-		} else {
-			int index = findNextOpen(randval);
-			if (!(index == -1)) {
-				createEnemy(index);
-			}
-		}
-	}
-
-	public void createEnemy(int spawnLoc) {
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(Constants.spawns[spawnLoc]);
-		bdef.type = BodyType.DynamicBody;
-		Body enemyBody = world.createBody(bdef);
-
-		Enemy enemy = new Enemy(enemyBody);
-		enemyBody.setUserData(enemy);
-		enemies.add(enemy);
-		currentEnemies += 1;
-		enemy.setSpawn(spawnLoc);
-		spawnuses.setElementAt(false, spawnLoc);
-	}
-
-	public int findNextOpen(int val) {
-		int n = Constants.spawns.length;
-		int i = val;
-		for (int j = 0; j < n; j++) {
-			if (spawnuses.elementAt(i)) {
-				return i;
-			}
-			i++;
-			if (i == n) {
-				i = 0;
-			}
-		}
-		return -1;
-	}
-
-	public void createPowerUp() {
-		Random rand = new Random();
-		int i = rand.nextInt(Constants.powerupSpawns.length);
-		
-		BodyDef bdef2 = new BodyDef();
-		bdef2.position.set(Constants.powerupSpawns[i]);
-		bdef2.type = BodyType.DynamicBody;
-		Body powerupBody = world.createBody(bdef2);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(13.0f / PPM, 15.0f / PPM);
-		FixtureDef fdef2 = new FixtureDef();
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_WEAPON;
-		fdef2.filter.maskBits = Constants.BIT_GROUND;
-		// fdef2.friction = 2.0f;
-		powerupBody.createFixture(fdef2).setUserData("powerup");
-
-		fdef2.isSensor = true;
-		//powerupBody.createFixture(fdef2).setUserData("powerup.foot");
-		PowerUp powerup = new PowerUp(powerupBody);
-		powerupBody.setUserData(powerup);
-		powerups.add(powerup);
-	}
-
-	public void createWeapon() {
-		BodyDef bdef2 = new BodyDef();
-		bdef2.position.set(500.0f / PPM, 200.0f / PPM);
-		bdef2.type = BodyType.DynamicBody;
-		Body weaponBody = world.createBody(bdef2);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(40.0f / PPM, 32.0f / PPM);
-		FixtureDef fdef2 = new FixtureDef();
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef2.filter.maskBits = Constants.BIT_GROUND;
-		fdef2.friction = 2.0f;
-		weaponBody.createFixture(fdef2).setUserData("weapon");
-
-		// create foot sensor
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
-		fdef2.shape = shape;
-		fdef2.filter.categoryBits = Constants.BIT_PLAYER;
-		fdef2.filter.maskBits = Constants.BIT_GROUND;
-		fdef2.isSensor = true;
-		weaponBody.createFixture(fdef2).setUserData("weapon.foot");
-		Weapon weapon = new Weapon(weaponBody);
-		weaponBody.setUserData(weapon);
-		weapons.add(weapon);
 	}
 
 	public void createPlatforms() {
@@ -343,6 +245,104 @@ public class GameScreen extends OFCScreen {
 		}
 	}
 
+	public void createPlayer() {
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(160.0f / PPM, 200.0f / PPM); // spawn location
+		bdef.type = BodyType.DynamicBody;
+		playerBody = world.createBody(bdef);
+
+		player = new Player(playerBody, hud);
+		playerBody.setUserData(player);
+	}
+
+	public void spawnEnemy() {
+		Random rand = new Random();
+		int randLoc = rand.nextInt(Constants.enemySpawns.length);
+		if (enemySpawnAvailable.elementAt(randLoc)) {
+			createEnemy(randLoc);
+		} else {
+			int index = findNextSpawn(randLoc);
+			if (!(index == -1)) {
+				createEnemy(index);
+			}
+		}
+	}
+
+	public int findNextSpawn(int val) {
+		int numSpawns = enemySpawnAvailable.size();
+		int i = val;
+		for (int j = 0; j < numSpawns; j++) {
+			if (enemySpawnAvailable.elementAt(i)) {
+				return i;
+			}
+			i++;
+			if (i == numSpawns) {
+				i = 0;
+			}
+		}
+		return -1;
+	}
+
+	public void createEnemy(int spawnLoc) {
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(Constants.enemySpawns[spawnLoc]);
+		bdef.type = BodyType.DynamicBody;
+		Body enemyBody = world.createBody(bdef);
+
+		Enemy enemy = new Enemy(enemyBody);
+		enemyBody.setUserData(enemy);
+		enemies.add(enemy);
+		currentEnemies += 1;
+		enemy.setSpawn(spawnLoc);
+		enemySpawnAvailable.setElementAt(false, spawnLoc);
+	}
+
+	public void spawnPowerup() {
+		Random rand = new Random();
+		int randLoc = rand.nextInt(Constants.powerupSpawns.length);
+
+		if (powerupSpawnAvailable.elementAt(randLoc)) {
+			createPowerup(randLoc);
+		}
+	}
+
+	public void createPowerup(int spawnLoc) {
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(Constants.powerupSpawns[spawnLoc]);
+		bdef.type = BodyType.DynamicBody;
+		Body powerupBody = world.createBody(bdef);
+
+		PowerUp powerup = new PowerUp(powerupBody);
+		powerupBody.setUserData(powerup);
+		powerups.add(powerup);
+	}
+
+	// public void createWeapon() {
+	// BodyDef bdef2 = new BodyDef();
+	// bdef2.position.set(500.0f / PPM, 200.0f / PPM);
+	// bdef2.type = BodyType.DynamicBody;
+	// Body weaponBody = world.createBody(bdef2);
+	// PolygonShape shape = new PolygonShape();
+	// shape.setAsBox(40.0f / PPM, 32.0f / PPM);
+	// FixtureDef fdef2 = new FixtureDef();
+	// fdef2.shape = shape;
+	// fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+	// fdef2.filter.maskBits = Constants.BIT_GROUND;
+	// fdef2.friction = 2.0f;
+	// weaponBody.createFixture(fdef2).setUserData("weapon");
+	//
+	// // create foot sensor
+	// shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(0.0f, -32.0f / PPM), 0);
+	// fdef2.shape = shape;
+	// fdef2.filter.categoryBits = Constants.BIT_PLAYER;
+	// fdef2.filter.maskBits = Constants.BIT_GROUND;
+	// fdef2.isSensor = true;
+	// weaponBody.createFixture(fdef2).setUserData("weapon.foot");
+	// Weapon weapon = new Weapon(weaponBody);
+	// weaponBody.setUserData(weapon);
+	// weapons.add(weapon);
+	// }
+
 	@Override
 	public void render(float delta) {
 		// processInput();
@@ -371,14 +371,16 @@ public class GameScreen extends OFCScreen {
 			player.updateMotion();
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
-			if (player.getGameOver()) {
-				game.setScreen(new AchievementsScreen(game));
-			}
 		} else {
+			System.out.println(Constants.ui.numKills());
+			System.out.println(Constants.ui.numDeaths());
+			System.out.println(Constants.ui.numJumps());
+			System.out.println(Constants.ui.killStreak());
+			Constants.ui.updateStats();
 			game.setScreen(new AchievementsScreen(game));
 			System.out.println("im dead");
 		}
-		
+
 		for (Enemy e : enemies) {
 			if (e.isDead()) {
 				toBeRemoved.add(e);
@@ -402,7 +404,7 @@ public class GameScreen extends OFCScreen {
 
 		for (Enemy e : toBeRemoved) {
 			int spawn = e.getSpawn();
-			spawnuses.setElementAt(true, spawn);
+			enemySpawnAvailable.setElementAt(true, spawn);
 			e.killEnemy();
 			enemies.remove(e);
 			currentEnemies -= 1;
@@ -415,12 +417,12 @@ public class GameScreen extends OFCScreen {
 		}
 		powerupRemoval.clear();
 
-		debugRenderer.render(world, b2dCamera.combined);
+		//debugRenderer.render(world, b2dCamera.combined);
 
 		world.step(1 / 60f, 6, 2);
 		sb.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
-		
+
 		if (enemiesKilled >= Constants.LEVEL_1_GOAL) { // LEVEL ENDS WHEN THIS CONDITION IS MET
 			GameOver();
 		}
@@ -457,17 +459,28 @@ public class GameScreen extends OFCScreen {
 		int randomNumber2 = random2.nextInt(25 - 10) + 10;
 		ambience_timer.scheduleTask(task2, randomNumber2);
 	}
-	
+
 	public static void addScore() {
 		enemiesKilled++;
 		Hud.addScore();
 	}
-	
+
 	private void GameOver() {
 		theme1.stop();
 		if (!fanfareIsPlaying) { // Harrison change this once u stop updating
 			fanfare.play();
 			fanfareIsPlaying = true;
 		}
+		System.out.println(Constants.ui.numKills());
+		System.out.println(Constants.ui.numDeaths());
+		System.out.println(Constants.ui.numJumps());
+		System.out.println(Constants.ui.killStreak());
+		Constants.ui.updateStats();
+		Task task = new Task() {
+			public void run() {
+				game.setScreen(new AchievementsScreen(game));
+			}
+		};
+		enemy_timer.scheduleTask(task, 5);	
 	}
 }
