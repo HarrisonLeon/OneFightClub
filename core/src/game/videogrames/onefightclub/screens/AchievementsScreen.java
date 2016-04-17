@@ -6,9 +6,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 import game.videogrames.onefightclub.utils.Constants;
 
@@ -18,15 +21,38 @@ public class AchievementsScreen extends OFCScreen{
 	private String beltImage = "images/belt.png";
 	private Vector<Boolean> achievements;
 	private Vector<Integer[]> points;
+	private Vector<String> titles;
+	private BitmapFont pixels;
+	private Vector<Integer> pointTitle;
 	
 	public AchievementsScreen(Game game) {
 		super(game);
 		points = new Vector<Integer[]>();
+		titles = new Vector<String>();
+		pointTitle = new Vector<Integer>();
 	}
 
 	@Override
     public void show() {
 		stage = new Stage();
+		
+		pixels = new BitmapFont();
+		TextButtonStyle style = new TextButtonStyle();
+    	style.font = pixels;
+    	
+		
+		titles.add("First Kill");
+		titles.add("Ten Kills");
+		titles.add("One Hundred Kills");
+		titles.add("First Death");
+		titles.add("Ten Deaths");
+		titles.add("One Hundred Deaths");
+		titles.add("First Jump");
+		titles.add("Ten Jumps");
+		titles.add("One Hundred Jumps");
+		titles.add("Five Killstreak");
+		titles.add("Ten Killstreak");
+		titles.add("Twenty Killstreak");
 		
 		Integer[] pointone = {-25, 0, 250, 600};
 		points.add(pointone);
@@ -53,9 +79,37 @@ public class AchievementsScreen extends OFCScreen{
 		Integer[] pointtwelve = {-775, -400, 1200, 600};
 		points.add(pointtwelve);
 		
+		pointTitle.add(50);
+		pointTitle.add(1000);
+		pointTitle.add(1500);
+
+		
+		
+		
 		achievements = Constants.ui.achievements();
 		for(int i = 0; i < achievements.size(); i++) {
 			if(achievements.elementAt(i)) {
+				int element = 0;
+				if(i % 4 == 0) {
+					element = 3;
+				}
+				if(i % 4 == 1) {
+					element = 1;
+				}
+				
+				if(i % 4 == 2) {
+					element = -1;
+				}
+				if(i % 4 == 3) {
+					element = -3;
+				}
+				
+				TextButton title = new TextButton(titles.elementAt(i + element), style);
+				title.setX(points.elementAt(i)[0] + 100);
+				title.setY(points.elementAt(i)[1] + 575);
+				title.setWidth(pointTitle.elementAt(2));
+				title.setHeight(15);
+				stage.addActor(title);
 				Image unlock = new Image(new TextureRegion(new Texture(Gdx.files.internal(beltImage)), points.elementAt(i)[0], points.elementAt(i)[1], points.elementAt(i)[2], points.elementAt(i)[3]));
 				stage.addActor(unlock);
 			}
