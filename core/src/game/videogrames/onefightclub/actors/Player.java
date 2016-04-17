@@ -144,7 +144,7 @@ public class Player extends MovingSprite {
 			fdef.shape = shape;
 			fdef.filter.categoryBits = Constants.BIT_WEAPON;
 			fdef.filter.maskBits = Constants.BIT_ENEMY;
-			fdef.isSensor = false;
+			fdef.isSensor = true;
 			body.createFixture(fdef).setUserData(weapon);
 			weapon.setActive(true);
 		}
