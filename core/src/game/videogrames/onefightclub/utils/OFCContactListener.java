@@ -42,7 +42,7 @@ public class OFCContactListener implements ContactListener {
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
 			kills++;
-			if (kills == 2) {
+			if (kills == 20) {
 				if (Constants.ui.killStreak() < killstreak) {
 					Constants.ui.setkillStreak(killstreak);
 				}
@@ -60,7 +60,7 @@ public class OFCContactListener implements ContactListener {
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
 			kills++;
-			if (kills == 2) {
+			if (kills == 20) {
 				if (Constants.ui.killStreak() < killstreak) {
 					Constants.ui.setkillStreak(killstreak);
 				}
