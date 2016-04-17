@@ -371,9 +371,6 @@ public class GameScreen extends OFCScreen {
 			player.updateMotion();
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
-			if (player.getGameOver()) {
-				game.setScreen(new AchievementsScreen(game));
-			}
 		} else {
 			game.setScreen(new AchievementsScreen(game));
 			System.out.println("im dead");
@@ -469,5 +466,16 @@ public class GameScreen extends OFCScreen {
 			fanfare.play();
 			fanfareIsPlaying = true;
 		}
+		System.out.println(Constants.ui.numKills());
+		System.out.println(Constants.ui.numDeaths());
+		System.out.println(Constants.ui.numJumps());
+		System.out.println(Constants.ui.killStreak());
+		Constants.ui.updateStats();
+		Task task = new Task() {
+			public void run() {
+				game.setScreen(new AchievementsScreen(game));
+			}
+		};
+		enemy_timer.scheduleTask(task, 5);	
 	}
 }

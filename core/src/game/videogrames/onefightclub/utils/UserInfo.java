@@ -17,7 +17,7 @@ public class UserInfo {
     private Vector<Boolean> achievements;
 
     public UserInfo(String line, String username, Client c2) {
-	
+	achievements = new Vector<Boolean>();
     if (line.equals("online")) {
     	this.c = c2;
 	    online = true;
@@ -97,6 +97,9 @@ public class UserInfo {
 	    System.out.println(character);
 
 	} else {
+		for(int i = 0; i < 12; i++) {
+			achievements.add(false);
+		}
 	    online = false;
 	    username = "";
 	    maxlevel = 1;

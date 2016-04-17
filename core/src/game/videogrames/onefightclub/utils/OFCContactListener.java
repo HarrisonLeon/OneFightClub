@@ -42,16 +42,10 @@ public class OFCContactListener implements ContactListener {
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
 			kills++;
-			if (kills == 2) {
+			if (kills == 20) {
 				if (Constants.ui.killStreak() < killstreak) {
 					Constants.ui.setkillStreak(killstreak);
 				}
-				System.out.println(Constants.ui.numKills());
-				System.out.println(Constants.ui.numDeaths());
-				System.out.println(Constants.ui.numJumps());
-				System.out.println(Constants.ui.killStreak());
-				Constants.ui.updateStats();
-				((Player)fb.getBody().getUserData()).setGameOver(true);
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
 			GameScreen.addScore();
@@ -60,16 +54,10 @@ public class OFCContactListener implements ContactListener {
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
 			kills++;
-			if (kills == 2) {
+			if (kills == 20) {
 				if (Constants.ui.killStreak() < killstreak) {
 					Constants.ui.setkillStreak(killstreak);
 				}
-				System.out.println(Constants.ui.numKills());
-				System.out.println(Constants.ui.numDeaths());
-				System.out.println(Constants.ui.numJumps());
-				System.out.println(Constants.ui.killStreak());
-				Constants.ui.updateStats();
-				((Player)fb.getBody().getUserData()).setGameOver(true);
 			}
 		}
 
