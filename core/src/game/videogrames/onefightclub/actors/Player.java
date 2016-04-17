@@ -22,9 +22,6 @@ import game.videogrames.onefightclub.screens.Hud;
 import game.videogrames.onefightclub.utils.Constants;
 
 public class Player extends MovingSprite {
-	//public static final String IDLE_FILEPATH = "images/soldier_idle.png";
-	//public static final String WALK_FILEPATH = "images/soldier_walk.png";
-
 	private Array<TextureRegion> idleAnimation;
 	private Array<TextureRegion> walkAnimation;
 
@@ -61,11 +58,13 @@ public class Player extends MovingSprite {
 		this.hud = hud;
 
 		// create idle animation
-		Texture idleTexture = new Texture(Gdx.files.internal(Constants.IdleCharacterSprites[Constants.ui.character() - 1]));
+		Texture idleTexture = new Texture(
+				Gdx.files.internal(Constants.IdleCharacterSprites[Constants.ui.character() - 1]));
 		idleAnimation = new Array<TextureRegion>(TextureRegion.split(idleTexture, 36, 60)[0]);
 
 		// create walk animation
-		Texture walkTexture = new Texture(Gdx.files.internal(Constants.WalkingCharacterSprites[Constants.ui.character() - 1]));
+		Texture walkTexture = new Texture(
+				Gdx.files.internal(Constants.WalkingCharacterSprites[Constants.ui.character() - 1]));
 		walkAnimation = new Array<TextureRegion>(TextureRegion.split(walkTexture, 36, 60)[0]);
 
 		setAnimation(1 / 12.0f, idleAnimation);
@@ -144,7 +143,7 @@ public class Player extends MovingSprite {
 			fdef.shape = shape;
 			fdef.filter.categoryBits = Constants.BIT_WEAPON;
 			fdef.filter.maskBits = Constants.BIT_ENEMY;
-			fdef.isSensor = false;
+			fdef.isSensor = true;
 			body.createFixture(fdef).setUserData(weapon);
 			weapon.setActive(true);
 		}
@@ -208,7 +207,7 @@ public class Player extends MovingSprite {
 	public void GetPowerUp() {
 		sound_powerup.play(0.7f);
 		final int i = rand.nextInt(2);
-		modifiers.set(i, modifiers.get(i) * 2.0f);
+		modifiers.set(i, modifiers.get(i) * 1.5f);
 		Task task = new Task() {
 			public void run() {
 				endPowerUp(i);
@@ -218,6 +217,10 @@ public class Player extends MovingSprite {
 	}
 
 	public void endPowerUp(int num) {
-		modifiers.set(num, modifiers.get(num) / 2.0f);
+		modifiers.set(num, modifiers.get(num) / 1.5f);
+	}
+	
+	public void addScore() {
+		hud.addScore();
 	}
 }

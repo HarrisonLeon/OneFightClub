@@ -67,7 +67,7 @@ public class GameScreen extends OFCScreen {
 	private Timer enemy_timer;
 	private boolean enemiesResume = false;
 	private int currentEnemies = 0;
-	private int enemiesKilled = 0;
+	private static int enemiesKilled = 0;
 
 	private Timer ambience_timer;
 	private Sound ambience_fizzle;
@@ -402,7 +402,6 @@ public class GameScreen extends OFCScreen {
 			e.killEnemy();
 			enemies.remove(e);
 			currentEnemies -= 1;
-			enemiesKilled += 1;
 		}
 		toBeRemoved.clear();
 
@@ -453,6 +452,11 @@ public class GameScreen extends OFCScreen {
 		Random random2 = new Random();
 		int randomNumber2 = random2.nextInt(25 - 10) + 10;
 		ambience_timer.scheduleTask(task2, randomNumber2);
+	}
+	
+	public static void addScore() {
+		enemiesKilled++;
+		Hud.addScore();
 	}
 	
 	private void GameOver() {

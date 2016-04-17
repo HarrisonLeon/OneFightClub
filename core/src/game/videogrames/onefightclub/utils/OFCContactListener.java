@@ -12,6 +12,8 @@ import game.videogrames.onefightclub.actors.Enemy;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
+import game.videogrames.onefightclub.screens.GameScreen;
+import game.videogrames.onefightclub.screens.Hud;
 
 public class OFCContactListener implements ContactListener {
 	// private boolean playerGrounded;
@@ -19,7 +21,9 @@ public class OFCContactListener implements ContactListener {
 	int numFootContacts = 0;
 	private int killstreak = 0;
 	private int kills = 0;
+	
 	private Sound sound_death = Gdx.audio.newSound(Gdx.files.internal("sounds/Enemy_Death.wav"));
+	private Sound sound_player_damage = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Damage.wav"));
 
 	public boolean isPlayerGrounded() {
 		return (numFootContacts > 0);
@@ -31,7 +35,8 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
-			sound_death.play(0.045f);
+			GameScreen.addScore();
+			sound_death.play(0.07f);
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -47,7 +52,8 @@ public class OFCContactListener implements ContactListener {
 				Constants.ui.updateStats();
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
-			sound_death.play(0.045f);
+			GameScreen.addScore();
+			sound_death.play(0.07f);
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -70,6 +76,7 @@ public class OFCContactListener implements ContactListener {
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
 			}
+			sound_player_damage.play(1.5f);
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
@@ -78,6 +85,7 @@ public class OFCContactListener implements ContactListener {
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
 			}
+			sound_player_damage.play(2.0f);
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		}
