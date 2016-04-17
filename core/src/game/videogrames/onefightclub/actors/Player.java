@@ -208,7 +208,7 @@ public class Player extends MovingSprite {
 	public void GetPowerUp() {
 		sound_powerup.play(0.7f);
 		final int i = rand.nextInt(2);
-		modifiers.set(i, modifiers.get(i) * 2.0f);
+		modifiers.set(i, modifiers.get(i) * 1.5f);
 		Task task = new Task() {
 			public void run() {
 				endPowerUp(i);
@@ -218,6 +218,6 @@ public class Player extends MovingSprite {
 	}
 
 	public void endPowerUp(int num) {
-		modifiers.set(num, modifiers.get(num) / 2.0f);
+		modifiers.set(num, modifiers.get(num) / 1.5f);
 	}
 }
