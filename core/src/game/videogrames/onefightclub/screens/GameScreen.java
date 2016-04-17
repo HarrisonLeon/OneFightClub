@@ -67,6 +67,7 @@ public class GameScreen extends OFCScreen {
 	private Timer enemy_timer;
 	private boolean enemiesResume = false;
 	private int currentEnemies = 0;
+	private int enemiesKilled = 0;
 
 	private Timer ambience_timer;
 	private Sound ambience_fizzle;
@@ -75,12 +76,16 @@ public class GameScreen extends OFCScreen {
 	private Sound ambience_robot;
 	private Sound ambience_scifi;
 	private Sound theme1;
+	private Sound fanfare;
+	private boolean fanfareIsPlaying = false;
 
 	public GameScreen(Game game) {
 		super(game);
 
 		theme1 = Gdx.audio.newSound(Gdx.files.internal("sounds/Theme_1.wav"));
 		theme1.loop(0.3f);
+		
+		fanfare = Gdx.audio.newSound(Gdx.files.internal("sounds/Fanfare.wav"));
 
 		ambience_fizzle = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_fizzle.wav"));
 		ambience_beep1 = Gdx.audio.newSound(Gdx.files.internal("sounds/ambience_beep1.wav"));
@@ -402,6 +407,7 @@ public class GameScreen extends OFCScreen {
 			e.killEnemy();
 			enemies.remove(e);
 			currentEnemies -= 1;
+			enemiesKilled += 1;
 		}
 		toBeRemoved.clear();
 
@@ -416,6 +422,10 @@ public class GameScreen extends OFCScreen {
 		world.step(1 / 60f, 6, 2);
 		sb.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
+		
+		if (enemiesKilled >= Constants.LEVEL_1_GOAL) { // LEVEL ENDS WHEN THIS CONDITION IS MET
+			GameOver();
+		}
 	}
 
 	@Override
@@ -448,5 +458,13 @@ public class GameScreen extends OFCScreen {
 		Random random2 = new Random();
 		int randomNumber2 = random2.nextInt(25 - 10) + 10;
 		ambience_timer.scheduleTask(task2, randomNumber2);
+	}
+	
+	private void GameOver() {
+		theme1.stop();
+		if (!fanfareIsPlaying) { // Harrison change this once u stop updating
+			fanfare.play();
+			fanfareIsPlaying = true;
+		}
 	}
 }

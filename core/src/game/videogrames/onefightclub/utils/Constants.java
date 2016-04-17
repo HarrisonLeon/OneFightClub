@@ -43,6 +43,7 @@ public class Constants {
 					(((float) Constants.APP_HEIGHT) * (2.0f / 8.0f)) / PPM) };
 
 	public static final int NUM_ENEMIES = 10;
+	public static final int LEVEL_1_GOAL = 20;
 
 	public static UserInfo ui;
 }
