@@ -45,6 +45,8 @@ public class Player extends MovingSprite {
 	private int health = 6;
 
 	private Hud hud;
+	
+	private GameScreen gs;
 
 	public Player(Body body, Hud hud) {
 		super(body);
@@ -133,6 +135,10 @@ public class Player extends MovingSprite {
 		}
 		this.movingRight = b;
 	}
+	
+	public void setGameScreen(GameScreen gsc) {
+		gs = gsc;
+	}
 
 	public void startAttack() {
 		// perform short range attack
@@ -211,7 +217,7 @@ public class Player extends MovingSprite {
 		return weapon;
 	}
 
-	public void GetPowerUp() {
+	public void GetPowerUp(PowerUp pu) {
 		if (!GameScreen.isOver()) {
 			sound_powerup.play(0.7f);
 		}
@@ -223,6 +229,7 @@ public class Player extends MovingSprite {
 			}
 		};
 		powerup_timer.scheduleTask(task, 5);
+		gs.freePowerupSpawn(pu.getSpawn());
 	}
 
 	public void endPowerUp(int num) {

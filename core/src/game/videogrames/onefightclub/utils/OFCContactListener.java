@@ -125,11 +125,11 @@ public class OFCContactListener implements ContactListener {
 		}
 
 		if (fa.getUserData().equals("player") && fb.getUserData().equals("powerup")) {
-			((Player) fa.getBody().getUserData()).GetPowerUp();
+			((Player) fa.getBody().getUserData()).GetPowerUp((PowerUp)fb.getBody().getUserData());
 			((PowerUp) fb.getBody().getUserData()).setIsDead(true);
 		}
 		if (fb.getUserData().equals("powerup") && fb.getUserData().equals("player")) {
-			((Player) fb.getBody().getUserData()).GetPowerUp();
+			((Player) fb.getBody().getUserData()).GetPowerUp((PowerUp)fb.getBody().getUserData());
 			((PowerUp) fa.getBody().getUserData()).setIsDead(true);
 		}
 
