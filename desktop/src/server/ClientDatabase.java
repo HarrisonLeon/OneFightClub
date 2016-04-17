@@ -37,13 +37,13 @@ public class ClientDatabase {
 		try {
 			System.out.println("trying");
 			ResultSet rs = st.executeQuery("SELECT * FROM userpass");
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userpass WHERE user=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM userpass WHERE username=?");
 			System.out.println("yay");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				String user = rs.getString("user");
+				String user = rs.getString("username");
 				if(user.equals(username)) {
 					password = rs.getString("pass");
 				}
@@ -59,7 +59,7 @@ public class ClientDatabase {
 
 	public void addUser(String username, String password) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO userpass(user,pass) VALUES(?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO userpass(username,pass) VALUES(?,?)");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			System.out.println("prepared");
