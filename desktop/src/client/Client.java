@@ -104,6 +104,10 @@ public class Client extends Thread{
 			
 		return pass;
 	}
+	
+	public void updateMaxLevel(String username, int maxlevel) {
+		sendMessage("!:" + username + ":" + maxlevel);
+	}
 
 	public void changeCharacter(String username, String charSprite) {
 		sendMessage("#:" + username + ":" + charSprite);
