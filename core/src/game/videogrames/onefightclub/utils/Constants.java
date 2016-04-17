@@ -19,8 +19,9 @@ public class Constants {
 	public static final short BIT_PLAYER = 6;
 	public static final short BIT_ENEMY = 8;
 	public static final short BIT_WEAPON = 10;
+	public static final short BIT_ITEM = 12;
 
-	public static final Vector2[] spawns = new Vector2[] {
+	public static final Vector2[] enemySpawns = new Vector2[] {
 			new Vector2((Constants.APP_WIDTH / PPM) / 2, (((float) Constants.APP_HEIGHT) * (7.0f / 8.0f)) / PPM),
 			new Vector2((Constants.APP_WIDTH / PPM) / 2, (((float) Constants.APP_HEIGHT) * (3.0f / 8.0f)) / PPM),
 			new Vector2(((((float) Constants.APP_WIDTH) * (1.0f / 8.0f)) / PPM),
@@ -52,9 +53,11 @@ public class Constants {
 	public static final String[] IdleCharacterSprites = new String[] { "images/soldier_idle_blue.png",
 			"images/soldier_idle_red.png", "images/soldier_idle_green.png", "images/soldier_idle_pink.png",
 			"images/soldier_idle_yello.png" };
+
 	public static final String[] WalkingCharacterSprites = new String[] { "images/soldier_walk_blue.png",
 			"images/soldier_walk_red.png", "images/soldier_walk_green.png", "images/soldier_walk_pink.png",
 			"images/soldier_walk_yellow.png" };
+
 	public static final String[] MeleeSprites = new String[] { "images/weapon_melee_blue.png",
 			"images/weapon_melee_red.png", "images/weapon_melee_green.png", "images/weapon_melee_pink.png",
 			"images/weapon_melee_yellow.png" };
