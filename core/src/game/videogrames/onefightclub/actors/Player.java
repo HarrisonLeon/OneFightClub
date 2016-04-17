@@ -34,6 +34,7 @@ public class Player extends MovingSprite {
 	private boolean isGrounded = false;
 	private boolean isDead = false;
 	private Random rand;
+	private boolean gameover = false;
 
 	private Array<Float> modifiers;
 
@@ -222,5 +223,13 @@ public class Player extends MovingSprite {
 	
 	public void addScore() {
 		hud.addScore();
+	}
+	
+	public boolean getGameOver() {
+		return gameover;
+	}
+	
+	public void setGameOver(boolean b) {
+		gameover = b;
 	}
 }

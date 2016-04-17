@@ -371,10 +371,14 @@ public class GameScreen extends OFCScreen {
 			player.updateMotion();
 			player.setGrounded(cl.isPlayerGrounded());
 			player.render(sb);
+			if (player.getGameOver()) {
+				game.setScreen(new AchievementsScreen(game));
+			}
 		} else {
+			game.setScreen(new AchievementsScreen(game));
 			System.out.println("im dead");
 		}
-
+		
 		for (Enemy e : enemies) {
 			if (e.isDead()) {
 				toBeRemoved.add(e);

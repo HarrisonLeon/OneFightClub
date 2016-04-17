@@ -31,5 +31,9 @@ public class Melee extends Weapon {
 		shiftedPos = shiftedPos.add(body.getPosition());
 		return (shiftedPos);
 	}
+	
+	public Player getPlayer() {
+		return player;
+	}
 
 }
