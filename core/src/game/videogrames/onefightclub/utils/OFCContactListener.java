@@ -1,5 +1,7 @@
 package game.videogrames.onefightclub.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -17,6 +19,7 @@ public class OFCContactListener implements ContactListener {
 	int numFootContacts = 0;
 	private int killstreak = 0;
 	private int kills = 0;
+	private Sound sound_death = Gdx.audio.newSound(Gdx.files.internal("sounds/Enemy_Death.wav"));
 
 	public boolean isPlayerGrounded() {
 		return (numFootContacts > 0);
@@ -28,6 +31,7 @@ public class OFCContactListener implements ContactListener {
 		Fixture fb = contact.getFixtureB();
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData() instanceof Weapon) {
+			sound_death.play(0.045f);
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -43,6 +47,7 @@ public class OFCContactListener implements ContactListener {
 				Constants.ui.updateStats();
 			}
 		} else if (fa.getUserData() instanceof Weapon && fb.getUserData().equals("enemy")) {
+			sound_death.play(0.045f);
 			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
