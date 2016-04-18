@@ -9,12 +9,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import game.videogrames.onefightclub.actors.Enemy;
-import game.videogrames.onefightclub.actors.Melee;
 import game.videogrames.onefightclub.actors.Player;
 import game.videogrames.onefightclub.actors.PowerUp;
 import game.videogrames.onefightclub.actors.Weapon;
 import game.videogrames.onefightclub.screens.GameScreen;
-import game.videogrames.onefightclub.screens.Hud;
 
 public class OFCContactListener implements ContactListener {
 	// private boolean playerGrounded;
@@ -22,7 +20,7 @@ public class OFCContactListener implements ContactListener {
 	int numFootContacts = 0;
 	private int killstreak = 0;
 	private int kills = 0;
-	
+
 	private Sound sound_death = Gdx.audio.newSound(Gdx.files.internal("sounds/Enemy_Death.wav"));
 	private Sound sound_player_damage = Gdx.audio.newSound(Gdx.files.internal("sounds/Player_Damage.wav"));
 
@@ -40,7 +38,7 @@ public class OFCContactListener implements ContactListener {
 			if (!GameScreen.isOver()) {
 				sound_death.play(0.07f);
 			}
-			
+
 			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			Constants.ui.setnumKills(Constants.ui.numKills() + 1);
 			killstreak++;
@@ -67,7 +65,6 @@ public class OFCContactListener implements ContactListener {
 		}
 
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("player")) {
-			((Enemy) fa.getBody().getUserData()).setIsDead(true);
 			((Player) fb.getBody().getUserData()).takeDamage(1);
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
@@ -75,11 +72,10 @@ public class OFCContactListener implements ContactListener {
 			if (!GameScreen.isOver()) {
 				sound_player_damage.play(1.5f);
 			}
-			
+
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		} else if (fa.getUserData().equals("player") && fb.getUserData().equals("enemy")) {
-			((Enemy) fb.getBody().getUserData()).setIsDead(true);
 			((Player) fa.getBody().getUserData()).takeDamage(1);
 			if (Constants.ui.killStreak() < killstreak) {
 				Constants.ui.setkillStreak(killstreak);
@@ -90,7 +86,7 @@ public class OFCContactListener implements ContactListener {
 			killstreak = 0;
 			Constants.ui.setnumDeaths(Constants.ui.numDeaths() + 1);
 		}
-		
+
 		if (fa.getUserData().equals("enemy") && fb.getUserData().equals("enemy")) {
 			Enemy enemyA = (Enemy) fa.getBody().getUserData();
 			if (enemyA.getBody().getLinearVelocity().x > 0.0f) {
@@ -125,11 +121,11 @@ public class OFCContactListener implements ContactListener {
 		}
 
 		if (fa.getUserData().equals("player") && fb.getUserData().equals("powerup")) {
-			((Player) fa.getBody().getUserData()).GetPowerUp((PowerUp)fb.getBody().getUserData());
+			((Player) fa.getBody().getUserData()).GetPowerUp((PowerUp) fb.getBody().getUserData());
 			((PowerUp) fb.getBody().getUserData()).setIsDead(true);
 		}
 		if (fb.getUserData().equals("powerup") && fb.getUserData().equals("player")) {
-			((Player) fb.getBody().getUserData()).GetPowerUp((PowerUp)fb.getBody().getUserData());
+			((Player) fb.getBody().getUserData()).GetPowerUp((PowerUp) fb.getBody().getUserData());
 			((PowerUp) fa.getBody().getUserData()).setIsDead(true);
 		}
 

@@ -36,7 +36,7 @@ public class Constants {
 			// bottom left [4]
 			new Vector2(((APP_WIDTH * (7.0f / 8.0f)) / PPM), ((APP_HEIGHT * (1.5f / 8.0f)) / PPM)),
 			// top right [5]
-			new Vector2(((APP_WIDTH * (5.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)),
+			new Vector2(((APP_WIDTH * (5.2f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)),
 			// top left [6]
 			new Vector2(((APP_WIDTH * (3.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)) };
 
