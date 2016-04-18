@@ -375,6 +375,7 @@ public class GameScreen extends OFCScreen {
 			System.out.println(Constants.ui.killStreak());
 			Constants.ui.updateStats();
 			game.setScreen(new AchievementsScreen(game));
+			this.dispose();
 			System.out.println("im dead");
 		}
 
