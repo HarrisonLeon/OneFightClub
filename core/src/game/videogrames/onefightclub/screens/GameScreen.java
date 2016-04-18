@@ -46,7 +46,7 @@ public class GameScreen extends OFCScreen {
 	private OrthographicCamera b2dCamera;
 	private OrthographicCamera mainCam;
 	private SpriteBatch sb;
-	private Hud hud;
+	private static Hud hud;
 
 	private TiledMap tileMap;
 	private OrthogonalTiledMapRenderer tmRenderer;
@@ -473,7 +473,7 @@ public class GameScreen extends OFCScreen {
 
 	public static void addScore() {
 		enemiesKilled++;
-		Hud.addScore();
+		hud.addScore();
 	}
 
 	private void GameOver() {

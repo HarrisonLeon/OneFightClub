@@ -12,7 +12,7 @@ public class Constants {
 
 	public static final float GRAVITY = -15.0f;
 	public static final float JUMP_VELOCITY = 6.5f;
-	public static final float RUN_VELOCITY = 2.5f;
+	public static final float RUN_VELOCITY = 3.0f;
 
 	public static final short BIT_GROUND = 2;
 	public static final short BIT_EDGE = 4;
@@ -24,19 +24,19 @@ public class Constants {
 	public static final Vector2 playerSpawn = new Vector2((APP_WIDTH / PPM) / 2, ((APP_HEIGHT * (7.0f / 8.0f)) / PPM));
 
 	public static final Vector2[] enemySpawns = new Vector2[] {
-			// bottom [1]
+			// bottom [0]
 			new Vector2((APP_WIDTH / PPM) / 2, (((float) APP_HEIGHT) * (3.0f / 8.0f)) / PPM),
-			// left [2]
-			new Vector2(((APP_WIDTH * (1.0f / 8.0f)) / PPM), ((APP_HEIGHT * (4.0f / 8.0f)) / PPM)),
-			// right [3]
+			// left [1]
+			new Vector2(((APP_WIDTH * (1.1f / 8.0f)) / PPM), ((APP_HEIGHT * (4.0f / 8.0f)) / PPM)),
+			// right [2]
 			new Vector2(((APP_WIDTH * (7.0f / 8.0f)) / PPM), ((APP_HEIGHT * (4.0f / 8.0f)) / PPM)),
-			// bottom left [4]
+			// bottom left [3]
 			new Vector2(((APP_WIDTH * (1.0f / 8.0f)) / PPM), ((APP_HEIGHT * (2.0f / 8.0f)) / PPM)),
-			// bottom left [5]
+			// bottom left [4]
 			new Vector2(((APP_WIDTH * (7.0f / 8.0f)) / PPM), ((APP_HEIGHT * (1.5f / 8.0f)) / PPM)),
-			// top right [6]
+			// top right [5]
 			new Vector2(((APP_WIDTH * (5.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)),
-			// top left [7]
+			// top left [6]
 			new Vector2(((APP_WIDTH * (3.0f / 8.0f)) / PPM), ((APP_HEIGHT * (6.0f / 8.0f)) / PPM)) };
 
 	public static final Vector2[] powerupSpawns = new Vector2[] {
