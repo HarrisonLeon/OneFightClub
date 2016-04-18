@@ -43,7 +43,7 @@ public class Enemy extends MovingSprite {
 		body.createFixture(fdef).setUserData("enemy");
 
 		// left foot fixture
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(-15.5f / PPM, -19.0f / PPM), 0);
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(-24.0f / PPM, -23.0f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_ENEMY;
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
@@ -51,7 +51,7 @@ public class Enemy extends MovingSprite {
 		body.createFixture(fdef).setUserData("enemy.foot");
 
 		// right foot fixture
-		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(15.5f / PPM, -19.0f / PPM), 0);
+		shape.setAsBox(2.0f / PPM, 2.0f / PPM, new Vector2(24.0f / PPM, -23.0f / PPM), 0);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = Constants.BIT_ENEMY;
 		fdef.filter.maskBits = Constants.BIT_GROUND | Constants.BIT_EDGE | Constants.BIT_PLAYER;
@@ -70,15 +70,11 @@ public class Enemy extends MovingSprite {
 
 	public void updateMotion() {
 		if (movingLeft) {
-			body.setLinearVelocity(-Constants.RUN_VELOCITY / 2, body.getLinearVelocity().y);
+			body.setLinearVelocity(-Constants.ENEMY_VELOCITY / 2, body.getLinearVelocity().y);
 		}
 		if (movingRight) {
-			body.setLinearVelocity(Constants.RUN_VELOCITY / 2, body.getLinearVelocity().y);
+			body.setLinearVelocity(Constants.ENEMY_VELOCITY / 2, body.getLinearVelocity().y);
 		}
-	}
-
-	public void jump() {
-		body.setLinearVelocity(body.getLinearVelocity().x, Constants.JUMP_VELOCITY);
 	}
 
 	public void moveLeft() {

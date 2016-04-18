@@ -256,7 +256,7 @@ public class GameScreen extends OFCScreen {
 
 	public void createPlayer() {
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(160.0f / PPM, 200.0f / PPM); // spawn location
+		bdef.position.set(Constants.playerSpawn); // spawn location
 		bdef.type = BodyType.DynamicBody;
 		playerBody = world.createBody(bdef);
 

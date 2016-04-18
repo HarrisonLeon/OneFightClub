@@ -13,6 +13,7 @@ public class Constants {
 	public static final float GRAVITY = -15.0f;
 	public static final float JUMP_VELOCITY = 6.5f;
 	public static final float RUN_VELOCITY = 3.0f;
+	public static final float ENEMY_VELOCITY = 5.0f;
 
 	public static final short BIT_GROUND = 2;
 	public static final short BIT_EDGE = 4;
