@@ -1,12 +1,17 @@
 # 2-0: The One Fight Club
-## by ***videogRAMs***
+## by the ***videogRAMs*** team
 
-**Team Members**
+### Import Instructions
+This project can be imported into Eclipse as a `.gradle` project. Once the game has been exported into Eclipse, it can be run by executing the `/desktop/src/.../DesktopLauncher.java` file
 
-Brenden Donlon  *(donlon@usc.edu)* [Add lec#]
+Any clarications on using the libgdx library/engine can be found [here](https://libgdx.badlogicgames.com/)
 
-Harrison Leon *(hleon@usc.edu)* [30381]
+### Team Members
+Brenden Donlon  *(donlon@usc.edu)*
 
-Nick Wojtyna *(wojtyna@usc.edu)* [30381]
+Harrison Leon *(hleon@usc.edu)*
 
-Sophia Spackova *(spackova@usc.edu)* [29928]
+Nick Wojtyna *(wojtyna@usc.edu)*
+
+Sophia Spackova *(spackova@usc.edu)*
+
